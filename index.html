@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ExifExplorer | Professional Image Metadata Extractor</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- EXIF.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --success: #4bb543;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-brand i {
+            margin-right: 10px;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 100px 0;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 50px;
+        }
+        
+        .hero-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .upload-area {
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px dashed #e0e0e0;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .upload-area.dragover {
+            border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metadata-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .metadata-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .metadata-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .metadata-icon {
+            background-color: rgba(67, 97, 238, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+        
+        .metadata-title {
+            font-weight: 600;
+            margin: 0;
+            color: var(--dark);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .metadata-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .metadata-item:last-child {
+            border-bottom: none;
+        }
+        
+        .metadata-label {
+            font-weight: 500;
+            color: var(--gray);
+        }
+        
+        .metadata-value {
+            font-weight: 400;
+            color: var(--dark);
+            text-align: right;
+            max-width: 60%;
+            word-break: break-word;
+        }
+        
+        .image-preview {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            max-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            height: 300px;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+        }
+        
+        .no-data {
+            color: var(--gray);
+            font-style: italic;
+        }
+        
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            color: var(--primary);
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1055;
+        }
+        
+        .file-info {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+    
+    .metadata-cards-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    
+    .align-items-start {
+        align-items: flex-start !important;
+    }
+    
+    /* Ensure cards fill the column height properly */
+    .col-lg-6 {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .metadata-card {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .metadata-content {
+        flex: 1;
+    }
+    
+    /* Adjust spacing for better alignment */
+    .mb-4 {
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .mt-5 {
+        margin-top: 3rem !important;
+    }
+    
+    /* Fix upload area height */
+    .upload-area {
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* Ensure file info aligns properly */
+    .file-info {
+        width: 100%;
+    }
+    
+    /* Image preview adjustments */
+    .image-preview {
+        min-height: 200px;
+        max-height: 400px;
+    }
+    
+    /* Toast positioning */
+    .toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+    }
+
+     /* Hero Section Mobile Optimizations */
+    .hero-section {
+        padding: 60px 0 80px;
+    }
+    
+    @media (min-width: 992px) {
+        .hero-section {
+            padding: 100px 0;
+        }
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+    
+    @media (min-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+    }
+    
+    @media (min-width: 992px) {
+        .hero-title {
+            font-size: 3.5rem;
+        }
+    }
+    
+    /* Button Mobile Optimizations */
+    .btn-lg {
+        padding: 12px 28px;
+        font-size: 1rem;
+    }
+    
+    @media (min-width: 576px) {
+        .btn-lg {
+            padding: 14px 32px;
+            font-size: 1.1rem;
+        }
+    }
+    
+    /* Responsive image margin */
+    .mt-4.mt-lg-0 {
+        margin-top: 2rem;
+    }
+    
+    @media (min-width: 992px) {
+        .mt-4.mt-lg-0 {
+            margin-top: 0;
+        }
+    }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-camera"></i>ExifExplorer
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="hero-title display-5 display-lg-4">Extract Image Metadata with Precision</h1>
+                <p class="lead mb-4">Uncover the hidden information in your photos - from detailed camera settings to precise location data. Our professional tool makes metadata extraction accurate and intuitive.</p>
+                <a href="#extractor" class="btn btn-light btn-lg w-100 w-sm-auto d-inline-flex align-items-center justify-content-center">
+                    Get Started <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+            <div class="col-lg-6 text-center mt-4 mt-lg-0">
+                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Camera" class="img-fluid rounded-3 shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">What You Can Discover</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4>Location Data</h4>
+                        <p>Extract GPS coordinates and see exactly where your photos were taken with precision mapping.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h4>Camera Details</h4>
+                        <p>Discover camera model, lens information, aperture, shutter speed, ISO, and other technical settings.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h4>Date & Time</h4>
+                        <p>Get precise date and time information when the photo was captured, including timezone data.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Extractor Section -->
+<section id="extractor" class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Extract Your Image Metadata</h2>
+        
+        <!-- Toast for notifications -->
+        <div class="toast align-items-center text-white bg-success border-0" role="alert" id="successToast">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Metadata extracted successfully!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+        
+        <div class="row align-items-start">
+            <!-- Left Column: Upload Area -->
+            <div class="col-lg-6 mb-4">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h4>Upload Your Image</h4>
+                    <p class="text-muted mb-4">Drag & drop your image or click to browse</p>
+                    <input type="file" id="imageUpload" class="d-none" accept="image/*">
+                    <button class="btn btn-primary" id="uploadButton">
+                        <i class="fas fa-folder-open me-2"></i>Choose Image
+                    </button>
+                    <p class="small text-muted mt-3">Supports JPG, JPEG, PNG, and other common formats</p>
+                </div>
+                
+                <!-- Loading Spinner -->
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Extracting metadata...</p>
+                </div>
+                
+                <!-- Image Preview -->
+                <div class="image-preview mt-4 d-none" id="imagePreview">
+                    <img src="" alt="Preview" id="previewImg">
+                </div>
+                
+                <!-- File Info -->
+                <div class="file-info d-none" id="fileInfo">
+                    <h5>File Information</h5>
+                    <div class="metadata-item">
+                        <span class="metadata-label">File Name</span>
+                        <span class="metadata-value" id="fileName">-</span>
+                    </div>
+                    <div class="metadata-item">
+                        <span class="metadata-label">File Size</span>
+                        <span class="metadata-value" id="fileSize">-</span>
+                    </div>
+                    <div class="metadata-item">
+                        <span class="metadata-label">File Type</span>
+                        <span class="metadata-value" id="fileType">-</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Metadata Cards -->
+            <div class="col-lg-6">
+                <div class="metadata-cards-container">
+                    <!-- Location Metadata -->
+                    <div class="metadata-card mb-4">
+                        <div class="metadata-header">
+                            <div class="metadata-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h3 class="metadata-title">Location Information</h3>
+                        </div>
+                        <div class="metadata-content">
+                            <div class="metadata-item">
+                                <span class="metadata-label">GPS Coordinates</span>
+                                <span class="metadata-value" id="gpsCoords">-</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Address</span>
+                                <span class="metadata-value" id="address">-</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Altitude</span>
+                                <span class="metadata-value" id="altitude">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Camera Metadata -->
+                    <div class="metadata-card mb-4">
+                        <div class="metadata-header">
+                            <div class="metadata-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <h3 class="metadata-title">Camera Information</h3>
+                        </div>
+                        <div class="metadata-content">
+                            <div class="metadata-item">
+                                <span class="metadata-label">Camera Model</span>
+                                <span class="metadata-value" id="cameraModel">-</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Lens</span>
+                                <span class="metadata-value" id="lens">-</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Aperture</span>
+                                <span class="metadata-value" id="aperture">-</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Shutter Speed</span>
+                                <span class="metadata-value" id="shutterSpeed">-</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">ISO</span>
+                                <span class="metadata-value" id="iso">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Metadata -->
+                    <div class="metadata-card">
+                        <div class="metadata-header">
+                            <div class="metadata-icon">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <h3 class="metadata-title">Image Information</h3>
+                        </div>
+                        <div class="metadata-content">
+                            <div class="metadata-item">
+                                <span class="metadata-label">Dimensions</span>
+                                <span class="metadata-value" id="dimensions">-</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Date Taken</span>
+                                <span class="metadata-value" id="dateTaken">-</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Orientation</span>
+                                <span class="metadata-value" id="orientation">-</span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Color Space</span>
+                                <span class="metadata-value" id="colorSpace">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Map Section -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="metadata-card">
+                    <div class="metadata-header">
+                        <div class="metadata-icon">
+                            <i class="fas fa-map"></i>
+                        </div>
+                        <h3 class="metadata-title">Location Map</h3>
+                    </div>
+                    <div class="map-container" id="mapContainer">
+                        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                            <i class="fas fa-globe-americas fa-3x text-muted mb-3"></i>
+                            <p class="no-data mb-2">Upload an image with GPS data to view the location on map</p>
+                            <small class="text-muted">Map will appear here when GPS data is available</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5><i class="fas fa-camera me-2"></i>ExifExplorer</h5>
+                <p class="mt-3">Extract valuable metadata from your images with our professional tool. Discover camera settings, location data, and more.</p>
+            </div>
+            <div class="col-md-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light">Home</a></li>
+                    <li><a href="#" class="text-light">Features</a></li>
+                    <li><a href="#" class="text-light">How It Works</a></li>
+                    <li><a href="#" class="text-light">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>Connect</h5>
+                <div class="d-flex mt-3">
+                    <a href="#" class="text-light me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="#" class="text-light me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                    <a href="#" class="text-light me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                    <a href="#" class="text-light"><i class="fab fa-github fa-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        <hr class="mt-4 mb-4">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="mb-0">© <span id="currentYear">2023</span> MetaSnap. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="text-light me-3">Privacy Policy</a>
+                <a href="#" class="text-light">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Automatically update the year in the footer
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentYear = new Date().getFullYear();
+        document.getElementById('currentYear').textContent = currentYear;
+    });
+</script>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // DOM Elements
+        const uploadArea = document.getElementById('uploadArea');
+        const imageUpload = document.getElementById('imageUpload');
+        const uploadButton = document.getElementById('uploadButton');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const fileInfo = document.getElementById('fileInfo');
+        const successToast = document.getElementById('successToast');
+        
+        // Metadata display elements
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const fileType = document.getElementById('fileType');
+        const gpsCoords = document.getElementById('gpsCoords');
+        const address = document.getElementById('address');
+        const altitude = document.getElementById('altitude');
+        const cameraModel = document.getElementById('cameraModel');
+        const lens = document.getElementById('lens');
+        const aperture = document.getElementById('aperture');
+        const shutterSpeed = document.getElementById('shutterSpeed');
+        const iso = document.getElementById('iso');
+        const dimensions = document.getElementById('dimensions');
+        const dateTaken = document.getElementById('dateTaken');
+        const orientation = document.getElementById('orientation');
+        const colorSpace = document.getElementById('colorSpace');
+        const mapContainer = document.getElementById('mapContainer');
+        
+        // Event Listeners
+        uploadButton.addEventListener('click', () => imageUpload.click());
+        
+        imageUpload.addEventListener('change', handleImageUpload);
+        
+        // Drag and drop functionality
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            uploadArea.classList.add('dragover');
+        }
+        
+        function unhighlight() {
+            uploadArea.classList.remove('dragover');
+        }
+        
+        uploadArea.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            imageUpload.files = files;
+            handleImageUpload();
+        }
+        
+        // Handle image upload and EXIF extraction
+        function handleImageUpload() {
+            const file = imageUpload.files[0];
+            if (!file) return;
+            
+            // Check if file is an image
+            if (!file.type.match('image.*')) {
+                showError('Please upload an image file (JPEG, PNG, etc.)');
+                return;
+            }
+            
+            // Show loading spinner
+            loadingSpinner.style.display = 'block';
+            imagePreview.classList.add('d-none');
+            fileInfo.classList.add('d-none');
+            
+            // Reset previous metadata
+            resetMetadata();
+            
+            // Display image preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                imagePreview.classList.remove('d-none');
+                
+                // Extract EXIF data
+                EXIF.getData(previewImg, function() {
+                    // Hide loading spinner
+                    loadingSpinner.style.display = 'none';
+                    
+                    // Display file info
+                    displayFileInfo(file);
+                    
+                    // Extract and display metadata
+                    extractAndDisplayMetadata();
+                    
+                    // Show success toast
+                    const toast = new bootstrap.Toast(successToast);
+                    toast.show();
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        // Display file information
+        function displayFileInfo(file) {
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            fileType.textContent = file.type.split('/')[1].toUpperCase();
+            fileInfo.classList.remove('d-none');
+        }
+        
+        // Extract and display metadata using EXIF.js
+        function extractAndDisplayMetadata() {
+            // Location Information
+            const gpsLatitude = EXIF.getTag(this, "GPSLatitude");
+            const gpsLongitude = EXIF.getTag(this, "GPSLongitude");
+            const gpsLatitudeRef = EXIF.getTag(this, "GPSLatitudeRef") || 'N';
+            const gpsLongitudeRef = EXIF.getTag(this, "GPSLongitudeRef") || 'E';
+            const gpsAltitude = EXIF.getTag(this, "GPSAltitude");
+            
+            if (gpsLatitude && gpsLongitude) {
+                const lat = convertGPSToDecimal(gpsLatitude, gpsLatitudeRef);
+                const lng = convertGPSToDecimal(gpsLongitude, gpsLongitudeRef);
+                gpsCoords.textContent = `${lat.toFixed(6)}° ${gpsLatitudeRef}, ${lng.toFixed(6)}° ${gpsLongitudeRef}`;
+                
+                // In a real application, you would use these coordinates to display a map
+                mapContainer.innerHTML = `
+                    <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center bg-light">
+                        <i class="fas fa-map-marked-alt fa-3x text-primary mb-3"></i>
+                        <p class="text-center">Location found: ${lat.toFixed(6)}° ${gpsLatitudeRef}, ${lng.toFixed(6)}° ${gpsLongitudeRef}</p>
+                        <small class="text-muted">Map integration would display here</small>
+                    </div>
+                `;
+                
+                // Try to get address from coordinates (this would require a geocoding API in a real app)
+                address.textContent = "Address lookup would appear here";
+            }
+            
+            if (gpsAltitude) {
+                altitude.textContent = `${gpsAltitude.toFixed(2)} meters`;
+            }
+            
+            // Camera Information
+            const make = EXIF.getTag(this, "Make") || '-';
+            const model = EXIF.getTag(this, "Model") || '-';
+            cameraModel.textContent = `${make} ${model}`.trim();
+            
+            lens.textContent = EXIF.getTag(this, "LensModel") || EXIF.getTag(this, "LensType") || '-';
+            
+            const fNumber = EXIF.getTag(this, "FNumber");
+            if (fNumber) {
+                aperture.textContent = `f/${fNumber}`;
+            }
+            
+            const exposureTime = EXIF.getTag(this, "ExposureTime");
+            if (exposureTime) {
+                shutterSpeed.textContent = formatShutterSpeed(exposureTime);
+            }
+            
+            iso.textContent = EXIF.getTag(this, "ISOSpeedRatings") || '-';
+            
+            // Image Information
+            dimensions.textContent = `${this.naturalWidth} × ${this.naturalHeight}`;
+            
+            const dateTimeOriginal = EXIF.getTag(this, "DateTimeOriginal");
+            if (dateTimeOriginal) {
+                dateTaken.textContent = formatExifDate(dateTimeOriginal);
+            }
+            
+            const orientationValue = EXIF.getTag(this, "Orientation");
+            orientation.textContent = orientationValue ? `Orientation ${orientationValue}` : 'Normal';
+            
+            colorSpace.textContent = EXIF.getTag(this, "ColorSpace") === 1 ? 'sRGB' : 'Uncalibrated';
+        }
+        
+        // Helper functions
+        function convertGPSToDecimal(gpsData, ref) {
+            const degrees = gpsData[0];
+            const minutes = gpsData[1];
+            const seconds = gpsData[2];
+            
+            let decimal = degrees + (minutes / 60) + (seconds / 3600);
+            if (ref === 'S' || ref === 'W') {
+                decimal = -decimal;
+            }
+            return decimal;
+        }
+        
+        function formatShutterSpeed(exposureTime) {
+            if (exposureTime < 1) {
+                return `1/${Math.round(1 / exposureTime)}s`;
+            }
+            return `${exposureTime}s`;
+        }
+        
+        function formatExifDate(dateString) {
+            // EXIF date format: "YYYY:MM:DD HH:MM:SS"
+            const parts = dateString.split(' ');
+            const datePart = parts[0].replace(/:/g, '-');
+            return new Date(`${datePart}T${parts[1]}`).toLocaleString();
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' bytes';
+            else if (bytes < 1048576) return (bytes / 1024).toFixed(2) + ' KB';
+            else return (bytes / 1048576).toFixed(2) + ' MB';
+        }
+        
+        function resetMetadata() {
+            const metadataValues = document.querySelectorAll('.metadata-value');
+            metadataValues.forEach(el => {
+                el.textContent = '-';
+            });
+            
+            mapContainer.innerHTML = '<p class="no-data">Upload an image with GPS data to view the location on map</p>';
+        }
+        
+        function showError(message) {
+            alert(message); // In a real app, you'd use a more elegant notification system
+        }
+    </script>
+</body>
+</html>
