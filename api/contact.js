@@ -1,46 +1,48 @@
 import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
+    if (req.method !== "POST") {
+        return res.status(405).json({ message: "Method Not Allowed" });
+    }
 
-  const { name, email, subject, message, newsletter } = req.body;
+    const { name, email, subject, message, newsletter } = req.body;
 
-  if (!name || !email || !subject || !message) {
-    return res.status(400).json({ message: "Missing required fields" });
-  }
+    // Validate fields
+    if (!name || !email || !subject || !message) {
+        return res.status(400).json({ message: "All required fields must be filled." });
+    }
 
-  try {
-    // Create transporter
+    // Create transporter using your Gmail App Password
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.MAIL_USER, 
-        pass: process.env.MAIL_PASS   
-      }
+        service: "gmail",
+        auth: {
+            user: process.env.MAIL_USER,
+            pass: process.env.MAIL_PASS,
+        },
     });
 
-    await transporter.sendMail({
-      from: `"Website Contact Form" <${process.env.MAIL_USER}>`,
-      to: "sahobordavid@gmail.com", // your email
-      subject: `New Contact Form Message: ${subject}`,
-      html: `
-        <h2>New Message from Contact Form</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <p><strong>Newsletter?:</strong> ${newsletter ? "Yes" : "No"}</p>
-        <p><strong>Message:</strong><br>${message}</p>
-      `
-    });
+    try {
+        // Email structure
+        const mailOptions = {
+            from: `"Website Contact Form" <${process.env.MAIL_USER}>`,
+            to: process.env.MAIL_TO,
+            subject: `New Message: ${subject}`,
+            html: `
+                <h2>New Contact Form Message</h2>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Subject:</strong> ${subject}</p>
+                <p><strong>Message:</strong><br>${message}</p>
+                <p><strong>Subscribed to newsletter:</strong> ${newsletter ? "Yes" : "No"}</p>
+            `
+        };
 
-    return res.status(200).json({ message: "Email sent successfully" });
+        await transporter.sendMail(mailOptions);
 
-  } catch (error) {
-    console.error("Email error:", error);
-    return res.status(500).json({ message: "Email sending failed", error });
-  }
+        return res.status(200).json({ message: "Message sent successfully!" });
+
+    } catch (error) {
+        console.error("Email sending error:", error);
+        return res.status(500).json({ message: "Failed to send message." });
+    }
 }
