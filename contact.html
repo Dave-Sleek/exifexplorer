@@ -803,37 +803,66 @@
             });
         });
         
-        // Contact form submission
-        const contactForm = document.getElementById('contactForm');
-        const successToast = document.getElementById('successToast');
+        // // Contact form submission
+        // const contactForm = document.getElementById('contactForm');
+        // const successToast = document.getElementById('successToast');
         
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+        // contactForm.addEventListener('submit', function(e) {
+        //     e.preventDefault();
             
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            const newsletter = document.getElementById('newsletter').checked;
+        //     // Get form values
+        //     const name = document.getElementById('name').value;
+        //     const email = document.getElementById('email').value;
+        //     const subject = document.getElementById('subject').value;
+        //     const message = document.getElementById('message').value;
+        //     const newsletter = document.getElementById('newsletter').checked;
             
-            // Validate form
-            if (!name || !email || !subject || !message) {
-                alert('Please fill in all required fields.');
-                return;
-            }
+        //     // Validate form
+        //     if (!name || !email || !subject || !message) {
+        //         alert('Please fill in all required fields.');
+        //         return;
+        //     }
             
-            // In a real application, you would send this data to a server
-            // For now, we'll simulate submission
-            console.log('Contact Form Submission:', { name, email, subject, message, newsletter });
+        //     // In a real application, you would send this data to a server
+        //     // For now, we'll simulate submission
+        //     console.log('Contact Form Submission:', { name, email, subject, message, newsletter });
             
-            // Show success toast
-            const toast = new bootstrap.Toast(successToast);
-            toast.show();
+        //     // Show success toast
+        //     const toast = new bootstrap.Toast(successToast);
+        //     toast.show();
             
-            // Reset form
-            this.reset();
-        });
+        //     // Reset form
+        //     this.reset();
+        // });
+
+
+    contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
+    const newsletter = document.getElementById('newsletter').checked;
+
+    const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, subject, message, newsletter })
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+        const toast = new bootstrap.Toast(successToast);
+        toast.show();
+        contactForm.reset();
+    } else {
+        alert(result.message || "Something went wrong.");
+    }
+});
+
+
         
         // Newsletter form submission
         const newsletterForm = document.getElementById('newsletterForm');
