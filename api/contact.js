@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     try {
         // Email structure
         const mailOptions = {
-            from: `"Website Contact Form" <${process.env.MAIL_USER}>`,
+            from: `"ExifExplorer Contact Form" <${process.env.MAIL_USER}>`,
             to: process.env.MAIL_TO,
             subject: `New Message: ${subject}`,
             html: `
