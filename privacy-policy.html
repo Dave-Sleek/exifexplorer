@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Privacy Policy | ExifExplorer</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-brand i {
+            margin-right: 10px;
+        }
+        
+        .privacy-hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 80px 0 60px;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .policy-content {
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+        
+        .policy-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .policy-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .highlight-box {
+            background-color: rgba(67, 97, 238, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 25px 0;
+        }
+        
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            text-decoration: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .info-icon {
+            color: var(--primary);
+            margin-right: 10px;
+        }
+        
+        .privacy-list li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+        
+        .privacy-list li strong {
+            color: var(--primary);
+        }
+        
+        .last-updated {
+            background-color: rgba(67, 97, 238, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .contact-info {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-info h5 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-camera"></i>ExifExplorer
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="features.html">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="how-it-works.html">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="privacy-policy.html">Privacy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="terms-of-use.html">Terms</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="privacy-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4">Privacy Policy</h1>
+                    <p class="lead mb-4">Your privacy is our priority. Learn how we protect your data when using MetaSnap.</p>
+                    <p class="mb-0"><i class="fas fa-shield-alt me-2"></i>Last Updated: January 15, 2024</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="policy-content">
+                        <div class="text-center mb-5">
+                            <h2 class="section-title">Our Commitment to Your Privacy</h2>
+                            <p class="lead text-muted">ExifExplorer is designed with privacy as a core principle. We believe in transparency and want you to understand exactly how your data is handled.</p>
+                        </div>
+
+                        <!-- Introduction -->
+                        <div class="policy-section">
+                            <h3 class="mb-3"><i class="fas fa-info-circle info-icon"></i>1. Introduction</h3>
+                            <p>Welcome to ExifExplorer. We are committed to protecting your privacy and ensuring the security of any information you provide while using our image metadata extraction tool. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website.</p>
+                            
+                            <div class="highlight-box">
+                                <h5><i class="fas fa-lightbulb me-2"></i>Important Note</h5>
+                                <p class="mb-0">ExifExplorer processes all images locally in your browser. Your images are <strong>never uploaded</strong> to our servers or any third-party servers. All metadata extraction happens entirely on your device.</p>
+                            </div>
+                        </div>
+
+                        <!-- Information We Collect -->
+                        <div class="policy-section">
+                            <h3 class="mb-3"><i class="fas fa-database info-icon"></i>2. Information We Collect</h3>
+                            <p>We collect minimal information to provide and improve our service:</p>
+                            
+                            <h5 class="mt-4 mb-3">A. Information You Provide</h5>
+                            <ul class="privacy-list">
+                                <li><strong>Contact Information:</strong> When you contact us through our contact form, we collect your name and email address.</li>
+                                <li><strong>Feedback:</strong> Any feedback, comments, or questions you send us.</li>
+                                <li><strong>Newsletter Subscription:</strong> If you subscribe to our newsletter, we collect your email address.</li>
+                            </ul>
+                            
+                            <h5 class="mt-4 mb-3">B. Automatically Collected Information</h5>
+                            <ul class="privacy-list">
+                                <li><strong>Usage Data:</strong> Anonymous analytics about how you interact with our website (pages visited, time spent, etc.)</li>
+                                <li><strong>Technical Data:</strong> Browser type, device type, operating system, and IP address (anonymized).</li>
+                                <li><strong>Cookies:</strong> We use essential cookies for website functionality and analytics cookies to improve our service.</li>
+                            </ul>
+                            
+                            <div class="highlight-box">
+                                <h5><i class="fas fa-exclamation-triangle me-2"></i>What We Do NOT Collect</h5>
+                                <ul class="mb-0">
+                                    <li>Your uploaded images (processed locally only)</li>
+                                    <li>Extracted metadata from your images</li>
+                                    <li>Personal identification beyond what you voluntarily provide</li>
+                                    <li>Sensitive personal information</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- How We Use Your Information -->
+                        <div class="policy-section">
+                            <h3 class="mb-3"><i class="fas fa-cogs info-icon"></i>3. How We Use Your Information</h3>
+                            <p>We use the information we collect for the following purposes:</p>
+                            <ul class="privacy-list">
+                                <li>To provide, operate, and maintain our website</li>
+                                <li>To improve, personalize, and expand our website</li>
+                                <li>To understand and analyze how you use our website</li>
+                                <li>To develop new products, services, features, and functionality</li>
+                                <li>To communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the website, and for marketing and promotional purposes</li>
+                                <li>To send you emails</li>
+                                <li>To find and prevent fraud</li>
+                            </ul>
+                        </div>
+
+                        <!-- Data Security -->
+                        <div class="policy-section">
+                            <h3 class="mb-3"><i class="fas fa-shield-alt info-icon"></i>4. Data Security</h3>
+                            <p>We implement appropriate technical and organizational security measures to protect your personal information against accidental or unlawful destruction, loss, alteration, unauthorized disclosure, or access. However, please note that no method of transmission over the Internet or method of electronic storage is 100% secure.</p>
+                            
+                            <div class="highlight-box">
+                                <h5><i class="fas fa-lock me-2"></i>Security Features of ExifExplorer</h5>
+                                <ul class="mb-0">
+                                    <li>Client-side image processing (no server uploads)</li>
+                                    <li>HTTPS encryption for all data transmission</li>
+                                    <li>Regular security updates and monitoring</li>
+                                    <li>Secure coding practices and vulnerability testing</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Cookies -->
+                        <div class="policy-section">
+                            <h3 class="mb-3"><i class="fas fa-cookie-bite info-icon"></i>5. Cookies and Tracking Technologies</h3>
+                            <p>We use cookies and similar tracking technologies to track activity on our website and hold certain information. Cookies are files with small amount of data which may include an anonymous unique identifier.</p>
+                            
+                            <h5 class="mt-4 mb-3">Types of Cookies We Use:</h5>
+                            <ul class="privacy-list">
+                                <li><strong>Essential Cookies:</strong> Necessary for the website to function properly</li>
+                                <li><strong>Analytics Cookies:</strong> Help us understand how visitors interact with the website</li>
+                                <li><strong>Preference Cookies:</strong> Remember your settings and preferences</li>
+                            </ul>
+                            
+                            <p>You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our service.</p>
+                        </div>
+
+                        <!-- Third-Party Services -->
+                        <div class="policy-section">
+                            <h3 class="mb-3"><i class="fas fa-external-link-alt info-icon"></i>6. Third-Party Services</h3>
+                            <p>We may employ third-party companies and individuals to facilitate our service ("Service Providers"), to provide the service on our behalf, to perform service-related services, or to assist us in analyzing how our service is used.</p>
+                            
+                            <p>These third parties have access to your Personal Information only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose.</p>
+                            
+                            <h5 class="mt-4 mb-3">Third-Party Services We Use:</h5>
+                            <ul class="privacy-list">
+                                <li><strong>Google Analytics:</strong> For website analytics (anonymous data only)</li>
+                                <li><strong>Cloudflare:</strong> For CDN and security services</li>
+                                <li><strong>Bootstrap & Font Awesome:</strong> For frontend libraries (loaded via CDN)</li>
+                            </ul>
+                        </div>
+
+                        <!-- Your Rights -->
+                        <div class="policy-section">
+                            <h3 class="mb-3"><i class="fas fa-user-check info-icon"></i>7. Your Data Protection Rights</h3>
+                            <p>Depending on your location, you may have the following rights regarding your personal information:</p>
+                            
+                            <ul class="privacy-list">
+                                <li><strong>Right to Access:</strong> You have the right to request copies of your personal information.</li>
+                                <li><strong>Right to Rectification:</strong> You have the right to request that we correct any information you believe is inaccurate or complete information you believe is incomplete.</li>
+                                <li><strong>Right to Erasure:</strong> You have the right to request that we erase your personal information, under certain conditions.</li>
+                                <li><strong>Right to Restrict Processing:</strong> You have the right to request that we restrict the processing of your personal information, under certain conditions.</li>
+                                <li><strong>Right to Object to Processing:</strong> You have the right to object to our processing of your personal information, under certain conditions.</li>
+                                <li><strong>Right to Data Portability:</strong> You have the right to request that we transfer the data that we have collected to another organization, or directly to you, under certain conditions.</li>
+                            </ul>
+                            
+                            <p>If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us at the email address provided below.</p>
+                        </div>
+
+                        <!-- Children's Privacy -->
+                        <div class="policy-section">
+                            <h3 class="mb-3"><i class="fas fa-child info-icon"></i>8. Children's Privacy</h3>
+                            <p>Our service does not address anyone under the age of 13 ("Children"). We do not knowingly collect personally identifiable information from anyone under the age of 13. If you are a parent or guardian and you are aware that your child has provided us with Personal Information, please contact us. If we become aware that we have collected Personal Information from children without verification of parental consent, we take steps to remove that information from our servers.</p>
+                        </div>
+
+                        <!-- Changes to This Policy -->
+                        <div class="policy-section">
+                            <h3 class="mb-3"><i class="fas fa-sync-alt info-icon"></i>9. Changes to This Privacy Policy</h3>
+                            <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date at the top of this Privacy Policy.</p>
+                            <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="contact-info">
+                            <h5><i class="fas fa-envelope me-2"></i>Contact Us</h5>
+                            <p class="mb-2">If you have any questions about this Privacy Policy, please contact us:</p>
+                            <ul class="list-unstyled">
+                                <li><strong>Email:</strong> privacy@exifexplorer.com</li>
+                                <li><strong>Address:</strong> 123 Tech Street, San Francisco, CA 94107, USA</li>
+                                <li><strong>Contact Form:</strong> <a href="contact.html">Visit our Contact Page</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Last Updated -->
+                        <div class="last-updated">
+                            <p class="mb-0"><i class="fas fa-clock me-2"></i>This Privacy Policy was last updated on <strong>January 15, 2024</strong> and is effective as of that date.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Back to Home -->
+                    <div class="text-center mt-4">
+                        <a href="index.html" class="btn btn-primary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Home
+                        </a>
+                        <a href="terms-of-use.html" class="btn btn-outline-primary ms-2">
+                            Read Terms of Use <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-camera me-2"></i>ExifExplorer</h5>
+                    <p class="mt-3">Extract valuable metadata from your images with our professional tool. Discover camera settings, location data, and more.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-light">Home</a></li>
+                        <li><a href="features.html" class="text-light">Features</a></li>
+                        <li><a href="how-it-works.html" class="text-light">How It Works</a></li>
+                        <li><a href="contact.html" class="text-light">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Legal</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="privacy-policy.html" class="text-light">Privacy Policy</a></li>
+                        <li><a href="terms-of-use.html" class="text-light">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">© <span id="currentYear">2023</span> ExifExplorer. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="privacy-policy.html" class="text-light me-3">Privacy Policy</a>
+                    <a href="terms-of-use.html" class="text-light">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Update current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Back to top button functionality
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
