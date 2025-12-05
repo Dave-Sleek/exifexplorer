@@ -301,6 +301,88 @@
             z-index: 9999;
         }
     </style>
+
+<style>
+    /* Common Styles for All Options */
+    .avatar-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 1.2rem;
+    }
+    
+    .icon-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+    }
+    
+    .step-number {
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+        font-weight: 600;
+    }
+    
+    .testimonial-item {
+        padding: 15px;
+        background-color: rgba(67, 97, 238, 0.02);
+        border-radius: 10px;
+        border-left: 3px solid var(--primary);
+    }
+    
+    .use-case-item {
+        padding: 15px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        border: 1px solid #eaeaea;
+    }
+    
+    .use-case-item:hover {
+        background-color: rgba(67, 97, 238, 0.05);
+        border-color: var(--primary);
+        transform: translateY(-2px);
+    }
+    
+    .video-placeholder {
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .video-placeholder:hover {
+        transform: scale(1.01);
+    }
+    
+    .video-placeholder .fa-play-circle {
+        transition: all 0.3s ease;
+    }
+    
+    .video-placeholder:hover .fa-play-circle {
+        transform: scale(1.1);
+        color: var(--secondary);
+    }
+    
+    .accordion-button {
+        background-color: rgba(67, 97, 238, 0.05);
+        border: 1px solid rgba(67, 97, 238, 0.1);
+    }
+    
+    .accordion-button:not(.collapsed) {
+        background-color: rgba(67, 97, 238, 0.1);
+        color: var(--primary);
+        box-shadow: none;
+    }
+    
+    .step-guide {
+        background-color: rgba(67, 97, 238, 0.02);
+        padding: 20px;
+        border-radius: 10px;
+    }
+</style>
 </head>
 <body>
     <!-- Navigation -->
@@ -524,34 +606,127 @@
                     </div>
                 </div>
                 
-                <!-- <div class="col-lg-6">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body p-5">
-                            <h3 class="mb-4">Subscribe to Our Newsletter</h3>
-                            <p class="text-muted mb-4">Stay updated with the latest features, metadata tips, and photography insights.</p>
-                            
-                            <form id="newsletterForm">
-                                <div class="mb-3">
-                                    <label for="newsletterEmail" class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" id="newsletterEmail" placeholder="your@email.com" required>
-                                </div>
-                                <div class="mb-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="privacyPolicy" required>
-                                        <label class="form-check-label" for="privacyPolicy">
-                                            I agree to the <a href="#">Privacy Policy</a>
-                                        </label>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Subscribe Now</button>
-                            </form>
-                            
-                            <div class="mt-4 text-center">
-                                <p class="small text-muted mb-0">No spam, unsubscribe anytime. We respect your privacy.</p>
+    <div class="col-lg-6">
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-5">
+            <h3 class="mb-4"><i class="fas fa-briefcase text-primary me-2"></i>Professional Use Cases</h3>
+            <p class="text-muted mb-4">Discover how different professionals use MetaSnap in their work.</p>
+            
+            <!-- Use Cases -->
+            <div class="use-cases">
+                <!-- Photography -->
+                <div class="use-case-item mb-4">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-shrink-0">
+                            <div class="icon-circle bg-primary text-white">
+                                <i class="fas fa-camera"></i>
                             </div>
                         </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-2">Photography & Media</h5>
+                            <ul class="text-muted small mb-0">
+                                <li>Copyright verification</li>
+                                <li>Location tracking for travel photos</li>
+                                <li>Camera settings analysis</li>
+                                <li>Asset management</li>
+                            </ul>
+                        </div>
                     </div>
-                </div> -->
+                </div>
+                
+                <!-- Research -->
+                <div class="use-case-item mb-4">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-shrink-0">
+                            <div class="icon-circle bg-success text-white">
+                                <i class="fas fa-microscope"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-2">Research & Academia</h5>
+                            <ul class="text-muted small mb-0">
+                                <li>Scientific image analysis</li>
+                                <li>Data validation and verification</li>
+                                <li>Research documentation</li>
+                                <li>Metadata standards compliance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Legal -->
+                <div class="use-case-item mb-4">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-shrink-0">
+                            <div class="icon-circle bg-warning text-white">
+                                <i class="fas fa-gavel"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-2">Legal & Forensics</h5>
+                            <ul class="text-muted small mb-0">
+                                <li>Digital evidence analysis</li>
+                                <li>Image authenticity verification</li>
+                                <li>Timestamp validation</li>
+                                <li>Location data extraction</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Business -->
+                <div class="use-case-item">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-shrink-0">
+                            <div class="icon-circle bg-info text-white">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-2">Business & Marketing</h5>
+                            <ul class="text-muted small mb-0">
+                                <li>Social media content analysis</li>
+                                <li>Competitor research</li>
+                                <li>Brand monitoring</li>
+                                <li>Digital asset management</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Features Highlight -->
+            <div class="mt-4 pt-3 border-top">
+                <h5 class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Key Benefits</h5>
+                <div class="row">
+                    <div class="col-6 mb-2">
+                        <i class="fas fa-lock text-success me-1"></i>
+                        <small>100% Private</small>
+                    </div>
+                    <div class="col-6 mb-2">
+                        <i class="fas fa-bolt text-warning me-1"></i>
+                        <small>Instant Results</small>
+                    </div>
+                    <div class="col-6 mb-2">
+                        <i class="fas fa-sync-alt text-info me-1"></i>
+                        <small>No Limits</small>
+                    </div>
+                    <div class="col-6 mb-2">
+                        <i class="fas fa-mobile-alt text-primary me-1"></i>
+                        <small>Mobile Friendly</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CTA -->
+            <div class="mt-4">
+                <a href="features.html" class="btn btn-outline-primary w-100">
+                    <i class="fas fa-rocket me-2"></i>Explore All Features
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
                 <!-- End Subscribe -->
             </div>
         </div>
