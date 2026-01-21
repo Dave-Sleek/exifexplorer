@@ -850,6 +850,14 @@
     contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
 
+    // Get the reCAPTCHA response
+    const recaptchaResponse = grecaptcha.getResponse();
+
+    if (!recaptchaResponse) {
+        alert('Please complete the reCAPTCHA.');
+        return;
+    }
+
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const subject = document.getElementById('subject').value;
@@ -859,7 +867,10 @@
     const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, subject, message, newsletter })
+        body: JSON.stringify({ 
+            name, email, subject, message, newsletter,
+            recaptcha: recaptchaResponse // send token to server
+        })
     });
 
     const result = await response.json();
@@ -868,33 +879,14 @@
         const toast = new bootstrap.Toast(successToast);
         toast.show();
         contactForm.reset();
+
+        // Reset reCAPTCHA
+        grecaptcha.reset();
     } else {
         alert(result.message || "Something went wrong.");
     }
 });
 
-
-        
-        // Newsletter form submission
-        const newsletterForm = document.getElementById('newsletterForm');
-        
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('newsletterEmail').value;
-            const privacyPolicy = document.getElementById('privacyPolicy').checked;
-            
-            if (!email || !privacyPolicy) {
-                alert('Please enter your email and agree to the privacy policy.');
-                return;
-            }
-            
-            // Simulate newsletter subscription
-            console.log('Newsletter Subscription:', { email });
-            
-            alert('Thank you for subscribing to our newsletter!');
-            this.reset();
-        });
         
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
