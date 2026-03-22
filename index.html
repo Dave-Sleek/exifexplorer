@@ -322,6 +322,20 @@
   </footer>
 
   <script>
+
+    // ================= MOBILE MENU =================
+const mobileBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+
+let menuOpen = false;
+
+mobileBtn.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  mobileMenu.classList.toggle('open');
+  mobileBtn.innerHTML = menuOpen
+    ? '<i class="fas fa-times"></i>'
+    : '<i class="fas fa-bars"></i>';
+})
 document.addEventListener("DOMContentLoaded", () => {
 
     const uploadBtn = document.getElementById('uploadBtn');
