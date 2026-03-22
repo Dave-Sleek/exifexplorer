@@ -5,17 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="title" content="Exif Explorer | Professional Image Metadata Extractor - Free Online Tool">
 <meta name="description" content="Extract image metadata for free with Exif Explorer. Get GPS coordinates, camera settings, date taken, and more from your photos. No registration required.">
-<meta name="keywords" content="image metadata extractor, EXIF data, GPS coordinates extraction, camera settings, photo metadata, image information, free online tool">
+<meta name="keywords" content="image metadata extractor, EXIF data, GPS coordinates extraction, camera settings, photo metadata">
 <meta name="author" content="Exif Explorer">
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.exifexplorer.com/">
 <meta property="og:title" content="Exif Explorer | Professional Image Metadata Extractor">
 <meta property="og:description" content="Free online tool to extract metadata from images. Get GPS, camera info, and more from your photos instantly.">
-<meta property="og:image" content="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1200&h=630&fit=crop">
 <!-- Canonical -->
 <link rel="canonical" href="https://www.exifexplorer.com/">
-<!-- Tailwind CSS + Custom Config -->
+<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
@@ -25,8 +24,6 @@
           primary: '#A855F7',
           secondary: '#EC4899',
           dark: '#0A0A0F',
-          card: '#111115',
-          surface: '#1A1A1F',
         },
         fontFamily: {
           'poppins': ['Poppins', 'sans-serif'],
@@ -34,7 +31,6 @@
         },
         animation: {
           'float': 'float 6s ease-in-out infinite',
-          'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
           'gradient': 'gradient 8s ease infinite',
         },
         keyframes: {
@@ -92,52 +88,73 @@
     background: #0A0A0F;
     border-radius: 1.5rem;
   }
-  ::-webkit-scrollbar {
-    width: 6px;
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #111115; }
+  ::-webkit-scrollbar-thumb { background: #A855F7; border-radius: 10px; }
+  
+  /* Mobile menu animation */
+  .mobile-menu {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  ::-webkit-scrollbar-track {
-    background: #111115;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #A855F7;
-    border-radius: 10px;
-  }
-  @keyframes shimmer {
-    0% { background-position: -1000px 0; }
-    100% { background-position: 1000px 0; }
+  .mobile-menu.open {
+    max-height: 400px;
+    opacity: 1;
+    visibility: visible;
   }
 </style>
 </head>
 <body class="font-inter text-gray-200">
 
-  <!-- Navigation - Sleek Glass -->
-  <nav class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-xl border-b border-white/5">
+  <!-- Navigation with Mobile Dropdown -->
+  <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
     <div class="container mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
-        <a href="#" class="flex items-center gap-3 group">
+        <!-- Logo -->
+        <a href="#home" class="flex items-center gap-3 group">
           <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
             <i class="fas fa-camera-retro text-white text-sm"></i>
           </div>
           <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
         </a>
+        
+        <!-- Desktop Menu -->
         <div class="hidden md:flex gap-8 text-sm font-medium">
-          <a href="#" class="hover:text-primary transition">Home</a>
-          <a href="#" class="hover:text-primary transition">Features</a>
-          <a href="#" class="hover:text-primary transition">How it Works</a>
-          <a href="#" class="hover:text-primary transition">Blog</a>
-          <a href="#" class="text-primary border-b-2 border-primary pb-1">About</a>
+          <a href="#home" class="hover:text-primary transition-colors">Home</a>
+          <a href="#features" class="hover:text-primary transition-colors">Features</a>
+          <a href="#how-it-works" class="hover:text-primary transition-colors">How it Works</a>
+          <a href="#blog" class="hover:text-primary transition-colors">Blog</a>
+          <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
+          <a href="#about" class="text-primary border-b-2 border-primary pb-1">About</a>
         </div>
-        <button class="md:hidden text-white"><i class="fas fa-bars text-xl"></i></button>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuBtn" class="md:hidden text-white text-2xl focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobileMenu" class="mobile-menu md:hidden overflow-hidden transition-all duration-300">
+        <div class="flex flex-col gap-3 pt-4 pb-2">
+          <a href="#home" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Home</a>
+          <a href="#features" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Features</a>
+          <a href="#how-it-works" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">How it Works</a>
+          <a href="#blog" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Blog</a>
+          <a href="#contact" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Contact</a>
+          <a href="#about" class="px-4 py-2 text-primary bg-white/5 rounded-lg transition-colors">About Us</a>
+        </div>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Section - Elegant, Modern, Cinematic -->
-  <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-    <!-- Animated Background Gradient -->
+  <!-- Hero Section (Home) -->
+  <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
     <div class="absolute inset-0 bg-gradient-to-br from-purple-950/20 via-transparent to-pink-950/20 animate-gradient"></div>
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse-slow"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
     
     <div class="container mx-auto px-6 relative z-10">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -164,13 +181,12 @@
               <span>Start Extracting</span>
               <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i>
             </a>
-            <a href="#" class="inline-flex items-center gap-2 border border-white/20 backdrop-blur-sm px-8 py-4 rounded-full font-semibold hover:bg-white/5 transition-all">
+            <a href="#how-it-works" class="inline-flex items-center gap-2 border border-white/20 backdrop-blur-sm px-8 py-4 rounded-full font-semibold hover:bg-white/5 transition-all">
               <i class="fas fa-play-circle"></i>
               Watch Demo
             </a>
           </div>
           
-          <!-- Stats Badges -->
           <div class="flex gap-6 justify-center lg:justify-start mt-10">
             <div class="text-center"><div class="text-2xl font-bold text-primary">1M+</div><div class="text-xs text-gray-500">Images Processed</div></div>
             <div class="text-center"><div class="text-2xl font-bold text-primary">100%</div><div class="text-xs text-gray-500">Free Forever</div></div>
@@ -186,7 +202,6 @@
                 <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&h=600&fit=crop" alt="Camera lens" class="rounded-2xl w-full max-w-md shadow-2xl">
               </div>
             </div>
-            <!-- Floating badges -->
             <div class="absolute -top-6 -right-6 glass-premium rounded-2xl px-4 py-2 flex items-center gap-2">
               <i class="fas fa-map-marker-alt text-primary text-sm"></i>
               <span class="text-xs font-medium">GPS Location</span>
@@ -201,20 +216,60 @@
     </div>
   </section>
 
+  <!-- Features Section -->
+  <section id="features" class="py-20">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full">Features</span>
+        <h2 class="font-poppins font-bold text-4xl md:text-5xl mt-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">What You Can Discover</h2>
+        <p class="text-gray-400 mt-3 max-w-2xl mx-auto">Unlock every hidden detail from your photos with our professional metadata extractor</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass-premium rounded-2xl p-8 text-center group hover:transform hover:-translate-y-2 transition-all">
+          <div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto text-primary text-2xl"><i class="fas fa-map-marker-alt"></i></div>
+          <h3 class="text-xl font-bold mt-5">Location Data</h3>
+          <p class="text-gray-400 mt-2">Extract GPS coordinates and see exactly where your photos were taken with precision mapping.</p>
+        </div>
+        <div class="glass-premium rounded-2xl p-8 text-center group hover:transform hover:-translate-y-2 transition-all">
+          <div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto text-primary text-2xl"><i class="fas fa-camera"></i></div>
+          <h3 class="text-xl font-bold mt-5">Camera Details</h3>
+          <p class="text-gray-400 mt-2">Discover camera model, lens, aperture, shutter speed, ISO, and other technical settings.</p>
+        </div>
+        <div class="glass-premium rounded-2xl p-8 text-center group hover:transform hover:-translate-y-2 transition-all">
+          <div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto text-primary text-2xl"><i class="fas fa-calendar-alt"></i></div>
+          <h3 class="text-xl font-bold mt-5">Date & Time</h3>
+          <p class="text-gray-400 mt-2">Get precise date and time information when the photo was captured, including timezone data.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="py-20 bg-black/30">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full">Simple Process</span>
+        <h2 class="font-poppins font-bold text-4xl md:text-5xl mt-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">How It Works</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center"><div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl font-bold mx-auto">1</div><h3 class="text-xl font-bold mt-4">Upload Image</h3><p class="text-gray-400 mt-2">Drag & drop or click to select any image file</p></div>
+        <div class="text-center"><div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl font-bold mx-auto">2</div><h3 class="text-xl font-bold mt-4">Extract Data</h3><p class="text-gray-400 mt-2">Our tool reads all EXIF metadata instantly</p></div>
+        <div class="text-center"><div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl font-bold mx-auto">3</div><h3 class="text-xl font-bold mt-4">View & Export</h3><p class="text-gray-400 mt-2">Explore data or export as CSV, PDF, JSON</p></div>
+      </div>
+    </div>
+  </section>
+
   <!-- Extractor Section -->
   <section id="extractor" class="py-20">
     <div class="container mx-auto px-6">
       <div class="text-center mb-12">
-        <span class="text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full">Extract Now</span>
-        <h2 class="font-poppins font-bold text-4xl md:text-5xl mt-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">Analyze Your Image</h2>
-        <p class="text-gray-400 mt-3 max-w-2xl mx-auto">Upload any JPEG, PNG, or WebP image and unlock all hidden metadata instantly</p>
+        <span class="text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full">Try It Now</span>
+        <h2 class="font-poppins font-bold text-4xl md:text-5xl mt-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">Extract Your Image Metadata</h2>
       </div>
 
-      <!-- Toast -->
       <div id="toastMsg" class="fixed top-24 right-6 z-[100] bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-2xl shadow-2xl backdrop-blur-sm hidden transition-all"></div>
 
       <div class="grid lg:grid-cols-2 gap-8">
-        <!-- Upload Area -->
         <div>
           <div id="uploadArea" class="glass-premium rounded-2xl p-8 text-center border-2 border-dashed border-white/20 cursor-pointer upload-zone transition-all">
             <i class="fas fa-cloud-upload-alt text-6xl text-primary mb-4"></i>
@@ -224,1553 +279,165 @@
             <button id="uploadBtn" class="bg-primary hover:bg-purple-700 px-8 py-3 rounded-full font-medium transition-all inline-flex items-center gap-2"><i class="fas fa-folder-open"></i> Choose File</button>
             <p class="text-xs text-gray-500 mt-4">Supports JPG, PNG, WebP (Max 50MB)</p>
           </div>
-
-          <div id="loadingSpinner" class="hidden mt-6 text-center py-8">
-            <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-primary border-r-2"></div>
-            <p class="mt-3 text-gray-400">Extracting metadata...</p>
-          </div>
-
-          <div id="imagePreview" class="hidden mt-6">
-            <div class="glass-premium rounded-2xl overflow-hidden">
-              <img id="previewImg" class="w-full max-h-80 object-contain bg-black/40" alt="Preview">
-            </div>
-          </div>
-
-          <div id="fileInfo" class="hidden mt-6 glass-premium rounded-2xl p-5">
-            <h4 class="font-semibold flex items-center gap-2"><i class="fas fa-file-alt text-primary"></i> File Details</h4>
-            <div class="grid grid-cols-2 gap-3 mt-3 text-sm">
-              <span class="text-gray-400">File Name</span><span id="fileName" class="font-mono">-</span>
-              <span class="text-gray-400">File Size</span><span id="fileSize">-</span>
-              <span class="text-gray-400">File Type</span><span id="fileType">-</span>
-            </div>
-          </div>
+          <div id="loadingSpinner" class="hidden mt-6 text-center py-8"><div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-primary border-r-2"></div><p class="mt-3 text-gray-400">Extracting metadata...</p></div>
+          <div id="imagePreview" class="hidden mt-6"><div class="glass-premium rounded-2xl overflow-hidden"><img id="previewImg" class="w-full max-h-80 object-contain bg-black/40" alt="Preview"></div></div>
+          <div id="fileInfo" class="hidden mt-6 glass-premium rounded-2xl p-5"><h4 class="font-semibold flex items-center gap-2"><i class="fas fa-file-alt text-primary"></i> File Details</h4><div class="grid grid-cols-2 gap-3 mt-3 text-sm"><span class="text-gray-400">File Name</span><span id="fileName" class="font-mono">-</span><span class="text-gray-400">File Size</span><span id="fileSize">-</span><span class="text-gray-400">File Type</span><span id="fileType">-</span></div></div>
         </div>
 
-        <!-- Metadata Cards -->
         <div class="space-y-6">
-          <div class="glass-premium rounded-2xl p-6">
-            <div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-4"><div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"><i class="fas fa-map-marker-alt text-primary"></i></div><h3 class="text-xl font-bold">Location Data</h3></div>
-            <div class="space-y-3 text-sm"><div class="flex justify-between"><span class="text-gray-400">GPS Coordinates</span><span id="gpsCoords" class="font-mono">-</span></div><div class="flex justify-between"><span class="text-gray-400">Address</span><span id="address" class="text-right max-w-[60%]">-</span></div><div class="flex justify-between"><span class="text-gray-400">Altitude</span><span id="altitude">-</span></div></div>
-          </div>
-          <div class="glass-premium rounded-2xl p-6">
-            <div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-4"><div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"><i class="fas fa-camera text-primary"></i></div><h3 class="text-xl font-bold">Camera Info</h3></div>
-            <div class="grid grid-cols-2 gap-y-3 text-sm"><span class="text-gray-400">Model</span><span id="cameraModel">-</span><span class="text-gray-400">Lens</span><span id="lens">-</span><span class="text-gray-400">Aperture</span><span id="aperture">-</span><span class="text-gray-400">Shutter Speed</span><span id="shutterSpeed">-</span><span class="text-gray-400">ISO</span><span id="iso">-</span></div>
-          </div>
-          <div class="glass-premium rounded-2xl p-6">
-            <div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-4"><div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"><i class="fas fa-image text-primary"></i></div><h3 class="text-xl font-bold">Image Details</h3></div>
-            <div class="grid grid-cols-2 gap-y-3 text-sm"><span class="text-gray-400">Dimensions</span><span id="dimensions">-</span><span class="text-gray-400">Date Taken</span><span id="dateTaken">-</span><span class="text-gray-400">Orientation</span><span id="orientation">-</span><span class="text-gray-400">Color Space</span><span id="colorSpace">-</span></div>
-          </div>
+          <div class="glass-premium rounded-2xl p-6"><div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-4"><div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"><i class="fas fa-map-marker-alt text-primary"></i></div><h3 class="text-xl font-bold">Location Data</h3></div><div class="space-y-3 text-sm"><div class="flex justify-between"><span class="text-gray-400">GPS Coordinates</span><span id="gpsCoords" class="font-mono">-</span></div><div class="flex justify-between"><span class="text-gray-400">Address</span><span id="address" class="text-right max-w-[60%]">-</span></div><div class="flex justify-between"><span class="text-gray-400">Altitude</span><span id="altitude">-</span></div></div></div>
+          <div class="glass-premium rounded-2xl p-6"><div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-4"><div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"><i class="fas fa-camera text-primary"></i></div><h3 class="text-xl font-bold">Camera Info</h3></div><div class="grid grid-cols-2 gap-y-3 text-sm"><span class="text-gray-400">Model</span><span id="cameraModel">-</span><span class="text-gray-400">Lens</span><span id="lens">-</span><span class="text-gray-400">Aperture</span><span id="aperture">-</span><span class="text-gray-400">Shutter Speed</span><span id="shutterSpeed">-</span><span class="text-gray-400">ISO</span><span id="iso">-</span></div></div>
+          <div class="glass-premium rounded-2xl p-6"><div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-4"><div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"><i class="fas fa-image text-primary"></i></div><h3 class="text-xl font-bold">Image Details</h3></div><div class="grid grid-cols-2 gap-y-3 text-sm"><span class="text-gray-400">Dimensions</span><span id="dimensions">-</span><span class="text-gray-400">Date Taken</span><span id="dateTaken">-</span><span class="text-gray-400">Orientation</span><span id="orientation">-</span><span class="text-gray-400">Color Space</span><span id="colorSpace">-</span></div></div>
         </div>
       </div>
 
-      <!-- Map Section -->
-      <div class="mt-8 glass-premium rounded-2xl p-6">
-        <div class="flex items-center gap-3 mb-4"><i class="fas fa-map text-primary text-xl"></i><h3 class="text-xl font-bold">Location Map</h3></div>
-        <div id="map" class="h-80 w-full rounded-xl bg-black/40 flex items-center justify-center"><div class="text-center text-gray-400"><i class="fas fa-globe-americas text-4xl mb-2"></i><p>Upload image with GPS data to view map</p></div></div>
-      </div>
+      <div class="mt-8 glass-premium rounded-2xl p-6"><div class="flex items-center gap-3 mb-4"><i class="fas fa-map text-primary text-xl"></i><h3 class="text-xl font-bold">Location Map</h3></div><div id="map" class="h-80 w-full rounded-xl bg-black/40 flex items-center justify-center"><div class="text-center text-gray-400"><i class="fas fa-globe-americas text-4xl mb-2"></i><p>Upload image with GPS data to view map</p></div></div></div>
 
-      <!-- Export Section -->
-      <div class="mt-8 glass-premium rounded-2xl p-6">
-        <div class="flex items-center gap-3 mb-5"><i class="fas fa-download text-primary"></i><h3 class="text-xl font-bold">Export Metadata</h3></div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <button id="exportCSV" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-file-csv mr-2"></i>CSV</button>
-          <button id="exportPDF" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-file-pdf mr-2"></i>PDF</button>
-          <button id="exportJSON" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-file-code mr-2"></i>JSON</button>
-          <button id="copyAll" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-copy mr-2"></i>Copy All</button>
-        </div>
+      <div class="mt-8 glass-premium rounded-2xl p-6"><div class="flex items-center gap-3 mb-5"><i class="fas fa-download text-primary"></i><h3 class="text-xl font-bold">Export Metadata</h3></div><div class="grid grid-cols-2 md:grid-cols-4 gap-4"><button id="exportCSV" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-file-csv mr-2"></i>CSV</button><button id="exportPDF" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-file-pdf mr-2"></i>PDF</button><button id="exportJSON" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-file-code mr-2"></i>JSON</button><button id="copyAll" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-copy mr-2"></i>Copy All</button></div></div>
+    </div>
+  </section>
+
+  <!-- Blog Section -->
+  <section id="blog" class="py-20 bg-black/30">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-12"><span class="text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full">Blog</span><h2 class="font-poppins font-bold text-4xl md:text-5xl mt-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">Latest Articles</h2></div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass-premium rounded-2xl overflow-hidden"><img src="https://images.unsplash.com/photo-1452780212940-6f5c0d14d848?w=400&h=250&fit=crop" class="w-full h-48 object-cover"><div class="p-6"><h3 class="font-bold text-xl">Understanding EXIF Data</h3><p class="text-gray-400 mt-2">Learn what metadata your photos contain and why it matters.</p><a href="#" class="text-primary mt-3 inline-block">Read more →</a></div></div>
+        <div class="glass-premium rounded-2xl overflow-hidden"><img src="https://images.unsplash.com/photo-1554048612-b6a482bc67f5?w=400&h=250&fit=crop" class="w-full h-48 object-cover"><div class="p-6"><h3 class="font-bold text-xl">Privacy & Photo Metadata</h3><p class="text-gray-400 mt-2">How to protect your location data when sharing photos online.</p><a href="#" class="text-primary mt-3 inline-block">Read more →</a></div></div>
+        <div class="glass-premium rounded-2xl overflow-hidden"><img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=400&h=250&fit=crop" class="w-full h-48 object-cover"><div class="p-6"><h3 class="font-bold text-xl">Photography Tips</h3><p class="text-gray-400 mt-2">Use metadata insights to improve your photography skills.</p><a href="#" class="text-primary mt-3 inline-block">Read more →</a></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & About Section -->
+  <section id="contact" class="py-20">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-12">
+        <div id="about"><div class="text-center md:text-left"><span class="text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full inline-block">About Us</span><h2 class="font-poppins font-bold text-4xl mt-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">Exif Explorer</h2><p class="text-gray-400 mt-4 leading-relaxed">We're dedicated to providing professional-grade metadata extraction tools for photographers, investigators, and privacy-conscious users. Our mission is to make hidden image data accessible to everyone.</p><div class="mt-6 space-y-2"><p><i class="fas fa-check-circle text-primary mr-2"></i> 100% Free & No Registration</p><p><i class="fas fa-check-circle text-primary mr-2"></i> Privacy-Focused - No Data Storage</p><p><i class="fas fa-check-circle text-primary mr-2"></i> Professional EXIF Support</p></div></div></div>
+        <div><div class="glass-premium rounded-2xl p-8"><h3 class="text-2xl font-bold mb-4">Get in Touch</h3><form id="contactForm" onsubmit="event.preventDefault(); alert('Message sent! We will respond shortly.');"><input type="text" placeholder="Your Name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 mb-4 focus:outline-none focus:border-primary"><input type="email" placeholder="Email Address" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 mb-4 focus:outline-none focus:border-primary"><textarea rows="4" placeholder="Your Message" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 mb-4 focus:outline-none focus:border-primary"></textarea><button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary py-3 rounded-xl font-semibold hover:opacity-90 transition">Send Message</button></form></div></div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="border-t border-white/10 mt-20 py-12 bg-black/30">
+  <footer class="border-t border-white/10 py-12 bg-black/30">
     <div class="container mx-auto px-6">
-      <div class="grid md:grid-cols-4 gap-8">
-        <div><i class="fas fa-camera text-primary text-2xl"></i><h5 class="font-bold text-lg mt-2">Exif Explorer</h5><p class="text-gray-500 text-sm">Professional metadata extraction tool</p></div>
-        <div><h5 class="font-semibold">Quick Links</h5><ul class="space-y-1 mt-2 text-sm text-gray-400"><li><a href="#" class="hover:text-primary">Home</a></li><li><a href="#" class="hover:text-primary">Features</a></li><li><a href="#" class="hover:text-primary">How It Works</a></li></ul></div>
+      <div class="grid md:grid-cols-4 gap-8"><div><i class="fas fa-camera text-primary text-2xl"></i><h5 class="font-bold text-lg mt-2">Exif Explorer</h5><p class="text-gray-500 text-sm">Professional metadata extraction tool</p></div>
+        <div><h5 class="font-semibold">Quick Links</h5><ul class="space-y-1 mt-2 text-sm text-gray-400"><li><a href="#home" class="hover:text-primary">Home</a></li><li><a href="#features" class="hover:text-primary">Features</a></li><li><a href="#how-it-works" class="hover:text-primary">How It Works</a></li><li><a href="#blog" class="hover:text-primary">Blog</a></li><li><a href="#contact" class="hover:text-primary">Contact</a></li><li><a href="#about" class="hover:text-primary">About</a></li></ul></div>
         <div><h5 class="font-semibold">Legal</h5><ul class="space-y-1 mt-2 text-sm text-gray-400"><li><a href="#" class="hover:text-primary">Privacy Policy</a></li><li><a href="#" class="hover:text-primary">Terms of Service</a></li></ul></div>
         <div><h5 class="font-semibold">Connect</h5><div class="flex gap-4 mt-2"><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-twitter fa-lg"></i></a><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-github fa-lg"></i></a><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-instagram fa-lg"></i></a></div></div>
       </div>
       <hr class="border-white/10 my-8"><div class="text-center text-gray-500 text-sm">© <span id="currentYear"></span> Exif Explorer — All rights reserved.</div>
     </div>
   </footer>
-Can you convert the CSS on this site to Tailwind css, make the background of the site to be black, just some beautiful, nice and modernize like a N1.4 million website:
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<meta name="title" content="Exif Explorer | Professional Image Metadata Extractor - Free Online Tool">
-<meta name="description" content="Extract image metadata for free with Exif Explorer. Get GPS coordinates, camera settings, date taken, and more from your photos. No registration required.">
-<meta name="keywords" content="image metadata extractor, EXIF data, GPS coordinates extraction, camera settings, photo metadata, image information, free online tool, metadata viewer, photo details">
-<meta name="author" content="Exif Explorer">
-<meta name="robots" content="index, follow">
-<meta name="language" content="English">
-<meta name="revisit-after" content="7 days">
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.exifexplorer.com/">
-<meta property="og:title" content="Exif Explorer | Professional Image Metadata Extractor">
-<meta property="og:description" content="Free online tool to extract metadata from images. Get GPS, camera info, and more from your photos instantly.">
-<meta property="og:image" content="https://www.exifexplorer.com/images/meta-preview.jpg">
-<meta property="og:image:alt" content="Exif Explorer - Image Metadata Extractor">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:site_name" content="Exif Explorer">
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://www.exifexplorer.com/">
-<meta property="twitter:title" content="Exif Explorer | Professional Image Metadata Extractor">
-<meta property="twitter:description" content="Free online tool to extract metadata from images. Get GPS, camera info, and more from your photos instantly.">
-<meta property="twitter:image" content="https://www.exifexplorer.com/images/meta-preview.jpg">
-<meta property="twitter:image:alt" content="Exif Explorer - Image Metadata Extractor">
-
-<!-- Additional SEO Tags -->
-
-<meta name="theme-color" content="#4361ee">
-<meta name="msapplication-TileColor" content="#4361ee">
-
-<!-- Canonical URL -->
-<link rel="canonical" href="https://www.exifexplorer.com/">
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8918616047230546"
-     crossorigin="anonymous"></script>
-
-<!-- Structured Data / Schema Markup -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Exif Explorer Image Metadata Extractor",
-  "url": "https://www.exifexplorer.com/",
-  "description": "Free online tool to extract metadata from images including GPS coordinates, camera settings, and photo information.",
-  "applicationCategory": "PhotographyApplication",
-  "operatingSystem": "Any",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "author": {
-    "@type": "Organization",
-    "name": "Exif Explorer"
-  },
-  "sameAs": [
-    "https://twitter.com/exifexplorer",
-    "https://facebook.com/exifexplorer",
-    "https://github.com/exifexplorer"
-  ]
-}
-</script>
-<!-- Mobile Optimization-->
-<meta name="format-detection" content="telephone=no">
-<meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-<!-- Language and Region -->
-<meta name="language" content="en">
-<link rel="alternate" hreflang="en" href="https://www.exifexplorer.com/">
-<link rel="alternate" hreflang="x-default" href="https://www.exifexplorer.com/">
-
-<!-- Security Headers (to be added to server config, but mentioned here)-->
-<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com;"> -->
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-Frame-Options" content="DENY">
-<meta http-equiv="X-XSS-Protection" content="1; mode=block">
-<meta name="referrer" content="strict-origin-when-cross-origin">
-
-<!-- Preconnect for Performance -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="preconnect" href="https://cdnjs.cloudflare.com">
-
-<!-- Sitemap -->
-<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-
-<!-- RSS Feed -->
-<link rel="alternate" type="application/rss+xml" title="Exif Explorer Updates" href="/rss.xml">
-<!-- Favicons -->
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-    <title>Exif Explorer | Professional Image Metadata Extractor</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- EXIF.js Library -->
-    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <style>
-        :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #4cc9f0;
-            --success: #4bb543;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f5f7fb;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        .navbar {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 1rem 0;
-        }
-        
-        .navbar-brand {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .navbar-brand i {
-            margin-right: 10px;
-        }
-        
-        .hero-section {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 100px 0;
-            border-radius: 0 0 30px 30px;
-            margin-bottom: 50px;
-        }
-        
-        .hero-title {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-        
-        .upload-area {
-            background-color: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            border: 2px dashed #e0e0e0;
-            text-align: center;
-            cursor: pointer;
-        }
-        
-        .upload-area:hover {
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-            border-color: var(--accent);
-            transform: translateY(-5px);
-        }
-        
-        .upload-area.dragover {
-            border-color: var(--primary);
-            background-color: rgba(67, 97, 238, 0.05);
-        }
-        
-        .upload-icon {
-            font-size: 4rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .metadata-card {
-            background-color: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
-            height: 100%;
-        }
-        
-        .metadata-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-        }
-        
-        .metadata-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eaeaea;
-        }
-        
-        .metadata-icon {
-            background-color: rgba(67, 97, 238, 0.1);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: var(--primary);
-            font-size: 1.3rem;
-        }
-        
-        .metadata-title {
-            font-weight: 600;
-            margin: 0;
-            color: var(--dark);
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .metadata-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .metadata-item:last-child {
-            border-bottom: none;
-        }
-        
-        .metadata-label {
-            font-weight: 500;
-            color: var(--gray);
-        }
-        
-        .metadata-value {
-            font-weight: 400;
-            color: var(--dark);
-            text-align: right;
-            max-width: 60%;
-            word-break: break-word;
-        }
-        
-        .image-preview {
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-            max-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f8f9fa;
-        }
-        
-        .image-preview img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        
-        .footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 40px 0;
-            margin-top: 80px;
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-        
-        .feature-card {
-            text-align: center;
-            padding: 30px 20px;
-            border-radius: 15px;
-            background-color: white;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            height: 100%;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-        }
-        
-        .section-title {
-            font-weight: 700;
-            margin-bottom: 50px;
-            position: relative;
-            display: inline-block;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background-color: var(--primary);
-        }
-        
-        .map-container {
-            border-radius: 15px;
-            overflow: hidden;
-            height: 300px;
-            background-color: #e9ecef;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gray);
-        }
-        
-        .no-data {
-            color: var(--gray);
-            font-style: italic;
-        }
-        
-        .loading-spinner {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-            color: var(--primary);
-        }
-        
-        .alert {
-            border-radius: 10px;
-            border: none;
-        }
-        
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1055;
-        }
-        
-        .file-info {
-            background-color: white;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-        }
-    
-    .metadata-cards-container {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-    
-    .align-items-start {
-        align-items: flex-start !important;
-    }
-    
-    /* Ensure cards fill the column height properly */
-    .col-lg-6 {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .metadata-card {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .metadata-content {
-        flex: 1;
-    }
-    
-    /* Adjust spacing for better alignment */
-    .mb-4 {
-        margin-bottom: 1.5rem !important;
-    }
-    
-    .mt-5 {
-        margin-top: 3rem !important;
-    }
-    
-    /* Fix upload area height */
-    .upload-area {
-        min-height: 300px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    /* Ensure file info aligns properly */
-    .file-info {
-        width: 100%;
-    }
-    
-    /* Image preview adjustments */
-    .image-preview {
-        min-height: 200px;
-        max-height: 400px;
-    }
-    
-    /* Toast positioning */
-    .toast {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 9999;
-    }
-
-     /* Hero Section Mobile Optimizations */
-    .hero-section {
-        padding: 60px 0 80px;
-    }
-    
-    @media (min-width: 992px) {
-        .hero-section {
-            padding: 100px 0;
-        }
-    }
-    
-    .hero-title {
-        font-size: 2rem;
-        line-height: 1.2;
-    }
-    
-    @media (min-width: 768px) {
-        .hero-title {
-            font-size: 2.5rem;
-        }
-    }
-    
-    @media (min-width: 992px) {
-        .hero-title {
-            font-size: 3.5rem;
-        }
-    }
-    
-    /* Button Mobile Optimizations */
-    .btn-lg {
-        padding: 12px 28px;
-        font-size: 1rem;
-    }
-    
-    @media (min-width: 576px) {
-        .btn-lg {
-            padding: 14px 32px;
-            font-size: 1.1rem;
-        }
-    }
-    
-    /* Responsive image margin */
-    .mt-4.mt-lg-0 {
-        margin-top: 2rem;
-    }
-    
-    @media (min-width: 992px) {
-        .mt-4.mt-lg-0 {
-            margin-top: 0;
-        }
-    }
-
-
-    /* Add these styles to your existing CSS */
-
-/* Export section styling */
-#exportCSV:hover, #exportPDF:hover, #exportJSON:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.btn-outline-primary {
-    border: 2px solid var(--primary);
-    color: var(--primary);
-    transition: all 0.3s ease;
-}
-
-.btn-outline-primary:hover {
-    background-color: var(--primary);
-    color: white;
-}
-
-/* Disabled state styling */
-#exportCSV:disabled, #exportPDF:disabled, #exportJSON:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none !important;
-    box-shadow: none !important;
-}
-
-/* Copy button */
-#copyAll {
-    padding: 8px 20px;
-    font-size: 0.9rem;
-}
-
-/* Export buttons container */
-.row.justify-content-center .col-md-4 {
-    transition: transform 0.3s ease;
-}
-
-.row.justify-content-center .col-md-4:hover {
-    transform: translateY(-3px);
-}
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <i class="fas fa-search"></i>Exif Explorer
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="features.html">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="how-it-works.html">How It Works</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="blog.html">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="about-us.html">About Us</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-<section class="hero-section">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h1 class="hero-title display-5 display-lg-4">Extract Image Metadata with Precision</h1>
-                <p class="lead mb-4">Uncover the hidden information in your photos - from detailed camera settings to precise location data. Our professional tool makes metadata extraction accurate and intuitive.</p>
-                <a href="#extractor" class="btn btn-light btn-lg w-100 w-sm-auto d-inline-flex align-items-center justify-content-center">
-                    Get Started <i class="fas fa-arrow-right ms-2"></i>
-                </a>
-            </div>
-            <div class="col-lg-6 text-center mt-4 mt-lg-0">
-                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Camera" class="img-fluid rounded-3 shadow">
-            </div>
-        </div>
-    </div>
-</section>
-
-    <!-- Features Section -->
-    <section class="py-5">
-        <div class="container">
-            <h2 class="section-title text-center mb-5">What You Can Discover</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <h4>Location Data</h4>
-                        <p>Extract GPS coordinates and see exactly where your photos were taken with precision mapping.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-camera"></i>
-                        </div>
-                        <h4>Camera Details</h4>
-                        <p>Discover camera model, lens information, aperture, shutter speed, ISO, and other technical settings.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
-                        <h4>Date & Time</h4>
-                        <p>Get precise date and time information when the photo was captured, including timezone data.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Extractor Section -->
-<section id="extractor" class="py-5">
-    <div class="container">
-        <h2 class="section-title text-center mb-5">Extract Your Image Metadata</h2>
-        
-        <!-- Toast for notifications -->
-        <div class="toast align-items-center text-white bg-success border-0" role="alert" id="successToast">
-            <div class="d-flex">
-                <div class="toast-body">
-                    Metadata extracted successfully!
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
-        </div>
-        
-        <div class="row align-items-start">
-            <!-- Left Column: Upload Area -->
-            <div class="col-lg-6 mb-4">
-                <div class="upload-area" id="uploadArea">
-                    <div class="upload-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
-                    <h4>Upload Your Image</h4>
-                    <p class="text-muted mb-4">Drag & drop your image or click to browse</p>
-                    <input type="file" id="imageUpload" class="d-none" accept="image/*">
-                    <button class="btn btn-primary" id="uploadButton">
-                        <i class="fas fa-folder-open me-2"></i>Choose Image
-                    </button>
-                    <p class="small text-muted mt-3">Supports JPG, JPEG, PNG, and other common formats</p>
-                </div>
-                
-                <!-- Loading Spinner -->
-                <div class="loading-spinner" id="loadingSpinner">
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <p class="mt-2">Extracting metadata...</p>
-                </div>
-                
-                <!-- Image Preview -->
-                <div class="image-preview mt-4 d-none" id="imagePreview">
-                    <img src="" alt="Preview" id="previewImg">
-                </div>
-                
-                <!-- File Info -->
-                <div class="file-info d-none" id="fileInfo">
-                    <h5>File Information</h5>
-                    <div class="metadata-item">
-                        <span class="metadata-label">File Name</span>
-                        <span class="metadata-value" id="fileName">-</span>
-                    </div>
-                    <div class="metadata-item">
-                        <span class="metadata-label">File Size</span>
-                        <span class="metadata-value" id="fileSize">-</span>
-                    </div>
-                    <div class="metadata-item">
-                        <span class="metadata-label">File Type</span>
-                        <span class="metadata-value" id="fileType">-</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Right Column: Metadata Cards -->
-            <div class="col-lg-6">
-                <div class="metadata-cards-container">
-                    <!-- Location Metadata -->
-                    <div class="metadata-card mb-4">
-                        <div class="metadata-header">
-                            <div class="metadata-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <h3 class="metadata-title">Location Information</h3>
-                        </div>
-                        <div class="metadata-content">
-                            <div class="metadata-item">
-                                <span class="metadata-label">GPS Coordinates</span>
-                                <span class="metadata-value" id="gpsCoords">-</span>
-                            </div>
-                            <div class="metadata-item">
-                                <span class="metadata-label">Address</span>
-                                <span class="metadata-value" id="address">-</span>
-                            </div>
-                            <div class="metadata-item">
-                                <span class="metadata-label">Altitude</span>
-                                <span class="metadata-value" id="altitude">-</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Camera Metadata -->
-                    <div class="metadata-card mb-4">
-                        <div class="metadata-header">
-                            <div class="metadata-icon">
-                                <i class="fas fa-camera"></i>
-                            </div>
-                            <h3 class="metadata-title">Camera Information</h3>
-                        </div>
-                        <div class="metadata-content">
-                            <div class="metadata-item">
-                                <span class="metadata-label">Camera Model</span>
-                                <span class="metadata-value" id="cameraModel">-</span>
-                            </div>
-                            <div class="metadata-item">
-                                <span class="metadata-label">Lens</span>
-                                <span class="metadata-value" id="lens">-</span>
-                            </div>
-                            <div class="metadata-item">
-                                <span class="metadata-label">Aperture</span>
-                                <span class="metadata-value" id="aperture">-</span>
-                            </div>
-                            <div class="metadata-item">
-                                <span class="metadata-label">Shutter Speed</span>
-                                <span class="metadata-value" id="shutterSpeed">-</span>
-                            </div>
-                            <div class="metadata-item">
-                                <span class="metadata-label">ISO</span>
-                                <span class="metadata-value" id="iso">-</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Image Metadata -->
-                    <div class="metadata-card">
-                        <div class="metadata-header">
-                            <div class="metadata-icon">
-                                <i class="fas fa-image"></i>
-                            </div>
-                            <h3 class="metadata-title">Image Information</h3>
-                        </div>
-                        <div class="metadata-content">
-                            <div class="metadata-item">
-                                <span class="metadata-label">Dimensions</span>
-                                <span class="metadata-value" id="dimensions">-</span>
-                            </div>
-                            <div class="metadata-item">
-                                <span class="metadata-label">Date Taken</span>
-                                <span class="metadata-value" id="dateTaken">-</span>
-                            </div>
-                            <div class="metadata-item">
-                                <span class="metadata-label">Orientation</span>
-                                <span class="metadata-value" id="orientation">-</span>
-                            </div>
-                            <div class="metadata-item">
-                                <span class="metadata-label">Color Space</span>
-                                <span class="metadata-value" id="colorSpace">-</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Map Section -->
-        <div class="row mt-5">
-            <div class="col-12">
-                <div class="metadata-card">
-                    <div class="metadata-header">
-                        <div class="metadata-icon">
-                            <i class="fas fa-map"></i>
-                        </div>
-                        <h3 class="metadata-title">Location Map</h3>
-                    </div>
-                    <div class="map-container" id="map">
-                        <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                            <i class="fas fa-globe-americas fa-3x text-muted mb-3"></i>
-                            <p class="no-data">Upload an image with GPS data to view the location on map</p>
-                            <small class="text-muted">Map will appear here when GPS data is available</small>
-                        </div>
-                    </div>
-
-                    <!-- Add this section after your map container -->
-<div class="row mt-4">
-    <div class="col-12">
-        <div class="metadata-card">
-            <div class="metadata-header">
-                <div class="metadata-icon">
-                    <i class="fas fa-download"></i>
-                </div>
-                <h3 class="metadata-title">Export Metadata</h3>
-            </div>
-            <div class="text-center p-4">
-                <p class="text-muted mb-4">Export your extracted metadata in multiple formats for further analysis or record-keeping.</p>
-                
-                <div class="row justify-content-center">
-                    <div class="col-md-4 mb-3">
-                        <button id="exportCSV" class="btn btn-outline-primary btn-lg w-100" disabled>
-                            <i class="fas fa-file-csv me-2"></i>Export as CSV
-                        </button>
-                        <small class="text-muted d-block mt-2">Compatible with Excel, Google Sheets</small>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <button id="exportPDF" class="btn btn-outline-primary btn-lg w-100" disabled>
-                            <i class="fas fa-file-pdf me-2"></i>Export as PDF
-                        </button>
-                        <small class="text-muted d-block mt-2">Formatted report with all data</small>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <button id="exportJSON" class="btn btn-outline-primary btn-lg w-100" disabled>
-                            <i class="fas fa-file-code me-2"></i>Export as JSON
-                        </button>
-                        <small class="text-muted d-block mt-2">For developers and APIs</small>
-                    </div>
-                </div>
-                
-                <div class="mt-3">
-                    <button id="copyAll" class="btn btn-outline-secondary">
-                        <i class="fas fa-copy me-2"></i>Copy All to Clipboard
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <!-- Footer -->
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h5><i class="fas fa-camera me-2"></i>Exif Explorer</h5>
-                <p class="mt-3">Extract valuable metadata from your images with our professional tool. Discover camera settings, location data, and more.</p>
-            </div>
-            <div class="col-md-3">
-                <h5>Quick Links</h5>
-                <ul class="list-unstyled">
-                    <li><a href="index.html" class="text-light">Home</a></li>
-                    <li><a href="features.html" class="text-light">Features</a></li>
-                    <li><a href="how-it-works.html" class="text-light">How It Works</a></li>
-                    <li><a href="contact.html" class="text-light">Contact</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <h5>Connect</h5>
-                <div class="d-flex mt-3">
-                    <a href="#" class="text-light me-3"><i class="fab fa-x fa-lg"></i></a>
-                    <a href="#" class="text-light me-3"><i class="fab fa-facebook fa-lg"></i></a>
-                    <a href="#" class="text-light me-3"><i class="fab fa-instagram fa-lg"></i></a>
-                    <a href="#" class="text-light"><i class="fab fa-github fa-lg"></i></a>
-                </div>
-            </div>
-        </div>
-        <hr class="mt-4 mb-4">
-        <div class="row">
-            <div class="col-md-6">
-                <p class="mb-0">© <span id="currentYear">2023</span> Exif Explorer. All rights reserved.</p>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <a href="privacy-policy.html" class="text-light me-3">Privacy Policy</a>
-                <a href="terms-of-use.html" class="text-light">Terms of Service</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<script>
-    // Automatically update the year in the footer
-    document.addEventListener('DOMContentLoaded', function() {
-        const currentYear = new Date().getFullYear();
-        document.getElementById('currentYear').textContent = currentYear;
+  <script>
+    // Mobile menu toggle
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    let menuOpen = false;
+    mobileBtn.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      if(menuOpen) {
+        mobileMenu.classList.add('open');
+        mobileBtn.innerHTML = '<i class="fas fa-times"></i>';
+      } else {
+        mobileMenu.classList.remove('open');
+        mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      }
     });
-</script>
-
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     
-<script>
-document.addEventListener("DOMContentLoaded", () => {
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        menuOpen = false;
+        mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      });
+    });
 
-    const uploadButton = document.getElementById('uploadButton');
-    const imageUpload = document.getElementById('imageUpload');
-    const imagePreview = document.getElementById('imagePreview');
-    const previewImg = document.getElementById('previewImg');
+    // All EXIF extraction code (same as before, fully functional)
+    const fileInput = document.getElementById('imageUpload');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const uploadArea = document.getElementById('uploadArea');
     const loadingSpinner = document.getElementById('loadingSpinner');
-    const fileInfo = document.getElementById('fileInfo');
-
-    // File Info elements
-    const fileName = document.getElementById('fileName');
-    const fileSize = document.getElementById('fileSize');
-    const fileType = document.getElementById('fileType');
-
-    // Camera Information
-    const cameraModel = document.getElementById('cameraModel');
-    const lens = document.getElementById('lens');
-    const aperture = document.getElementById('aperture');
-    const shutterSpeed = document.getElementById('shutterSpeed');
-    const iso = document.getElementById('iso');
-
-    // Image Information
-    const dimensions = document.getElementById('dimensions');
-    const dateTaken = document.getElementById('dateTaken');
-    const orientation = document.getElementById('orientation');
-    const colorSpace = document.getElementById('colorSpace');
-
-    // GPS
-    const gpsCoords = document.getElementById('gpsCoords');
-    const altitude = document.getElementById('altitude');
-    const address = document.getElementById('address');
-
-    // Success Toast (Bootstrap)
-    const successToast = document.getElementById("successToast")
-        ? new bootstrap.Toast(document.getElementById("successToast"))
-        : null;
-
-    let map;
-    let mapMarker;
-
-    uploadButton.addEventListener('click', () => imageUpload.click());
-
-    // imageUpload.addEventListener('change', function() {
-    //     const file = this.files[0];
-    //     if (!file) return;
-
-    //     loadingSpinner.style.display = "block";
-
-    //     // Display File Info
-    //     fileName.textContent = file.name;
-    //     fileSize.textContent = (file.size / 1024).toFixed(2) + " KB";
-    //     fileType.textContent = file.type;
-    //     fileInfo.classList.remove("d-none");
-
-    //     // Preview image
-    //     const reader = new FileReader();
-    //     reader.onload = e => {
-    //         previewImg.src = e.target.result;
-    //         imagePreview.classList.remove("d-none");
-    //     };
-    //     reader.readAsDataURL(file);
-
-    //     // Extract EXIF
-    //     EXIF.getData(file, function() {
-    //         loadingSpinner.style.display = "none";
-    //         let exif = EXIF.getAllTags(this);
-
-    //         // CAMERA DATA
-    //         cameraModel.textContent   = exif.Model || "-";
-    //         lens.textContent          = exif.LensModel || "-";
-    //         aperture.textContent      = exif.FNumber ? "f/" + formatFraction(exif.FNumber) : "-";
-    //         shutterSpeed.textContent  = exif.ExposureTime ? formatExposure(exif.ExposureTime) : "-";
-    //         iso.textContent           = exif.ISOSpeedRatings || "-";
-
-    //         // IMAGE DATA
-    //         dimensions.textContent = (exif.PixelXDimension && exif.PixelYDimension)
-    //             ? `${exif.PixelXDimension} × ${exif.PixelYDimension}`
-    //             : "-";
-
-    //         dateTaken.textContent  = exif.DateTimeOriginal || "-";
-    //         orientation.textContent = exif.Orientation || "-";
-    //         colorSpace.textContent  = exif.ColorSpace || "-";
-
-    //         // GPS DATA
-    //         if (exif.GPSLatitude && exif.GPSLongitude) {
-    //             let lat = convertDMSToDD(exif.GPSLatitude, exif.GPSLatitudeRef);
-    //             let lon = convertDMSToDD(exif.GPSLongitude, exif.GPSLongitudeRef);
-
-    //             gpsCoords.textContent = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
-    //             altitude.textContent = exif.GPSAltitude
-    //                 ? formatFraction(exif.GPSAltitude) + " m"
-    //                 : "-";
-
-    //             showMap(lat, lon);
-    //             reverseLookup(lat, lon);
-    //         } else {
-    //             gpsCoords.textContent = "-";
-    //             altitude.textContent = "-";
-    //             address.textContent = "-";
-    //         }
-
-    //         // Show toast
-    //         if (successToast) successToast.show();
-    //     });
-    // });
-
-    // Add these new variables for export
-    const exportCSV = document.getElementById('exportCSV');
-    const exportPDF = document.getElementById('exportPDF');
-    const exportJSON = document.getElementById('exportJSON');
-    const copyAll = document.getElementById('copyAll');
+    const imagePreviewDiv = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
+    const fileInfoDiv = document.getElementById('fileInfo');
+    const toastDiv = document.getElementById('toastMsg');
     
-    // Store all extracted data globally
-    let currentMetadata = {
-        file: {},
-        camera: {},
-        image: {},
-        gps: {},
-        raw: {}
+    const elements = {
+      fileName: document.getElementById('fileName'), fileSize: document.getElementById('fileSize'), fileType: document.getElementById('fileType'),
+      cameraModel: document.getElementById('cameraModel'), lens: document.getElementById('lens'), aperture: document.getElementById('aperture'),
+      shutterSpeed: document.getElementById('shutterSpeed'), iso: document.getElementById('iso'), dimensions: document.getElementById('dimensions'),
+      dateTaken: document.getElementById('dateTaken'), orientation: document.getElementById('orientation'), colorSpace: document.getElementById('colorSpace'),
+      gpsCoords: document.getElementById('gpsCoords'), altitude: document.getElementById('altitude'), address: document.getElementById('address')
     };
-
-    imageUpload.addEventListener('change', function() {
-        const file = this.files[0];
-        if (!file) return;
-
-        loadingSpinner.style.display = "block";
+    
+    let currentMetadata = { file: {}, camera: {}, image: {}, gps: {} };
+    let mapInstance = null, markerInstance = null;
+    
+    function showToast(msg, isError = false) { toastDiv.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'} mr-2"></i>${msg}`; toastDiv.classList.remove('hidden'); setTimeout(() => toastDiv.classList.add('hidden'), 3000); }
+    
+    uploadBtn.addEventListener('click', () => fileInput.click());
+    uploadArea.addEventListener('click', () => fileInput.click());
+    uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
+    uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop', (e) => { e.preventDefault(); uploadArea.classList.remove('drag-over'); const file = e.dataTransfer.files[0]; if(file && file.type.startsWith('image/')) handleFileUpload(file); else showToast('Please upload a valid image file', true); });
+    fileInput.addEventListener('change', (e) => { if(e.target.files[0]) handleFileUpload(e.target.files[0]); });
+    
+    function handleFileUpload(file) {
+      if(!file) return;
+      loadingSpinner.classList.remove('hidden');
+      document.getElementById('exportCSV').disabled = true; document.getElementById('exportPDF').disabled = true; document.getElementById('exportJSON').disabled = true; document.getElementById('copyAll').disabled = true;
+      
+      elements.fileName.textContent = file.name; elements.fileSize.textContent = (file.size / 1024).toFixed(2) + " KB"; elements.fileType.textContent = file.type || 'image';
+      fileInfoDiv.classList.remove('hidden'); currentMetadata.file = { name: file.name, size: (file.size/1024).toFixed(2)+" KB", type: file.type };
+      
+      const reader = new FileReader();
+      reader.onload = (e) => { previewImg.src = e.target.result; imagePreviewDiv.classList.remove('hidden'); };
+      reader.readAsDataURL(file);
+      
+      EXIF.getData(file, function() {
+        const exif = EXIF.getAllTags(this);
+        elements.cameraModel.textContent = exif.Model || exif.Make || "-";
+        elements.lens.textContent = exif.LensModel || exif.LensMake || "-";
+        elements.aperture.textContent = exif.FNumber ? (typeof exif.FNumber === 'object' ? (exif.FNumber.numerator/exif.FNumber.denominator).toFixed(2) : exif.FNumber) : "-";
+        elements.shutterSpeed.textContent = exif.ExposureTime ? (typeof exif.ExposureTime === 'object' ? (exif.ExposureTime.numerator/exif.ExposureTime.denominator < 1 ? `1/${Math.round(1/(exif.ExposureTime.numerator/exif.ExposureTime.denominator))}` : (exif.ExposureTime.numerator/exif.ExposureTime.denominator).toFixed(2)) : exif.ExposureTime) : "-";
+        elements.iso.textContent = exif.ISOSpeedRatings || "-";
+        currentMetadata.camera = { model: elements.cameraModel.textContent, lens: elements.lens.textContent, aperture: elements.aperture.textContent, shutterSpeed: elements.shutterSpeed.textContent, iso: elements.iso.textContent };
         
-        // Reset export buttons
-        exportCSV.disabled = exportPDF.disabled = exportJSON.disabled = true;
-        copyAll.disabled = true;
-
-        // Display File Info
-        fileName.textContent = file.name;
-        fileSize.textContent = (file.size / 1024).toFixed(2) + " KB";
-        fileType.textContent = file.type;
-        fileInfo.classList.remove("d-none");
-
-        // Store file info
-        currentMetadata.file = {
-            name: file.name,
-            size: (file.size / 1024).toFixed(2) + " KB",
-            type: file.type
-        };
-
-        // Preview image
-        const reader = new FileReader();
-        reader.onload = e => {
-            previewImg.src = e.target.result;
-            imagePreview.classList.remove("d-none");
-        };
-        reader.readAsDataURL(file);
-
-        // Extract EXIF
-        EXIF.getData(file, function() {
-            loadingSpinner.style.display = "none";
-            let exif = EXIF.getAllTags(this);
-            
-            // Store raw EXIF data
-            currentMetadata.raw = exif;
-
-            // CAMERA DATA
-            cameraModel.textContent   = exif.Model || "-";
-            lens.textContent          = exif.LensModel || "-";
-            aperture.textContent      = exif.FNumber ? "f/" + formatFraction(exif.FNumber) : "-";
-            shutterSpeed.textContent  = exif.ExposureTime ? formatExposure(exif.ExposureTime) : "-";
-            iso.textContent           = exif.ISOSpeedRatings || "-";
-
-            currentMetadata.camera = {
-                model: exif.Model || "-",
-                lens: exif.LensModel || "-",
-                aperture: exif.FNumber ? "f/" + formatFraction(exif.FNumber) : "-",
-                shutterSpeed: exif.ExposureTime ? formatExposure(exif.ExposureTime) : "-",
-                iso: exif.ISOSpeedRatings || "-",
-                make: exif.Make || "-",
-                focalLength: exif.FocalLength ? formatFraction(exif.FocalLength) + "mm" : "-",
-                flash: exif.Flash || "-"
-            };
-
-            // IMAGE DATA
-            const dimensionsText = (exif.PixelXDimension && exif.PixelYDimension)
-                ? `${exif.PixelXDimension} × ${exif.PixelYDimension}`
-                : "-";
-            
-            dimensions.textContent = dimensionsText;
-            dateTaken.textContent  = exif.DateTimeOriginal || "-";
-            orientation.textContent = exif.Orientation || "-";
-            colorSpace.textContent  = exif.ColorSpace || "-";
-
-            currentMetadata.image = {
-                dimensions: dimensionsText,
-                dateTaken: exif.DateTimeOriginal || "-",
-                orientation: exif.Orientation || "-",
-                colorSpace: exif.ColorSpace || "-",
-                resolution: `${exif.XResolution || "-"} × ${exif.YResolution || "-"}`,
-                compression: exif.Compression || "-",
-                software: exif.Software || "-"
-            };
-
-            // GPS DATA
-            if (exif.GPSLatitude && exif.GPSLongitude) {
-                let lat = convertDMSToDD(exif.GPSLatitude, exif.GPSLatitudeRef);
-                let lon = convertDMSToDD(exif.GPSLongitude, exif.GPSLongitudeRef);
-
-                gpsCoords.textContent = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
-                altitude.textContent = exif.GPSAltitude
-                    ? formatFraction(exif.GPSAltitude) + " m"
-                    : "-";
-
-                currentMetadata.gps = {
-                    latitude: lat,
-                    longitude: lon,
-                    coordinates: `${lat.toFixed(6)}, ${lon.toFixed(6)}`,
-                    altitude: exif.GPSAltitude ? formatFraction(exif.GPSAltitude) + " m" : "-",
-                    address: "Loading..."
-                };
-
-                showMap(lat, lon);
-                reverseLookup(lat, lon);
-            } else {
-                gpsCoords.textContent = "-";
-                altitude.textContent = "-";
-                address.textContent = "-";
-                currentMetadata.gps = {
-                    coordinates: "-",
-                    altitude: "-",
-                    address: "-"
-                };
-            }
-
-            // Enable export buttons
-            exportCSV.disabled = exportPDF.disabled = exportJSON.disabled = false;
-            copyAll.disabled = false;
-
-            // Show toast
-            if (successToast) successToast.show();
-        });
-    });
-
-
-    // ====================
-    // EXPORT FUNCTIONALITY
-    // ====================
-
-    // Export to CSV
-    exportCSV.addEventListener('click', () => {
-        const csvData = generateCSV();
-        downloadFile(csvData, 'exifexplorer-metadata.csv', 'text/csv');
-    });
-
-    // Export to JSON
-    exportJSON.addEventListener('click', () => {
-        const jsonData = JSON.stringify(currentMetadata, null, 2);
-        downloadFile(jsonData, 'exifexplorer-metadata.json', 'application/json');
-    });
-
-    // Export to PDF (using jsPDF and html2canvas)
-    exportPDF.addEventListener('click', async () => {
-        try {
-            // Load libraries dynamically
-            await loadPDFLibraries();
-            generatePDF();
-        } catch (error) {
-            alert('Error generating PDF: ' + error.message);
-        }
-    });
-
-    // Copy all metadata to clipboard
-    copyAll.addEventListener('click', () => {
-        const text = generateTextReport();
-        navigator.clipboard.writeText(text).then(() => {
-            // Show a small toast notification
-            const copyToast = new bootstrap.Toast(document.getElementById('successToast'));
-            document.querySelector('.toast-body').textContent = 'Metadata copied to clipboard!';
-            copyToast.show();
-        });
-    });
-
-    // Helper function to load PDF libraries dynamically
-    function loadPDFLibraries() {
-        return new Promise((resolve, reject) => {
-            // Check if libraries are already loaded
-            if (window.jspdf && window.html2canvas) {
-                resolve();
-                return;
-            }
-
-            let loadedCount = 0;
-            
-            // Load jsPDF
-            const script1 = document.createElement('script');
-            script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-            script1.onload = () => {
-                loadedCount++;
-                if (loadedCount === 2) resolve();
-            };
-            script1.onerror = reject;
-            
-            // Load html2canvas
-            const script2 = document.createElement('script');
-            script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-            script2.onload = () => {
-                loadedCount++;
-                if (loadedCount === 2) resolve();
-            };
-            script2.onerror = reject;
-            
-            document.head.appendChild(script1);
-            document.head.appendChild(script2);
-        });
+        const dims = (exif.PixelXDimension && exif.PixelYDimension) ? `${exif.PixelXDimension} × ${exif.PixelYDimension}` : (exif.ImageWidth ? `${exif.ImageWidth} × ${exif.ImageLength}` : "-");
+        elements.dimensions.textContent = dims;
+        elements.dateTaken.textContent = exif.DateTimeOriginal || exif.DateTimeDigitized || exif.DateTime || "-";
+        elements.orientation.textContent = exif.Orientation || "-";
+        elements.colorSpace.textContent = exif.ColorSpace || "-";
+        currentMetadata.image = { dimensions: dims, dateTaken: elements.dateTaken.textContent, orientation: elements.orientation.textContent, colorSpace: elements.colorSpace.textContent };
+        
+        if(exif.GPSLatitude && exif.GPSLongitude) {
+          let lat = (() => { let dms = exif.GPSLatitude; let ref = exif.GPSLatitudeRef; let dd = dms[0] + dms[1]/60 + dms[2]/3600; return (ref === 'S' || ref === 'W') ? -dd : dd; })();
+          let lon = (() => { let dms = exif.GPSLongitude; let ref = exif.GPSLongitudeRef; let dd = dms[0] + dms[1]/60 + dms[2]/3600; return (ref === 'S' || ref === 'W') ? -dd : dd; })();
+          elements.gpsCoords.textContent = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+          elements.altitude.textContent = exif.GPSAltitude ? (typeof exif.GPSAltitude === 'object' ? (exif.GPSAltitude.numerator/exif.GPSAltitude.denominator).toFixed(2) : exif.GPSAltitude) + " m" : "-";
+          currentMetadata.gps = { coordinates: elements.gpsCoords.textContent, altitude: elements.altitude.textContent, address: "Loading..." };
+          if(mapInstance) { mapInstance.setView([lat, lon], 14); if(markerInstance) markerInstance.setLatLng([lat, lon]); else markerInstance = L.marker([lat, lon]).addTo(mapInstance); }
+          else { const mapDiv = document.getElementById('map'); mapDiv.innerHTML = ''; mapInstance = L.map('map').setView([lat, lon], 14); L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }).addTo(mapInstance); markerInstance = L.marker([lat, lon]).addTo(mapInstance); }
+          fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`).then(r=>r.json()).then(data=>{ let addr = data.display_name || "-"; elements.address.textContent = addr; currentMetadata.gps.address = addr; }).catch(()=>{ elements.address.textContent = "-"; });
+        } else { elements.gpsCoords.textContent = "-"; elements.altitude.textContent = "-"; elements.address.textContent = "-"; if(mapInstance) { mapInstance.remove(); mapInstance = null; document.getElementById('map').innerHTML = '<div class="text-center text-gray-400"><i class="fas fa-globe-americas text-4xl mb-2"></i><p>No GPS data found in this image</p></div>'; } }
+        
+        loadingSpinner.classList.add('hidden');
+        document.getElementById('exportCSV').disabled = false; document.getElementById('exportPDF').disabled = false; document.getElementById('exportJSON').disabled = false; document.getElementById('copyAll').disabled = false;
+        showToast('Metadata extracted successfully!');
+      });
     }
-
-    // Generate CSV data
-    function generateCSV() {
-        const rows = [
-            ['Category', 'Field', 'Value'],
-            ['File Information', 'File Name', currentMetadata.file.name],
-            ['File Information', 'File Size', currentMetadata.file.size],
-            ['File Information', 'File Type', currentMetadata.file.type],
-            ['Camera Information', 'Camera Model', currentMetadata.camera.model],
-            ['Camera Information', 'Lens', currentMetadata.camera.lens],
-            ['Camera Information', 'Aperture', currentMetadata.camera.aperture],
-            ['Camera Information', 'Shutter Speed', currentMetadata.camera.shutterSpeed],
-            ['Camera Information', 'ISO', currentMetadata.camera.iso],
-            ['Camera Information', 'Make', currentMetadata.camera.make],
-            ['Camera Information', 'Focal Length', currentMetadata.camera.focalLength],
-            ['Image Information', 'Dimensions', currentMetadata.image.dimensions],
-            ['Image Information', 'Date Taken', currentMetadata.image.dateTaken],
-            ['Image Information', 'Orientation', currentMetadata.image.orientation],
-            ['Image Information', 'Color Space', currentMetadata.image.colorSpace],
-            ['GPS Information', 'Coordinates', currentMetadata.gps.coordinates],
-            ['GPS Information', 'Altitude', currentMetadata.gps.altitude],
-            ['GPS Information', 'Address', currentMetadata.gps.address]
-        ];
-        
-        return rows.map(row => 
-            row.map(cell => `"${cell}"`).join(',')
-        ).join('\n');
-    }
-
-    // Generate PDF report
-    function generatePDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        
-        // Add title
-        doc.setFontSize(20);
-        doc.text('ExifExplorer Metadata Report', 105, 20, { align: 'center' });
-        
-        // Add subtitle
-        doc.setFontSize(12);
-        doc.text(`Generated: ${new Date().toLocaleString()}`, 105, 30, { align: 'center' });
-        doc.text(`File: ${currentMetadata.file.name}`, 105, 35, { align: 'center' });
-        
-        let yPos = 45;
-        
-        // File Information
-        doc.setFontSize(16);
-        doc.text('File Information', 14, yPos);
-        yPos += 10;
-        
-        doc.setFontSize(11);
-        doc.text(`Name: ${currentMetadata.file.name}`, 20, yPos);
-        yPos += 7;
-        doc.text(`Size: ${currentMetadata.file.size}`, 20, yPos);
-        yPos += 7;
-        doc.text(`Type: ${currentMetadata.file.type}`, 20, yPos);
-        yPos += 12;
-        
-        // Camera Information
-        if (currentMetadata.camera.model !== '-') {
-            doc.setFontSize(16);
-            doc.text('Camera Information', 14, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(11);
-            doc.text(`Model: ${currentMetadata.camera.model}`, 20, yPos);
-            yPos += 7;
-            doc.text(`Lens: ${currentMetadata.camera.lens}`, 20, yPos);
-            yPos += 7;
-            doc.text(`Aperture: ${currentMetadata.camera.aperture}`, 20, yPos);
-            yPos += 7;
-            doc.text(`Shutter Speed: ${currentMetadata.camera.shutterSpeed}`, 20, yPos);
-            yPos += 7;
-            doc.text(`ISO: ${currentMetadata.camera.iso}`, 20, yPos);
-            yPos += 12;
-        }
-        
-        // Image Information
-        doc.setFontSize(16);
-        doc.text('Image Information', 14, yPos);
-        yPos += 10;
-        
-        doc.setFontSize(11);
-        doc.text(`Dimensions: ${currentMetadata.image.dimensions}`, 20, yPos);
-        yPos += 7;
-        doc.text(`Date Taken: ${currentMetadata.image.dateTaken}`, 20, yPos);
-        yPos += 7;
-        doc.text(`Orientation: ${currentMetadata.image.orientation}`, 20, yPos);
-        yPos += 7;
-        doc.text(`Color Space: ${currentMetadata.image.colorSpace}`, 20, yPos);
-        yPos += 12;
-        
-        // GPS Information
-        if (currentMetadata.gps.coordinates !== '-') {
-            doc.setFontSize(16);
-            doc.text('GPS Information', 14, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(11);
-            doc.text(`Coordinates: ${currentMetadata.gps.coordinates}`, 20, yPos);
-            yPos += 7;
-            doc.text(`Altitude: ${currentMetadata.gps.altitude}`, 20, yPos);
-            yPos += 7;
-            doc.text(`Address: ${currentMetadata.gps.address}`, 20, yPos);
-            yPos += 12;
-        }
-        
-        // Add footer
-        doc.setFontSize(10);
-        doc.setTextColor(100, 100, 100);
-        doc.text('Generated by Exif Explorer - https://exifexplorer.com', 105, 280, { align: 'center' });
-        
-        // Save the PDF
-        doc.save(`exifexplorer-${currentMetadata.file.name.replace(/\.[^/.]+$/, "")}.pdf`);
-    }
-
-    // Generate text report for clipboard
-    function generateTextReport() {
-        let report = `EXIF EXPLORER METADATA REPORT\n`;
-        report += `Generated: ${new Date().toLocaleString()}\n`;
-        report += `File: ${currentMetadata.file.name}\n`;
-        report += `════════════════════════════════════════\n\n`;
-        
-        report += `📁 FILE INFORMATION\n`;
-        report += `  Name: ${currentMetadata.file.name}\n`;
-        report += `  Size: ${currentMetadata.file.size}\n`;
-        report += `  Type: ${currentMetadata.file.type}\n\n`;
-        
-        if (currentMetadata.camera.model !== '-') {
-            report += `📷 CAMERA INFORMATION\n`;
-            report += `  Model: ${currentMetadata.camera.model}\n`;
-            report += `  Lens: ${currentMetadata.camera.lens}\n`;
-            report += `  Aperture: ${currentMetadata.camera.aperture}\n`;
-            report += `  Shutter Speed: ${currentMetadata.camera.shutterSpeed}\n`;
-            report += `  ISO: ${currentMetadata.camera.iso}\n`;
-            report += `  Make: ${currentMetadata.camera.make}\n`;
-            report += `  Focal Length: ${currentMetadata.camera.focalLength}\n\n`;
-        }
-        
-        report += `🖼️ IMAGE INFORMATION\n`;
-        report += `  Dimensions: ${currentMetadata.image.dimensions}\n`;
-        report += `  Date Taken: ${currentMetadata.image.dateTaken}\n`;
-        report += `  Orientation: ${currentMetadata.image.orientation}\n`;
-        report += `  Color Space: ${currentMetadata.image.colorSpace}\n\n`;
-        
-        if (currentMetadata.gps.coordinates !== '-') {
-            report += `📍 GPS INFORMATION\n`;
-            report += `  Coordinates: ${currentMetadata.gps.coordinates}\n`;
-            report += `  Altitude: ${currentMetadata.gps.altitude}\n`;
-            report += `  Address: ${currentMetadata.gps.address}\n\n`;
-        }
-        
-        report += `════════════════════════════════════════\n`;
-        report += `Generated by Exif Explorer\n`;
-        report += `https://exifexplorer.com`;
-        
-        return report;
-    }
-
-    // Generic file download function
-    function downloadFile(content, filename, mimeType) {
-        const blob = new Blob([content], { type: mimeType });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }
-
-// });
-
-
-    // Reverse Geocoding - Update to store address
-    function reverseLookup(lat, lon) {
-        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
-            .then(r => r.json())
-            .then(data => {
-                const addressText = data.display_name || "-";
-                address.textContent = addressText;
-                currentMetadata.gps.address = addressText;
-            })
-            .catch(() => {
-                address.textContent = "-";
-                currentMetadata.gps.address = "-";
-            });
-    }
-
-    // Convert EXIF rational numbers (object) to readable number
-    function formatFraction(val) {
-        if (typeof val === "object" && val.numerator !== undefined) {
-            return (val.numerator / val.denominator).toFixed(2);
-        }
-        return val;
-    }
-
-    // Convert exposure time to 1/xxx format
-    function formatExposure(exp) {
-        if (typeof exp === "object") {
-            let value = exp.numerator / exp.denominator;
-            return value < 1 ? `1/${Math.round(1/value)}` : value.toFixed(3);
-        }
-        return exp;
-    }
-
-    // Convert EXIF DMS to decimal degrees
-    function convertDMSToDD(dms, ref) {
-        let deg = dms[0];
-        let min = dms[1];
-        let sec = dms[2];
-
-        let dd = deg + min / 60 + sec / 3600;
-        if (ref === "S" || ref === "W") dd *= -1;
-        return dd;
-    }
-
-    // Show Leaflet map
-    function showMap(lat, lon) {
-        if (!map) {
-            map = L.map('map').setView([lat, lon], 15);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-        }
-
-        if (mapMarker) {
-            map.removeLayer(mapMarker);
-        }
-
-        mapMarker = L.marker([lat, lon]).addTo(map);
-        map.setView([lat, lon], 15);
-    }
-
-    // Reverse Geocoding
-    function reverseLookup(lat, lon) {
-        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
-            .then(r => r.json())
-            .then(data => {
-                address.textContent = data.display_name || "-";
-            })
-            .catch(() => address.textContent = "-");
-    }
-
-});
-
-</script>
-
-</body>
-</html>
-
+    
+    function generateCSV() { let rows = [['Category','Field','Value']]; for(let cat in currentMetadata) if(currentMetadata[cat] && typeof currentMetadata[cat] === 'object') for(let [k,v] of Object.entries(currentMetadata[cat])) rows.push([cat, k, v]); return rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n'); }
+    function downloadFile(content, name, type) { let a = document.createElement('a'); let blob = new Blob([content], {type}); a.href = URL.createObjectURL(blob); a.download = name; a.click(); URL.revokeObjectURL(a.href); }
+    document.getElementById('exportCSV').addEventListener('click', () => downloadFile(generateCSV(), 'exif_metadata.csv', 'text/csv'));
+    document.getElementById('exportJSON').addEventListener('click', () => downloadFile(JSON.stringify(currentMetadata, null, 2), 'exif_metadata.json', 'application/json'));
+    document.getElementById('exportPDF').addEventListener('click', async () => { const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.setFontSize(20); doc.text('Exif Explorer Report', 105, 20, { align: 'center' }); doc.setFontSize(10); doc.text(`File: ${currentMetadata.file.name}`, 20, 30); let y = 40; for(let section of ['file','camera','image','gps']) { doc.setFontSize(14); doc.text(section.toUpperCase(), 20, y); y+=6; doc.setFontSize(9); for(let [k,v] of Object.entries(currentMetadata[section] || {})) { doc.text(`${k}: ${v}`, 25, y); y+=5; if(y>270) { doc.addPage(); y=20; } } y+=5; } doc.save(`exif_${currentMetadata.file.name.replace(/\..+$/,'')}.pdf`); });
+    document.getElementById('copyAll').addEventListener('click', () => { let text = `EXIF EXPLORER REPORT\nGenerated: ${new Date()}\nFile: ${currentMetadata.file.name}\n\nCAMERA:\n${JSON.stringify(currentMetadata.camera, null, 2)}\n\nIMAGE:\n${JSON.stringify(currentMetadata.image, null, 2)}\n\nGPS:\n${JSON.stringify(currentMetadata.gps, null, 2)}`; navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!')); });
+    document.getElementById('currentYear').innerText = new Date().getFullYear();
+  </script>
 </body>
 </html>
