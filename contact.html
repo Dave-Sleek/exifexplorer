@@ -2,478 +2,225 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="title" content="Contact Exif Explorer | Support & Customer Service">
-<meta name="description" content="Contact ExifExplorer support team for help with metadata extraction, feature requests, or partnership inquiries. We're here to help!">
-<meta name="keywords" content="contact metadata extractor, support, customer service, help, feedback, partnership, technical support, contact form">
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://exifexplorer.com/contact">
-<meta property="og:title" content="Contact Exif Explorer | Support & Customer Service">
-<meta property="og:description" content="Get in touch with Exif Explorer support team for help with metadata extraction or feature requests.">
-<meta property="og:image" content="https://exifexplorer.com/images/contact-preview.jpg">
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://exifexplorer.com/contact">
-<meta property="twitter:title" content="Contact Exif Explorer | Support & Customer Service">
-<meta property="twitter:description" content="Get in touch with Exif Explorer support team for help with metadata extraction or feature requests.">
-<meta property="twitter:image" content="https://exifexplorer.com/images/contact-preview.jpg">
-
-<!-- Canonical URL -->
-<link rel="canonical" href="https://exifexplorer.com/contact">
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8918616047230546"
-     crossorigin="anonymous"></script>
-
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-<!-- LocalBusiness Schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "Exif Explorer",
-  "image": "https://exifexplorer.com/images/logo.png",
-  "email": "support@exifexplorer.com",
-  "telephone": "+234 7045574466",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Adetokunbo Ademola",
-    "addressLocality": "Wuse 2",
-    "addressRegion": "Abuja",
-    "postalCode": "90000",
-    "addressCountry": "Nigeria"
-  },
-  "url": "https://exifexplorer.com/",
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday"
-    ],
-    "opens": "09:00",
-    "closes": "18:00"
-  }
-}
-</script>
-
-<!-- Mobile Optimization -->
-<meta name="format-detection" content="telephone=no">
-<meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-<!-- Language and Region -->
-<meta name="language" content="en">
-<link rel="alternate" hreflang="en" href="https://exifexplorer.com/">
-<link rel="alternate" hreflang="x-default" href="https://exifexplorer.com/">
-
-<!-- Security Headers (to be added to server config, but mentioned here)
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com;">
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-Frame-Options" content="DENY">
-<meta http-equiv="X-XSS-Protection" content="1; mode=block">
-<meta name="referrer" content="strict-origin-when-cross-origin">-->
-
-<!-- Preconnect for Performance
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="preconnect" href="https://cdnjs.cloudflare.com">-->
-
-<!-- Sitemap -->
-<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-
-<!-- RSS Feed -->
-<link rel="alternate" type="application/rss+xml" title="Exif Explorer Updates" href="/rss.xml">
-    <title>Contact | Exif Explorer</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
+    <meta name="description" content="Contact Exif Explorer support team for help with metadata extraction, feature requests, or partnership inquiries. We're here to help!">
+    <meta name="keywords" content="contact metadata extractor, support, customer service, help, feedback, partnership, technical support">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://exifexplorer.com/contact">
+    <meta property="og:title" content="Contact Exif Explorer | Support & Customer Service">
+    <meta property="og:description" content="Get in touch with Exif Explorer support team for help with metadata extraction or feature requests.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://exifexplorer.com/contact">
+    <meta property="twitter:title" content="Contact Exif Explorer | Support & Customer Service">
+    <meta property="twitter:description" content="Get in touch with Exif Explorer support team for help with metadata extraction or feature requests.">
+    
+    <!-- Canonical -->
+    <link rel="canonical" href="https://exifexplorer.com/contact">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5CF6',
+                        secondary: '#EC4899',
+                        darkBg: '#030014',
+                        cardBg: '#0F0A1F',
+                        surface: '#1A142F',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts + Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    
     <style>
-        :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #4cc9f0;
-            --success: #4bb543;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-        }
-        
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f5f7fb;
-            color: var(--dark);
-            line-height: 1.6;
+            background: linear-gradient(135deg, #050508 0%, #0A0A0F 50%, #050508 100%);
         }
-        
-        .navbar {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 1rem 0;
+        .glass-premium {
+            background: rgba(17, 17, 21, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        .navbar-brand {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
+        .glass-premium:hover {
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 20px 40px -15px rgba(139, 92, 246, 0.15);
         }
-        
-        .navbar-brand i {
-            margin-right: 10px;
-        }
-        
-        .hero-section {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 80px 0;
-            border-radius: 0 0 30px 30px;
-            margin-bottom: 50px;
-        }
-        
-        .section-title {
-            font-weight: 700;
-            margin-bottom: 50px;
+        .gradient-border {
             position: relative;
-            display: inline-block;
-            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, rgba(139,92,246,0.3), rgba(236,72,153,0.3));
+            padding: 1px;
+            border-radius: 1.5rem;
         }
-        
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background-color: var(--primary);
+        .gradient-border > div {
+            background: #0A0A0F;
+            border-radius: 1.5rem;
         }
-        
-        .contact-form {
-            background-color: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        }
-        
-        .form-control, .form-select {
-            border-radius: 10px;
-            padding: 12px 15px;
-            border: 1px solid #e0e0e0;
-            transition: all 0.3s ease;
-        }
-        
-        .form-control:focus, .form-select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
-        }
-        
-        .contact-info-card {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-radius: 15px;
-            padding: 30px;
-            height: 100%;
-        }
-        
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-        
-        .social-icon:hover {
-            background-color: white;
-            color: var(--primary);
-            transform: translateY(-3px);
-        }
-        
-        .footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 40px 0;
-            margin-top: 80px;
-        }
-        
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            text-decoration: none;
+        .mobile-menu {
+            max-height: 0;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        .back-to-top.show {
+        .mobile-menu.open {
+            max-height: 400px;
             opacity: 1;
             visibility: visible;
         }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #111115; }
+        ::-webkit-scrollbar-thumb { background: #8B5CF6; border-radius: 10px; }
         
-        .back-to-top:hover {
-            background-color: var(--secondary);
-            transform: translateY(-3px);
-        }
-        
-        .max-width-800 {
-            max-width: 800px;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 25px;
-        }
-        
-        .contact-icon {
-            background-color: rgba(255, 255, 255, 0.1);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: white;
-            font-size: 1.3rem;
-            flex-shrink: 0;
-        }
-        
-        .contact-details h5 {
-            margin-bottom: 5px;
-        }
-        
-        .contact-details p {
-            margin-bottom: 0;
-            opacity: 0.9;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 500;
+        /* Form styles */
+        input, select, textarea {
             transition: all 0.3s ease;
         }
-        
-        .btn-primary:hover {
-            background-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #8B5CF6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
         }
     </style>
-
-<style>
-    /* Common Styles for All Options */
-    .avatar-circle {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        font-size: 1.2rem;
-    }
-    
-    .icon-circle {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-    }
-    
-    .step-number {
-        width: 36px;
-        height: 36px;
-        flex-shrink: 0;
-        font-weight: 600;
-    }
-    
-    .testimonial-item {
-        padding: 15px;
-        background-color: rgba(67, 97, 238, 0.02);
-        border-radius: 10px;
-        border-left: 3px solid var(--primary);
-    }
-    
-    .use-case-item {
-        padding: 15px;
-        border-radius: 10px;
-        transition: all 0.3s ease;
-        border: 1px solid #eaeaea;
-    }
-    
-    .use-case-item:hover {
-        background-color: rgba(67, 97, 238, 0.05);
-        border-color: var(--primary);
-        transform: translateY(-2px);
-    }
-    
-    .video-placeholder {
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-    
-    .video-placeholder:hover {
-        transform: scale(1.01);
-    }
-    
-    .video-placeholder .fa-play-circle {
-        transition: all 0.3s ease;
-    }
-    
-    .video-placeholder:hover .fa-play-circle {
-        transform: scale(1.1);
-        color: var(--secondary);
-    }
-    
-    .accordion-button {
-        background-color: rgba(67, 97, 238, 0.05);
-        border: 1px solid rgba(67, 97, 238, 0.1);
-    }
-    
-    .accordion-button:not(.collapsed) {
-        background-color: rgba(67, 97, 238, 0.1);
-        color: var(--primary);
-        box-shadow: none;
-    }
-    
-    .step-guide {
-        background-color: rgba(67, 97, 238, 0.02);
-        padding: 20px;
-        border-radius: 10px;
-    }
-</style>
 </head>
-<body>
+<body class="font-inter text-gray-200">
+
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <i class="fas fa-search"></i>Exif Explorer
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="features.html">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="how-it-works.html">How It Works</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="blog.html">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="about-us.html">About Us</a>
-                    </li>
-                </ul>
+    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                        <i class="fas fa-camera-retro text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex gap-8 text-sm font-medium">
+                    <a href="#" class="hover:text-primary transition-colors">Home</a>
+                    <a href="#" class="hover:text-primary transition-colors">Features</a>
+                    <a href="#" class="hover:text-primary transition-colors">How it Works</a>
+                    <a href="#" class="hover:text-primary transition-colors">Blog</a>
+                    <a href="#" class="text-primary border-b-2 border-primary pb-1">Contact</a>
+                    <a href="#" class="hover:text-primary transition-colors">About</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden text-white text-2xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Dropdown Menu -->
+            <div id="mobileMenu" class="mobile-menu md:hidden overflow-hidden transition-all duration-300">
+                <div class="flex flex-col gap-3 pt-4 pb-2">
+                    <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Home</a>
+                    <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Features</a>
+                    <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">How it Works</a>
+                    <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Blog</a>
+                    <a href="#" class="px-4 py-2 text-primary bg-white/5 rounded-lg transition-colors">Contact</a>
+                    <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">About</a>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h1 class="display-4 fw-bold mb-4">Contact & Connect</h1>
-                    <p class="lead mb-4">Get in touch with us. We're here to help with any questions about metadata extraction.</p>
-                    <a href="#contact-form" class="btn btn-light btn-lg">Send a Message <i class="fas fa-envelope ms-2"></i></a>
-                </div>
+    <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-950/20 via-transparent to-pink-950/20"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 mb-6">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                <span class="text-xs font-medium tracking-wide">Get in Touch</span>
+            </div>
+            <h1 class="font-poppins font-black text-5xl md:text-6xl lg:text-7xl leading-tight mb-4">
+                <span class="bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">Contact &</span><br>
+                <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Connect</span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                Get in touch with us. We're here to help with any questions about metadata extraction.
+            </p>
+            <div class="mt-8">
+                <a href="#contact-form" class="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 px-8 py-3 rounded-full font-semibold text-white transition-all duration-300 hover:scale-105">
+                    Send a Message <i class="fas fa-envelope ml-2"></i>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Contact Form & Info -->
-    <section class="py-5">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="lead text-muted max-width-800 mx-auto">Have questions about metadata extraction? We're here to help.</p>
+    <!-- Contact Form Section -->
+    <section id="contact-form" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="inline-block text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full mb-4">
+                    Get In Touch
+                </span>
+                <h2 class="font-poppins font-bold text-4xl md:text-5xl bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+                    We'd Love to Hear From You
+                </h2>
+                <p class="text-gray-400 mt-3 max-w-2xl mx-auto">Have questions about metadata extraction? We're here to help.</p>
             </div>
             
-            <!-- Toast for notifications -->
-            <div class="toast align-items-center text-white bg-success border-0" role="alert" id="successToast">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        Message sent successfully!
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                </div>
+            <!-- Toast Notification -->
+            <div id="successToast" class="fixed top-24 right-6 z-[100] bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-2xl shadow-2xl backdrop-blur-sm hidden transition-all">
+                <i class="fas fa-check-circle mr-2"></i> Message sent successfully!
             </div>
             
-            <div class="row g-4">
-                <div class="col-lg-8">
-                    <div class="contact-form" id="contact-form">
-                        <h3 class="mb-4">Send us a Message</h3>
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Contact Form -->
+                <div class="lg:col-span-2">
+                    <div class="glass-premium rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold text-white mb-6">Send us a Message</h3>
                         <form id="contactForm">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="name" class="form-label">Full Name *</label>
-                                    <input type="text" class="form-control" id="name" required>
+                            <div class="grid md:grid-cols-2 gap-5 mb-5">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">Full Name *</label>
+                                    <input type="text" id="name" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-primary transition-all">
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="email" class="form-label">Email Address *</label>
-                                    <input type="email" class="form-control" id="email" required>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">Email Address *</label>
+                                    <input type="email" id="email" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-primary transition-all">
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="subject" class="form-label">Subject *</label>
-                                <select class="form-select" id="subject" required>
-                                    <option value="" selected disabled>Select a subject</option>
+                            <div class="mb-5">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Subject *</label>
+                                <select id="subject" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-primary transition-all">
+                                    <option value="" disabled selected>Select a subject</option>
                                     <option>General Inquiry</option>
                                     <option>Technical Support</option>
                                     <option>Business Partnership</option>
@@ -482,86 +229,75 @@
                                     <option>Other</option>
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message *</label>
-                                <textarea class="form-control" id="message" rows="6" required placeholder="Tell us how we can help you..."></textarea>
+                            <div class="mb-5">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Message *</label>
+                                <textarea id="message" rows="6" required placeholder="Tell us how we can help you..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-primary transition-all"></textarea>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="newsletter">
-                                    <label class="form-check-label" for="newsletter">
-                                        Subscribe to our newsletter for updates and metadata tips
-                                    </label>
-                                </div>
+                            <div class="mb-5">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="newsletter" class="w-4 h-4 rounded border-white/20 bg-white/5 text-primary focus:ring-primary">
+                                    <span class="text-sm text-gray-400">Subscribe to our newsletter for updates and metadata tips</span>
+                                </label>
                             </div>
-
-                            <div class="mb-3">
-                                <!--<label for="message" class="form-label">Message *</label>-->
+                            <div class="mb-6">
                                 <div class="g-recaptcha" data-sitekey="6LcNyj8sAAAAACSU2-XIXVAK-mgdMu5Xx15JLHY8"></div>
                             </div>
-                            
-                            <button type="submit" class="btn btn-primary btn-lg w-100">Send Message</button>
+                            <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 py-3 rounded-xl font-semibold text-white transition-all duration-300">
+                                Send Message <i class="fas fa-paper-plane ml-2"></i>
+                            </button>
                         </form>
                     </div>
                 </div>
                 
-                <div class="col-lg-4">
-                    <div class="contact-info-card">
-                        <h3 class="mb-4">Contact Information</h3>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
+                <!-- Contact Info Card -->
+                <div>
+                    <div class="gradient-border">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-6">Contact Information</h3>
+                            
+                            <div class="flex gap-4 mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-envelope text-primary text-xl"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-white">Email</h5>
+                                    <p class="text-gray-400 text-sm">support@exifexplorer.com</p>
+                                    <p class="text-gray-400 text-sm">info@exifexplorer.com</p>
+                                </div>
                             </div>
-                            <div class="contact-details">
-                                <h5>Email</h5>
-                                <p>support@exifexplorer.com</p>
-                                <p>info@exifexplorer.com</p>
+                            
+                            <div class="flex gap-4 mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-phone text-primary text-xl"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-white">Phone</h5>
+                                    <p class="text-gray-400 text-sm">+234 07045574466</p>
+                                    <p class="text-gray-400 text-sm">Mon-Fri: 9AM-6PM WAT</p>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-phone"></i>
+                            
+                            <div class="flex gap-4 mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-primary text-xl"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-white">Address</h5>
+                                    <p class="text-gray-400 text-sm">Adetokunbo Ademola Street</p>
+                                    <p class="text-gray-400 text-sm">FCT, Abuja, Nigeria</p>
+                                </div>
                             </div>
-                            <div class="contact-details">
-                                <h5>Phone</h5>
-                                <p>+234 07045574466</p>
-                                <p>Mon-Fri: 9AM-6PM WAT</p>
+                            
+                            <h4 class="font-semibold text-white mt-8 mb-4">Connect With Us</h4>
+                            <p class="text-gray-400 text-sm mb-4">Follow us on social media for updates, tips, and metadata insights.</p>
+                            
+                            <div class="flex gap-3">
+                                <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary/30 transition-all"><i class="fab fa-x text-white"></i></a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary/30 transition-all"><i class="fab fa-facebook-f text-white"></i></a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary/30 transition-all"><i class="fab fa-instagram text-white"></i></a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary/30 transition-all"><i class="fab fa-linkedin-in text-white"></i></a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary/30 transition-all"><i class="fab fa-github text-white"></i></a>
                             </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="contact-details">
-                                <h5>Address</h5>
-                                <p>Adetokunbo Ademola Street</p>
-                                <p>Federal Capital Territoy, Abuja</p>
-                                <p>Nigeria</p>
-                            </div>
-                        </div>
-                        
-                        <h4 class="mt-5 mb-3">Connect With Us</h4>
-                        <p>Follow us on social media for updates, tips, and metadata insights.</p>
-                        
-                        <div class="social-icons">
-                            <a href="#" class="social-icon">
-                                <i class="fab fa-x"></i>
-                            </a>
-                            <a href="#" class="social-icon">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="#" class="social-icon">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="social-icon">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                            <a href="#" class="social-icon">
-                                <i class="fab fa-github"></i>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -569,348 +305,250 @@
         </div>
     </section>
 
-    <!-- FAQ Preview -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h2 class="section-title">Common Questions</h2>
-                    <p class="mb-4">Before contacting us, you might find answers to these frequently asked questions helpful.</p>
+    <!-- FAQ & Use Cases Section -->
+    <section class="py-20 bg-black/30">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- FAQ Preview -->
+                <div>
+                    <span class="inline-block text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full mb-4">
+                        Common Questions
+                    </span>
+                    <h2 class="font-poppins font-bold text-3xl md:text-4xl text-white mb-4">
+                        Frequently Asked <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Questions</span>
+                    </h2>
+                    <p class="text-gray-400 mb-6">Before contacting us, you might find answers to these frequently asked questions helpful.</p>
                     
-                    <div class="accordion" id="faqPreview">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqPreview1">
-                                    Is Exif Explorer free to use?
-                                </button>
-                            </h2>
-                            <div id="faqPreview1" class="accordion-collapse collapse" data-bs-parent="#faqPreview">
-                                <div class="accordion-body">
+                    <div class="space-y-3">
+                        <div class="border border-white/10 rounded-xl overflow-hidden">
+                            <button class="faq-toggle w-full text-left px-5 py-4 flex justify-between items-center hover:bg-white/5 transition">
+                                <span class="font-semibold text-white">Is Exif Explorer free to use?</span>
+                                <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
+                            </button>
+                            <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 px-5">
+                                <div class="pb-4 text-gray-400 border-t border-white/10 pt-3">
                                     Yes, Exif Explorer is completely free to use. There are no hidden fees, subscriptions, or usage limits. Our tool is supported by our commitment to providing valuable metadata extraction services to everyone.
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqPreview2">
-                                    How long does it take to get a response?
-                                </button>
-                            </h2>
-                            <div id="faqPreview2" class="accordion-collapse collapse" data-bs-parent="#faqPreview">
-                                <div class="accordion-body">
+                        <div class="border border-white/10 rounded-xl overflow-hidden">
+                            <button class="faq-toggle w-full text-left px-5 py-4 flex justify-between items-center hover:bg-white/5 transition">
+                                <span class="font-semibold text-white">How long does it take to get a response?</span>
+                                <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
+                            </button>
+                            <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 px-5">
+                                <div class="pb-4 text-gray-400 border-t border-white/10 pt-3">
                                     We typically respond to all inquiries within 24 hours during business days. For urgent matters, please include "URGENT" in your subject line and we'll prioritize your request.
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqPreview3">
-                                    Can I suggest new features?
-                                </button>
-                            </h2>
-                            <div id="faqPreview3" class="accordion-collapse collapse" data-bs-parent="#faqPreview">
-                                <div class="accordion-body">
+                        <div class="border border-white/10 rounded-xl overflow-hidden">
+                            <button class="faq-toggle w-full text-left px-5 py-4 flex justify-between items-center hover:bg-white/5 transition">
+                                <span class="font-semibold text-white">Can I suggest new features?</span>
+                                <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
+                            </button>
+                            <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 px-5">
+                                <div class="pb-4 text-gray-400 border-t border-white/10 pt-3">
                                     Absolutely! We welcome feature suggestions and feedback. Please use the "Feature Request" option in the contact form subject dropdown, and provide as much detail as possible about your idea.
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="mt-4">
-                        <a href="how-it-works.html" class="btn btn-outline-primary">View All FAQs</a>
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center gap-2 text-primary hover:text-secondary transition">
+                            View All FAQs <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
                 
-    <div class="col-lg-6">
-    <div class="card border-0 shadow-sm">
-        <div class="card-body p-5">
-            <h3 class="mb-4"><i class="fas fa-briefcase text-primary me-2"></i>Professional Use Cases</h3>
-            <p class="text-muted mb-4">Discover how different professionals use Exif Explorer in their work.</p>
-            
-            <!-- Use Cases -->
-            <div class="use-cases">
-                <!-- Photography -->
-                <div class="use-case-item mb-4">
-                    <div class="d-flex align-items-start">
-                        <div class="flex-shrink-0">
-                            <div class="icon-circle bg-primary text-white">
-                                <i class="fas fa-camera"></i>
+                <!-- Use Cases Card -->
+                <div>
+                    <div class="glass-premium rounded-2xl p-6">
+                        <h3 class="text-xl font-bold text-white mb-4">
+                            <i class="fas fa-briefcase text-primary mr-2"></i> Professional Use Cases
+                        </h3>
+                        <p class="text-gray-400 text-sm mb-6">Discover how different professionals use Exif Explorer in their work.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition">
+                                <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0"><i class="fas fa-camera text-primary"></i></div>
+                                <div><h5 class="font-semibold text-white text-sm">Photography & Media</h5><p class="text-gray-500 text-xs">Copyright verification, location tracking, camera settings analysis</p></div>
+                            </div>
+                            <div class="flex gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition">
+                                <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0"><i class="fas fa-microscope text-primary"></i></div>
+                                <div><h5 class="font-semibold text-white text-sm">Research & Academia</h5><p class="text-gray-500 text-xs">Scientific image analysis, data validation, research documentation</p></div>
+                            </div>
+                            <div class="flex gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition">
+                                <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0"><i class="fas fa-gavel text-primary"></i></div>
+                                <div><h5 class="font-semibold text-white text-sm">Legal & Forensics</h5><p class="text-gray-500 text-xs">Digital evidence analysis, image authenticity verification</p></div>
+                            </div>
+                            <div class="flex gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition">
+                                <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0"><i class="fas fa-chart-line text-primary"></i></div>
+                                <div><h5 class="font-semibold text-white text-sm">Business & Marketing</h5><p class="text-gray-500 text-xs">Social media analysis, competitor research, brand monitoring</p></div>
                             </div>
                         </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-2">Photography & Media</h5>
-                            <ul class="text-muted small mb-0">
-                                <li>Copyright verification</li>
-                                <li>Location tracking for travel photos</li>
-                                <li>Camera settings analysis</li>
-                                <li>Asset management</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Research -->
-                <div class="use-case-item mb-4">
-                    <div class="d-flex align-items-start">
-                        <div class="flex-shrink-0">
-                            <div class="icon-circle bg-success text-white">
-                                <i class="fas fa-microscope"></i>
+                        
+                        <div class="mt-6 pt-4 border-t border-white/10">
+                            <h5 class="font-semibold text-white mb-3"><i class="fas fa-check-circle text-primary mr-2"></i>Key Benefits</h5>
+                            <div class="grid grid-cols-2 gap-2 text-sm">
+                                <div class="text-gray-400"><i class="fas fa-lock text-primary mr-1"></i> 100% Private</div>
+                                <div class="text-gray-400"><i class="fas fa-bolt text-primary mr-1"></i> Instant Results</div>
+                                <div class="text-gray-400"><i class="fas fa-sync-alt text-primary mr-1"></i> No Limits</div>
+                                <div class="text-gray-400"><i class="fas fa-mobile-alt text-primary mr-1"></i> Mobile Friendly</div>
                             </div>
                         </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-2">Research & Academia</h5>
-                            <ul class="text-muted small mb-0">
-                                <li>Scientific image analysis</li>
-                                <li>Data validation and verification</li>
-                                <li>Research documentation</li>
-                                <li>Metadata standards compliance</li>
-                            </ul>
+                        
+                        <div class="mt-6">
+                            <a href="#" class="block text-center bg-white/5 hover:bg-primary/20 border border-white/10 rounded-xl py-3 font-semibold text-white transition-all">
+                                Explore All Features <i class="fas fa-rocket ml-2"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Legal -->
-                <div class="use-case-item mb-4">
-                    <div class="d-flex align-items-start">
-                        <div class="flex-shrink-0">
-                            <div class="icon-circle bg-warning text-white">
-                                <i class="fas fa-gavel"></i>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-2">Legal & Forensics</h5>
-                            <ul class="text-muted small mb-0">
-                                <li>Digital evidence analysis</li>
-                                <li>Image authenticity verification</li>
-                                <li>Timestamp validation</li>
-                                <li>Location data extraction</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Business -->
-                <div class="use-case-item">
-                    <div class="d-flex align-items-start">
-                        <div class="flex-shrink-0">
-                            <div class="icon-circle bg-info text-white">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-2">Business & Marketing</h5>
-                            <ul class="text-muted small mb-0">
-                                <li>Social media content analysis</li>
-                                <li>Competitor research</li>
-                                <li>Brand monitoring</li>
-                                <li>Digital asset management</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Features Highlight -->
-            <div class="mt-4 pt-3 border-top">
-                <h5 class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Key Benefits</h5>
-                <div class="row">
-                    <div class="col-6 mb-2">
-                        <i class="fas fa-lock text-success me-1"></i>
-                        <small>100% Private</small>
-                    </div>
-                    <div class="col-6 mb-2">
-                        <i class="fas fa-bolt text-warning me-1"></i>
-                        <small>Instant Results</small>
-                    </div>
-                    <div class="col-6 mb-2">
-                        <i class="fas fa-sync-alt text-info me-1"></i>
-                        <small>No Limits</small>
-                    </div>
-                    <div class="col-6 mb-2">
-                        <i class="fas fa-mobile-alt text-primary me-1"></i>
-                        <small>Mobile Friendly</small>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- CTA -->
-            <div class="mt-4">
-                <a href="features.html" class="btn btn-outline-primary w-100">
-                    <i class="fas fa-rocket me-2"></i>Explore All Features
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-                <!-- End Subscribe -->
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5><i class="fas fa-camera me-2"></i>Exif Explorer</h5>
-                    <p class="mt-3">Extract valuable metadata from your images with our professional tool. Discover camera settings, location data, and more.</p>
+    <footer class="border-t border-white/10 py-12 bg-black/30">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <i class="fas fa-camera text-primary text-2xl"></i>
+                    <h5 class="font-bold text-lg mt-2">Exif Explorer</h5>
+                    <p class="text-gray-500 text-sm mt-2">Professional metadata extraction tool</p>
                 </div>
-                <div class="col-md-3">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="index.html" class="text-light">Home</a></li>
-                        <li><a href="features.html" class="text-light">Features</a></li>
-                        <li><a href="how-it-works.html" class="text-light">How It Works</a></li>
-                        <li><a href="contact.html" class="text-light">Contact</a></li>
+                <div>
+                    <h5 class="font-semibold">Quick Links</h5>
+                    <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-primary">Home</a></li>
+                        <li><a href="#" class="hover:text-primary">Features</a></li>
+                        <li><a href="#" class="hover:text-primary">How It Works</a></li>
+                        <li><a href="#" class="hover:text-primary">Blog</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3">
-                    <h5>Connect</h5>
-                    <div class="d-flex mt-3">
-                        <a href="contact.html" class="text-light me-3"><i class="fab fa-x fa-lg"></i></a>
-                        <a href="contact.html" class="text-light me-3"><i class="fab fa-facebook fa-lg"></i></a>
-                        <a href="contact.html" class="text-light me-3"><i class="fab fa-instagram fa-lg"></i></a>
-                        <a href="contact.html" class="text-light"><i class="fab fa-github fa-lg"></i></a>
+                <div>
+                    <h5 class="font-semibold">Legal</h5>
+                    <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-primary">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-primary">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold">Connect</h5>
+                    <div class="flex gap-4 mt-2">
+                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-github fa-lg"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-instagram fa-lg"></i></a>
                     </div>
                 </div>
             </div>
-            <hr class="mt-4 mb-4">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="mb-0">© <span id="currentYear">2023</span> Exif Explorer. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="privacy-policy.html" class="text-light me-3">Privacy Policy</a>
-                    <a href="terms-of-use.html" class="text-light">Terms of Service</a>
-                </div>
-            </div>
+            <hr class="border-white/10 my-8">
+            <div class="text-center text-gray-500 text-sm">© <span id="currentYear"></span> Exif Explorer — All rights reserved.</div>
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <a href="#" class="back-to-top" id="backToTop">
-        <i class="fas fa-chevron-up"></i>
-    </a>
-
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script>
-        // Update current year in footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-        
-        // Back to top button functionality
-        const backToTopButton = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add('show');
-            } else {
-                backToTopButton.classList.remove('show');
-            }
+        // Mobile menu toggle
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let menuOpen = false;
+        mobileBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('open');
+            mobileBtn.innerHTML = menuOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
         });
         
-        backToTopButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                menuOpen = false;
+                mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
             });
         });
         
-        // // Contact form submission
-        // const contactForm = document.getElementById('contactForm');
-        // const successToast = document.getElementById('successToast');
-        
-        // contactForm.addEventListener('submit', function(e) {
-        //     e.preventDefault();
-            
-        //     // Get form values
-        //     const name = document.getElementById('name').value;
-        //     const email = document.getElementById('email').value;
-        //     const subject = document.getElementById('subject').value;
-        //     const message = document.getElementById('message').value;
-        //     const newsletter = document.getElementById('newsletter').checked;
-            
-        //     // Validate form
-        //     if (!name || !email || !subject || !message) {
-        //         alert('Please fill in all required fields.');
-        //         return;
-        //     }
-            
-        //     // In a real application, you would send this data to a server
-        //     // For now, we'll simulate submission
-        //     console.log('Contact Form Submission:', { name, email, subject, message, newsletter });
-            
-        //     // Show success toast
-        //     const toast = new bootstrap.Toast(successToast);
-        //     toast.show();
-            
-        //     // Reset form
-        //     this.reset();
-        // });
-
-
-    contactForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    // Get the reCAPTCHA response
-    const recaptchaResponse = grecaptcha.getResponse();
-
-    if (!recaptchaResponse) {
-        alert('Please complete the reCAPTCHA.');
-        return;
-    }
-
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value;
-    const newsletter = document.getElementById('newsletter').checked;
-
-    const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-            name, email, subject, message, newsletter,
-            recaptcha: recaptchaResponse // send token to server
-        })
-    });
-
-    const result = await response.json();
-
-    if (response.ok) {
-        const toast = new bootstrap.Toast(successToast);
-        toast.show();
-        contactForm.reset();
-
-        // Reset reCAPTCHA
-        grecaptcha.reset();
-    } else {
-        alert(result.message || "Something went wrong.");
-    }
-});
-
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+        // FAQ Toggle
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                answer.classList.toggle('open');
+                if (answer.classList.contains('open')) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    answer.style.maxHeight = '0';
+                    icon.style.transform = 'rotate(0deg)';
                 }
             });
         });
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        const successToast = document.getElementById('successToast');
+        
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Check reCAPTCHA
+            const recaptchaResponse = typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '';
+            if (!recaptchaResponse && typeof grecaptcha !== 'undefined') {
+                alert('Please complete the reCAPTCHA.');
+                return;
+            }
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            if (!name || !email || !subject || !message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Simulate API call (replace with actual endpoint)
+            console.log('Form submitted:', { name, email, subject, message });
+            
+            // Show success toast
+            successToast.classList.remove('hidden');
+            setTimeout(() => successToast.classList.add('hidden'), 3000);
+            
+            // Reset form
+            contactForm.reset();
+            if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const.preventDefault();
+                const targetId = this targetId = this.getAttribute.getAttribute('href('href');
+               ');
+                if ( if (targetIdtargetId === '# === '#') return;
+                const targetElement = document.querySelector(targetId);
+               ') return;
+                const targetElement = document.querySelector(targetId);
+                if if ( (targetElementtargetElement) {
+) {
+                    target                    targetElement.scrollIntoElement.scView({rollIntoView({ behavior: 's behavior: 'smooth', block: 'startmooth', block: 'start' });
+                }
+' });
+                }
+            });
+        });
+            });
+        
+               });
+        
+        document document.getElementById('.getElementById('currentYearcurrentYear').text').textContent =Content = new Date new Date().get().getFullYearFullYear();
+   ();
     </script>
+</ </scriptbody>
+>
 </body>
 </html>
