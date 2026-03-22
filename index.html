@@ -324,6 +324,7 @@
   <script>
     // Mobile menu toggle
     // ================= MOBILE MENU =================
+// ================= MOBILE MENU =================
 const mobileBtn = document.getElementById('mobileMenuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 
@@ -331,22 +332,10 @@ let menuOpen = false;
 
 mobileBtn.addEventListener('click', () => {
   menuOpen = !menuOpen;
-
-  if (menuOpen) {
-    mobileMenu.classList.add('open');
-    mobileBtn.innerHTML = '<i class="fas fa-times"></i>';
-  } else {
-    mobileMenu.classList.remove('open');
-    mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
-  }
-});
-
-document.querySelectorAll('#mobileMenu a').forEach(link => {
-  link.addEventListener('click', () => {
-    mobileMenu.classList.remove('open');
-    menuOpen = false;
-    mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
-  });
+  mobileMenu.classList.toggle('open');
+  mobileBtn.innerHTML = menuOpen
+    ? '<i class="fas fa-times"></i>'
+    : '<i class="fas fa-bars"></i>';
 });
 
 // ================= DOM =================
@@ -377,9 +366,7 @@ const elements = {
   address: document.getElementById('address')
 };
 
-let currentMetadata = { file: {}, camera: {}, image: {}, gps: {} };
-let mapInstance = null;
-let markerInstance = null;
+let currentMetadata = {};
 
 // ================= TOAST =================
 function showToast(msg, isError = false) {
@@ -388,66 +375,22 @@ function showToast(msg, isError = false) {
   setTimeout(() => toastDiv.classList.add('hidden'), 3000);
 }
 
-// ================= UPLOAD EVENTS =================
+// ================= UPLOAD =================
 uploadBtn.addEventListener('click', () => fileInput.click());
 
 uploadArea.addEventListener('click', (e) => {
   if (e.target.id !== 'uploadBtn') fileInput.click();
 });
 
-uploadArea.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  uploadArea.classList.add('drag-over');
-});
-
-uploadArea.addEventListener('dragleave', () => {
-  uploadArea.classList.remove('drag-over');
-});
-
-uploadArea.addEventListener('drop', (e) => {
-  e.preventDefault();
-  uploadArea.classList.remove('drag-over');
-
-  const file = e.dataTransfer.files[0];
-  if (file && file.type.startsWith('image/')) {
-    handleFileUpload(file);
-  } else {
-    showToast('Please upload a valid image file', true);
-  }
-});
-
 fileInput.addEventListener('change', (e) => {
   if (e.target.files[0]) handleFileUpload(e.target.files[0]);
 });
 
-// ================= MAIN FUNCTION =================
+// ================= MAIN =================
 function handleFileUpload(file) {
   if (!file) return;
 
-  // File size check
-  if (file.size > 50 * 1024 * 1024) {
-    showToast('File too large (max 50MB)', true);
-    return;
-  }
-
   loadingSpinner.classList.remove('hidden');
-
-  // Reset buttons
-  ['exportCSV','exportPDF','exportJSON','copyAll'].forEach(id => {
-    document.getElementById(id).disabled = true;
-  });
-
-  // File info
-  elements.fileName.textContent = file.name;
-  elements.fileSize.textContent = (file.size / 1024).toFixed(2) + " KB";
-  elements.fileType.textContent = file.type || 'image';
-  fileInfoDiv.classList.remove('hidden');
-
-  currentMetadata.file = {
-    name: file.name,
-    size: (file.size / 1024).toFixed(2) + " KB",
-    type: file.type
-  };
 
   const reader = new FileReader();
 
@@ -456,73 +399,73 @@ function handleFileUpload(file) {
     imagePreviewDiv.classList.remove('hidden');
 
     previewImg.onload = function () {
-      try {
-        EXIF.getData(previewImg, function () {
-          const exif = EXIF.getAllTags(this) || {};
-          console.log('EXIF:', exif);
+      EXIF.getData(previewImg, function () {
+        const exif = EXIF.getAllTags(this) || {};
 
-          if (Object.keys(exif).length === 0) {
-            showToast('No EXIF data found (common for WhatsApp images)', true);
-          }
+        // ================= BUILD DATA OBJECT =================
+        const camera = {
+          model: exif.Model || exif.Make || "-",
+          lens: exif.LensModel || "-",
+          aperture: exif.FNumber ? formatValue(exif.FNumber) : "-",
+          shutterSpeed: exif.ExposureTime ? formatExposure(exif.ExposureTime) : "-",
+          iso: exif.ISOSpeedRatings || "-"
+        };
 
-          // CAMERA
-          elements.cameraModel.textContent = exif.Model || exif.Make || "-";
-          elements.lens.textContent = exif.LensModel || "-";
-          elements.aperture.textContent = exif.FNumber ? formatValue(exif.FNumber) : "-";
-          elements.shutterSpeed.textContent = exif.ExposureTime ? formatExposure(exif.ExposureTime) : "-";
-          elements.iso.textContent = exif.ISOSpeedRatings || "-";
-
-          // IMAGE
-          const dims = (exif.PixelXDimension && exif.PixelYDimension)
+        const image = {
+          dimensions: (exif.PixelXDimension && exif.PixelYDimension)
             ? `${exif.PixelXDimension} × ${exif.PixelYDimension}`
+            : "-",
+          dateTaken: exif.DateTimeOriginal || "-",
+          orientation: exif.Orientation || "-",
+          colorSpace: exif.ColorSpace || "-"
+        };
+
+        let gps = {
+          coordinates: "-",
+          altitude: "-",
+          address: "-"
+        };
+
+        if (exif.GPSLatitude && exif.GPSLongitude) {
+          const lat = convertDMSToDD(exif.GPSLatitude, exif.GPSLatitudeRef);
+          const lon = convertDMSToDD(exif.GPSLongitude, exif.GPSLongitudeRef);
+
+          gps.coordinates = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+          gps.altitude = exif.GPSAltitude
+            ? formatValue(exif.GPSAltitude) + " m"
             : "-";
 
-          elements.dimensions.textContent = dims;
-          elements.dateTaken.textContent = exif.DateTimeOriginal || "-";
-          elements.orientation.textContent = exif.Orientation || "-";
-          elements.colorSpace.textContent = exif.ColorSpace || "-";
+          initMap(lat, lon);
+          reverseGeocode(lat, lon);
+        }
 
-          // GPS
-          if (exif.GPSLatitude && exif.GPSLongitude) {
-            const lat = convertDMSToDD(exif.GPSLatitude, exif.GPSLatitudeRef);
-            const lon = convertDMSToDD(exif.GPSLongitude, exif.GPSLongitudeRef);
+        currentMetadata = {
+          file: {
+            name: file.name,
+            size: (file.size / 1024).toFixed(2) + " KB",
+            type: file.type
+          },
+          camera,
+          image,
+          gps
+        };
 
-            elements.gpsCoords.textContent = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
-            elements.altitude.textContent = exif.GPSAltitude ? formatValue(exif.GPSAltitude) + " m" : "-";
+        // ================= UPDATE UI =================
+        Object.keys(camera).forEach(k => elements[k === 'model' ? 'cameraModel' : k].textContent = camera[k]);
+        elements.dimensions.textContent = image.dimensions;
+        elements.dateTaken.textContent = image.dateTaken;
+        elements.orientation.textContent = image.orientation;
+        elements.colorSpace.textContent = image.colorSpace;
+        elements.gpsCoords.textContent = gps.coordinates;
+        elements.altitude.textContent = gps.altitude;
 
-            initMap(lat, lon);
-            reverseGeocode(lat, lon);
-          } else {
-            elements.gpsCoords.textContent = "-";
-            elements.altitude.textContent = "-";
-            elements.address.textContent = "-";
-          }
-
-          loadingSpinner.classList.add('hidden');
-
-          ['exportCSV','exportPDF','exportJSON','copyAll'].forEach(id => {
-            document.getElementById(id).disabled = false;
-          });
-
-          showToast('Metadata extracted successfully!');
-        });
-
-      } catch (err) {
-        console.error(err);
-        showToast('Error reading EXIF data', true);
         loadingSpinner.classList.add('hidden');
-      }
-    };
 
-    previewImg.onerror = function () {
-      showToast('Failed to preview image', true);
-      loadingSpinner.classList.add('hidden');
-    };
-  };
+        enableButtons();
 
-  reader.onerror = function () {
-    showToast('File reading failed', true);
-    loadingSpinner.classList.add('hidden');
+        showToast('Metadata extracted!');
+      });
+    };
   };
 
   reader.readAsDataURL(file);
@@ -530,14 +473,11 @@ function handleFileUpload(file) {
 
 // ================= HELPERS =================
 function formatValue(val) {
-  if (val && typeof val === 'object' && val.numerator) {
-    return (val.numerator / val.denominator).toFixed(2);
-  }
-  return val;
+  return (val && val.numerator) ? (val.numerator / val.denominator).toFixed(2) : val;
 }
 
 function formatExposure(exp) {
-  if (exp && typeof exp === 'object') {
+  if (exp && exp.numerator) {
     let v = exp.numerator / exp.denominator;
     return v < 1 ? `1/${Math.round(1 / v)}` : v.toFixed(2);
   }
@@ -545,71 +485,107 @@ function formatExposure(exp) {
 }
 
 function convertDMSToDD(dms, ref) {
-  let dd = dms[0] + dms[1] / 60 + dms[2] / 3600;
+  let dd = dms[0] + dms[1]/60 + dms[2]/3600;
   return (ref === 'S' || ref === 'W') ? -dd : dd;
 }
 
 // ================= MAP =================
+let mapInstance, markerInstance;
+
 function initMap(lat, lng) {
-  const mapContainer = document.getElementById('map');
+  const mapDiv = document.getElementById('map');
 
-  if (mapInstance) {
-    mapInstance.setView([lat, lng], 14);
-    if (markerInstance) markerInstance.setLatLng([lat, lng]);
-  } else {
-    mapContainer.innerHTML = '';
+  if (!mapInstance) {
+    mapDiv.innerHTML = '';
     mapInstance = L.map('map').setView([lat, lng], 14);
-
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '© OpenStreetMap'
-    }).addTo(mapInstance);
-
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(mapInstance);
     markerInstance = L.marker([lat, lng]).addTo(mapInstance);
+  } else {
+    mapInstance.setView([lat, lng], 14);
+    markerInstance.setLatLng([lat, lng]);
   }
 }
 
-function reverseGeocode(lat, lng) {
-  fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+function reverseGeocode(lat, lon) {
+  fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
     .then(r => r.json())
-    .then(data => {
-      elements.address.textContent = data.display_name || "-";
-    })
-    .catch(() => {
-      elements.address.textContent = "-";
-    });
+    .then(d => elements.address.textContent = d.display_name || "-");
 }
 
 // ================= EXPORT =================
+function enableButtons() {
+  ['exportCSV','exportPDF','exportJSON','copyAll'].forEach(id => {
+    document.getElementById(id).disabled = false;
+  });
+}
+
 function generateCSV() {
   let rows = [['Category','Field','Value']];
-  for (let cat in currentMetadata) {
-    for (let [k,v] of Object.entries(currentMetadata[cat] || {})) {
-      rows.push([cat, k, v]);
+  for (let section in currentMetadata) {
+    for (let key in currentMetadata[section]) {
+      rows.push([section, key, currentMetadata[section][key]]);
     }
   }
-  return rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+  return rows.map(r => r.join(',')).join('\n');
 }
 
 function downloadFile(content, name, type) {
-  let a = document.createElement('a');
-  let blob = new Blob([content], {type});
+  const blob = new Blob([content], { type });
+  const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = name;
   a.click();
 }
 
+// CSV
 document.getElementById('exportCSV').onclick = () =>
-  downloadFile(generateCSV(), 'exif_metadata.csv', 'text/csv');
+  downloadFile(generateCSV(), 'metadata.csv', 'text/csv');
 
+// JSON
 document.getElementById('exportJSON').onclick = () =>
-  downloadFile(JSON.stringify(currentMetadata, null, 2), 'exif_metadata.json', 'application/json');
+  downloadFile(JSON.stringify(currentMetadata, null, 2), 'metadata.json', 'application/json');
 
+// PDF (FIXED)
+document.getElementById('exportPDF').onclick = () => {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  let y = 20;
+
+  doc.setFontSize(16);
+  doc.text('EXIF REPORT', 105, y, { align: 'center' });
+  y += 10;
+
+  for (let section in currentMetadata) {
+    doc.setFontSize(12);
+    doc.text(section.toUpperCase(), 20, y);
+    y += 6;
+
+    doc.setFontSize(10);
+
+    for (let key in currentMetadata[section]) {
+      doc.text(`${key}: ${currentMetadata[section][key]}`, 25, y);
+      y += 5;
+
+      if (y > 280) {
+        doc.addPage();
+        y = 20;
+      }
+    }
+
+    y += 5;
+  }
+
+  doc.save('metadata.pdf');
+};
+
+// COPY
 document.getElementById('copyAll').onclick = () => {
   navigator.clipboard.writeText(JSON.stringify(currentMetadata, null, 2));
   showToast('Copied!');
 };
 
-// ================= YEAR =================
+// YEAR
 document.getElementById('currentYear').innerText = new Date().getFullYear();
   </script>
 </body>
