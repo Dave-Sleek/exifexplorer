@@ -2,454 +2,455 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="title" content="About Us | Exif Explorer - Our Mission & Team">
-    <meta name="description" content="Learn about Exif Explorer's mission to make photo metadata accessible while protecting your privacy. Meet our team and discover our story.">
-    <meta name="keywords" content="about us, metadata extraction team, privacy tool, EXIF explorer mission, photo metadata company">
-    
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://exifexplorer.com/about-us">
-    <meta property="og:title" content="About Us | Exif Explorer">
-    <meta property="og:description" content="Making photo metadata accessible while protecting your privacy. Discover our story, mission, and team.">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://exifexplorer.com/about-us">
-    <meta property="twitter:title" content="About Us | Exif Explorer">
-    <meta property="twitter:description" content="Making photo metadata accessible while protecting your privacy.">
-    
-    <!-- Canonical -->
-    <link rel="canonical" href="https://exifexplorer.com/about-us">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#8B5CF6',
-                        secondary: '#EC4899',
-                        darkBg: '#030014',
-                        cardBg: '#0F0A1F',
-                        surface: '#1A142F',
-                    },
-                    fontFamily: {
-                        'poppins': ['Poppins', 'sans-serif'],
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'counter': 'counter 2s ease-out forwards',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        counter: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Google Fonts + Font Awesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Terms of Use | Exif Explorer</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+        
         body {
-            background: linear-gradient(135deg, #050508 0%, #0A0A0F 50%, #050508 100%);
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
         }
-        .glass-premium {
-            background: rgba(17, 17, 21, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
         }
-        .glass-premium:hover {
-            border-color: rgba(139, 92, 246, 0.5);
-            box-shadow: 0 20px 40px -15px rgba(139, 92, 246, 0.15);
+        
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
         }
-        .gradient-border {
+        
+        .navbar-brand i {
+            margin-right: 10px;
+        }
+        
+        .terms-hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 80px 0 60px;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 30px;
             position: relative;
-            background: linear-gradient(135deg, rgba(139,92,246,0.3), rgba(236,72,153,0.3));
-            padding: 1px;
-            border-radius: 1.5rem;
+            display: inline-block;
+            font-family: 'Poppins', sans-serif;
         }
-        .gradient-border > div {
-            background: #0A0A0F;
-            border-radius: 1.5rem;
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
         }
-        .mobile-menu {
-            max-height: 0;
+        
+        .terms-content {
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+        
+        .terms-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .terms-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .warning-box {
+            background-color: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 25px 0;
+        }
+        
+        .info-box {
+            background-color: rgba(67, 97, 238, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 25px 0;
+        }
+        
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            text-decoration: none;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
+            z-index: 1000;
         }
-        .mobile-menu.open {
-            max-height: 400px;
+        
+        .back-to-top.show {
             opacity: 1;
             visibility: visible;
         }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #111115; }
-        ::-webkit-scrollbar-thumb { background: #8B5CF6; border-radius: 10px; }
         
-        .value-card {
-            transition: all 0.3s ease;
+        .back-to-top:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
         }
-        .value-card:hover {
-            transform: translateY(-8px);
+        
+        .terms-icon {
+            color: var(--primary);
+            margin-right: 10px;
         }
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #8B5CF6, #EC4899);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        
+        .terms-list li {
+            margin-bottom: 10px;
+            padding-left: 10px;
         }
-        .timeline-dot {
-            position: relative;
+        
+        .terms-list li strong {
+            color: var(--primary);
         }
-        .timeline-dot::before {
-            content: '';
-            position: absolute;
-            left: -20px;
-            top: 8px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #8B5CF6;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+        
+        .agreement-box {
+            background-color: white;
+            border: 2px solid #eaeaea;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .important-note {
+            background-color: rgba(220, 53, 69, 0.05);
+            border: 1px solid rgba(220, 53, 69, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .definition-list dt {
+            color: var(--primary);
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        
+        .definition-list dd {
+            margin-left: 20px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
-<body class="font-inter text-gray-200">
-
+<body>
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <a href="#" class="flex items-center gap-3 group">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                        <i class="fas fa-camera-retro text-white text-sm"></i>
-                    </div>
-                    <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
-                </a>
-                
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex gap-8 text-sm font-medium">
-                    <a href="#" class="hover:text-primary transition-colors">Home</a>
-                    <a href="#" class="hover:text-primary transition-colors">Features</a>
-                    <a href="#" class="hover:text-primary transition-colors">How it Works</a>
-                    <a href="#" class="hover:text-primary transition-colors">Blog</a>
-                    <a href="#" class="hover:text-primary transition-colors">Contact</a>
-                    <a href="#" class="text-primary border-b-2 border-primary pb-1">About Us</a>
-                </div>
-                
-                <!-- Mobile Menu Button -->
-                <button id="mobileMenuBtn" class="md:hidden text-white text-2xl focus:outline-none">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-            
-            <!-- Mobile Dropdown Menu -->
-            <div id="mobileMenu" class="mobile-menu md:hidden overflow-hidden transition-all duration-300">
-                <div class="flex flex-col gap-3 pt-4 pb-2">
-                    <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Home</a>
-                    <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Features</a>
-                    <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">How it Works</a>
-                    <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Blog</a>
-                    <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Contact</a>
-                    <a href="#" class="px-4 py-2 text-primary bg-white/5 rounded-lg transition-colors">About Us</a>
-                </div>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-camera"></i>Exif Explorer
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="features.html">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="how-it-works.html">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="privacy-policy.html">Privacy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="terms-of-use.html">Terms</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
-        <div class="absolute inset-0">
-            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1920&h=600&fit=crop" alt="Hero background" class="w-full h-full object-cover opacity-20">
-            <div class="absolute inset-0 bg-gradient-to-br from-purple-950/50 via-transparent to-pink-950/50"></div>
-        </div>
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
-        
-        <div class="container mx-auto px-6 relative z-10 text-center">
-            <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 mb-6">
-                <i class="fas fa-heart text-primary text-sm"></i>
-                <span class="text-xs font-medium tracking-wide">Our Story & Mission</span>
-            </div>
-            <h1 class="font-poppins font-black text-5xl md:text-6xl lg:text-7xl leading-tight mb-4">
-                <span class="bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">Our</span>
-                <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Story & Mission</span>
-            </h1>
-            <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-                Discover the team and vision behind Exif Explorer - making photo metadata accessible to everyone while protecting your privacy.
-            </p>
-            <div class="mt-8">
-                <a href="#our-story" class="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 px-8 py-3 rounded-full font-semibold text-white transition-all duration-300 hover:scale-105">
-                    <i class="fas fa-book-open"></i> Read Our Story
-                </a>
+    <section class="terms-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4">Terms of Use</h1>
+                    <p class="lead mb-4">Please read these terms carefully before using Exif Explorer.</p>
+                    <p class="mb-0"><i class="fas fa-file-contract me-2"></i>Last Updated: January 15, 2024</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Our Story Section -->
-    <section id="our-story" class="py-20">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto">
-                <div class="glass-premium rounded-2xl p-8 md:p-10">
-                    <div class="text-center mb-8">
-                        <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-book text-3xl text-primary"></i>
-                        </div>
-                        <h2 class="font-poppins font-bold text-3xl text-white">Our Story</h2>
-                    </div>
-                    <p class="text-gray-300 text-lg mb-4">Exif Explorer was born from a simple observation: every digital photo contains a hidden story, but accessing this information was either too technical or compromised user privacy.</p>
-                    <p class="text-gray-400 mb-4">In 2023, our founder — a web developer and privacy advocate — grew frustrated with existing metadata tools. They either required uploading sensitive images to unknown servers or demanded technical expertise that most users didn't have.</p>
-                    
-                    <div class="gradient-border mt-6 mb-6">
-                        <div class="p-6">
-                            <div class="flex items-start gap-4">
-                                <i class="fas fa-quote-left text-primary text-3xl"></i>
-                                <p class="text-gray-300 italic text-lg">"We believe that understanding your digital content shouldn't come at the cost of your privacy. Every user deserves tools that respect their data while making complex information accessible."</p>
+    <!-- Main Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="terms-content">
+                        <div class="text-center mb-5">
+                            <h2 class="section-title">Terms and Conditions</h2>
+                            <p class="lead text-muted">By accessing and using Exif Explorer, you accept and agree to be bound by the terms and provisions of this agreement.</p>
+                            
+                            <div class="agreement-box">
+                                <h5><i class="fas fa-handshake terms-icon"></i>Agreement to Terms</h5>
+                                <p class="mb-0">By using our website, you agree to these Terms of Use. If you do not agree, please do not use EXIF Explorer.</p>
                             </div>
                         </div>
+
+                        <!-- Definitions -->
+                        <div class="terms-section">
+                            <h3 class="mb-3"><i class="fas fa-book terms-icon"></i>1. Definitions</h3>
+                            <dl class="definition-list">
+                                <dt>"Exif Explorer"</dt>
+                                <dd>Refers to the website, service, and all associated content available at metasnap.com and its subdomains.</dd>
+                                
+                                <dt>"Service"</dt>
+                                <dd>Refers to the image metadata extraction functionality provided through the EXIF Explorer website.</dd>
+                                
+                                <dt>"User" or "You"</dt>
+                                <dd>Refers to any individual or entity accessing or using the Service.</dd>
+                                
+                                <dt>"Content"</dt>
+                                <dd>Refers to text, images, code, and other materials available on the EXIF Explorer website.</dd>
+                                
+                                <dt>"User Content"</dt>
+                                <dd>Refers to images uploaded by users for metadata extraction.</dd>
+                            </dl>
+                        </div>
+
+                        <!-- Acceptance of Terms -->
+                        <div class="terms-section">
+                            <h3 class="mb-3"><i class="fas fa-check-circle terms-icon"></i>2. Acceptance of Terms</h3>
+                            <p>By accessing or using Exif Explorer, you agree to be bound by these Terms of Use and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site.</p>
+                            
+                            <div class="info-box">
+                                <h5><i class="fas fa-info-circle me-2"></i>Eligibility</h5>
+                                <p class="mb-0">You must be at least 13 years old to use Exif Explorer. If you are under 18, you must have your parent or guardian's permission to use our service.</p>
+                            </div>
+                        </div>
+
+                        <!-- License to Use -->
+                        <div class="terms-section">
+                            <h3 class="mb-3"><i class="fas fa-key terms-icon"></i>3. License to Use</h3>
+                            <p>Subject to these Terms, Exif Explorer grants you a limited, non-exclusive, non-transferable, revocable license to:</p>
+                            
+                            <ul class="terms-list">
+                                <li>Access and use Exif Explorer for personal or commercial purposes</li>
+                                <li>Extract metadata from your own images</li>
+                                <li>Use the extracted metadata as needed</li>
+                            </ul>
+                            
+                            <div class="warning-box">
+                                <h5><i class="fas fa-ban me-2"></i>Restrictions</h5>
+                                <p class="mb-0">You may not: reverse engineer the service, attempt to gain unauthorized access, use EXIF Explorer for illegal purposes, or violate any applicable laws.</p>
+                            </div>
+                        </div>
+
+                        <!-- User Responsibilities -->
+                        <div class="terms-section">
+                            <h3 class="mb-3"><i class="fas fa-user-check terms-icon"></i>4. User Responsibilities</h3>
+                            <p>When using Exif Explorer, you agree to:</p>
+                            
+                            <ul class="terms-list">
+                                <li><strong>Comply with Laws:</strong> Use the service in compliance with all applicable laws and regulations</li>
+                                <li><strong>Respect Privacy:</strong> Do not upload images containing sensitive personal information of others without consent</li>
+                                <li><strong>Ownership Rights:</strong> Only upload images you own or have permission to use</li>
+                                <li><strong>No Malicious Use:</strong> Do not use the service to harm others or engage in illegal activities</li>
+                                <li><strong>Accuracy:</strong> Understand that metadata extraction depends on the information embedded in images</li>
+                            </ul>
+                            
+                            <div class="important-note">
+                                <h5><i class="fas fa-exclamation-triangle me-2"></i>Important Note on Image Uploads</h5>
+                                <p class="mb-0">While Exif Explorer processes images locally in your browser, you should still exercise caution when handling sensitive or confidential images. Ensure you have appropriate rights to any images you process.</p>
+                            </div>
+                        </div>
+
+                        <!-- Intellectual Property -->
+                        <div class="terms-section">
+                            <h3 class="mb-3"><i class="fas fa-copyright terms-icon"></i>5. Intellectual Property</h3>
+                            
+                            <h5 class="mt-4 mb-3">A. Our Intellectual Property</h5>
+                            <p>Exif Explorer and all associated content, features, and functionality are owned by EXIF Explorer and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.</p>
+                            
+                            <h5 class="mt-4 mb-3">B. Your Intellectual Property</h5>
+                            <p>You retain all rights to the images you upload. Exif Explorer does not claim ownership of any images processed through our service.</p>
+                            
+                            <h5 class="mt-4 mb-3">C. Third-Party Intellectual Property</h5>
+                            <p>Exif Explorer uses third-party libraries including:</p>
+                            <ul class="terms-list">
+                                <li>EXIF.js - For metadata extraction</li>
+                                <li>Bootstrap - For frontend framework</li>
+                                <li>Font Awesome - For icons</li>
+                            </ul>
+                            <p>These libraries are used under their respective licenses.</p>
+                        </div>
+
+                        <!-- Disclaimer of Warranties -->
+                        <div class="terms-section">
+                            <h3 class="mb-3"><i class="fas fa-exclamation-triangle terms-icon"></i>6. Disclaimer of Warranties</h3>
+                            <p>Exif Explorer is provided "as is" and "as available" without any warranties of any kind, either express or implied, including but not limited to:</p>
+                            
+                            <ul class="terms-list">
+                                <li>Warranties of merchantability</li>
+                                <li>Fitness for a particular purpose</li>
+                                <li>Non-infringement</li>
+                                <li>Accuracy or reliability of results</li>
+                                <li>Uninterrupted or error-free service</li>
+                            </ul>
+                            
+                            <div class="warning-box">
+                                <h5><i class="fas fa-shield-alt me-2"></i>Service Limitations</h5>
+                                <p class="mb-0">Exif Explorer may not work correctly with all image formats or in all browsers. The accuracy of metadata extraction depends on the information embedded in the original image by the camera or editing software.</p>
+                            </div>
+                        </div>
+
+                        <!-- Limitation of Liability -->
+                        <div class="terms-section">
+                            <h3 class="mb-3"><i class="fas fa-balance-scale terms-icon"></i>7. Limitation of Liability</h3>
+                            <p>To the fullest extent permitted by applicable law, Exif Explorer shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation:</p>
+                            
+                            <ul class="terms-list">
+                                <li>Loss of profits</li>
+                                <li>Loss of data</li>
+                                <li>Business interruption</li>
+                                <li>Personal injury</li>
+                                <li>Privacy violation</li>
+                            </ul>
+                            
+                            <p>This limitation applies whether the alleged liability is based on contract, tort, negligence, strict liability, or any other basis.</p>
+                            
+                            <div class="info-box">
+                                <h5><i class="fas fa-gavel me-2"></i>Maximum Liability</h5>
+                                <p class="mb-0">In no event shall Exif Explorer's total liability to you for all damages exceed the amount of fifty dollars ($50.00 USD).</p>
+                            </div>
+                        </div>
+
+                        <!-- Indemnification -->
+                        <div class="terms-section">
+                            <h3 class="mb-3"><i class="fas fa-user-shield terms-icon"></i>8. Indemnification</h3>
+                            <p>You agree to defend, indemnify, and hold harmless Exif Explorer and its affiliates, officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, and expenses, including without limitation reasonable legal and accounting fees, arising out of or in any way connected with:</p>
+                            
+                            <ul class="terms-list">
+                                <li>Your access to or use of Exif Explorer</li>
+                                <li>Your violation of these Terms of Use</li>
+                                <li>Your violation of any third-party right</li>
+                                <li>Any content you submit or upload</li>
+                            </ul>
+                        </div>
+
+                        <!-- Termination -->
+                        <div class="terms-section">
+                            <h3 class="mb-3"><i class="fas fa-power-off terms-icon"></i>9. Termination</h3>
+                            <p>We may terminate or suspend your access to Exif Explorer immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p>
+                            
+                            <p>Upon termination, your right to use Exif Explorer will cease immediately. All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity, and limitations of liability.</p>
+                        </div>
+
+                        <!-- Changes to Terms -->
+                        <div class="terms-section">
+                            <h3 class="mb-3"><i class="fas fa-sync-alt terms-icon"></i>10. Changes to Terms</h3>
+                            <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will try to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+                            
+                            <p>By continuing to access or use Exif Explorer after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the service.</p>
+                        </div>
+
+                        <!-- Governing Law -->
+                        <div class="terms-section">
+                            <h3 class="mb-3"><i class="fas fa-globe terms-icon"></i>11. Governing Law</h3>
+                            <p>These Terms shall be governed and construed in accordance with the laws of the State of California, United States, without regard to its conflict of law provisions.</p>
+                            
+                            <p>Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect.</p>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="terms-section">
+                            <h3 class="mb-3"><i class="fas fa-envelope terms-icon"></i>12. Contact Information</h3>
+                            <p>If you have any questions about these Terms, please contact us:</p>
+                            
+                            <ul class="list-unstyled">
+                                <li><strong>Email:</strong> legal@exifexplorer.com</li>
+                                <li><strong>Address:</strong> Adetokunbo Ademola Street
+Federal Capital Territoy, Abuja
+Nigeria</li>
+                                <li><strong>Contact Form:</strong> <a href="contact.html">Visit our Contact Page</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Agreement Section -->
+                        <div class="agreement-box">
+                            <h5><i class="fas fa-file-signature terms-icon"></i>Your Agreement</h5>
+                            <p class="mb-3">By using Exif Explorer, you acknowledge that you have read, understood, and agree to be bound by these Terms of Use.</p>
+                            <p class="mb-0"><small>These Terms constitute the entire agreement between you and ExifExplorer regarding our service and supersede any prior agreements.</small></p>
+                        </div>
+
+                        <!-- Last Updated -->
+                        <div class="text-center mt-5">
+                            <p class="text-muted"><i class="fas fa-clock me-2"></i>These Terms of Use were last updated on <strong>January 15, 2024</strong>.</p>
+                        </div>
                     </div>
                     
-                    <p class="text-gray-400">What started as a personal project quickly evolved into a mission to democratize access to photo metadata. We assembled a team of developers, designers, and privacy experts who shared the vision of creating a tool that was both powerful and privacy-respecting.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Mission & Vision -->
-    <section class="py-12">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-                <div class="gradient-border">
-                    <div class="p-8 text-center">
-                        <div class="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-bullseye text-2xl text-primary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-3">Our Mission</h3>
-                        <p class="text-gray-400">To make photo metadata extraction accessible, understandable, and privacy-focused for everyone - from professional photographers to curious individuals.</p>
-                    </div>
-                </div>
-                <div class="gradient-border">
-                    <div class="p-8 text-center">
-                        <div class="w-16 h-16 rounded-2xl bg-secondary/20 flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-eye text-2xl text-secondary"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-3">Our Vision</h3>
-                        <p class="text-gray-400">A world where digital literacy includes understanding the data within our photos, and where privacy is the default standard for all online tools.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Core Values -->
-    <section class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <span class="inline-block text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full mb-4">
-                    What We Stand For
-                </span>
-                <h2 class="font-poppins font-bold text-4xl text-white mb-4">Our Core Values</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">The principles that guide everything we do at Exif Explorer</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-                <div class="value-card glass-premium rounded-2xl p-6 text-center">
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-lock text-white text-xl"></i>
-                    </div>
-                    <h4 class="font-bold text-white mb-2">Privacy First</h4>
-                    <p class="text-gray-400 text-sm">Your images never leave your device. Privacy isn't a feature - it's a fundamental right.</p>
-                </div>
-                <div class="value-card glass-premium rounded-2xl p-6 text-center">
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-universal-access text-white text-xl"></i>
-                    </div>
-                    <h4 class="font-bold text-white mb-2">Accessibility</h4>
-                    <p class="text-gray-400 text-sm">Complex technology made simple. No technical knowledge required to uncover photo secrets.</p>
-                </div>
-                <div class="value-card glass-premium rounded-2xl p-6 text-center">
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-graduation-cap text-white text-xl"></i>
-                    </div>
-                    <h4 class="font-bold text-white mb-2">Education</h4>
-                    <p class="text-gray-400 text-sm">We're not just building a tool - we're fostering digital literacy and understanding.</p>
-                </div>
-                <div class="value-card glass-premium rounded-2xl p-6 text-center">
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-heart text-white text-xl"></i>
-                    </div>
-                    <h4 class="font-bold text-white mb-2">Free Forever</h4>
-                    <p class="text-gray-400 text-sm">Essential tools should be accessible to everyone, regardless of their budget.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Timeline & Stats -->
-    <section class="py-16 bg-black/30">
-        <div class="container mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-                <!-- Timeline -->
-                <div class="glass-premium rounded-2xl p-8">
-                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                        <i class="fas fa-timeline text-primary"></i> Our Journey
-                    </h3>
-                    <div class="space-y-6">
-                        <div class="timeline-dot pl-6 relative">
-                            <div class="absolute left-0 top-2 w-2 h-2 rounded-full bg-primary"></div>
-                            <div class="absolute left-0 top-2 w-8 h-0.5 bg-gradient-to-r from-primary to-transparent"></div>
-                            <h4 class="font-bold text-white">January 2023</h4>
-                            <p class="text-gray-400 text-sm">The idea was born after recognizing the gap in privacy-focused metadata tools.</p>
-                        </div>
-                        <div class="timeline-dot pl-6 relative">
-                            <div class="absolute left-0 top-2 w-2 h-2 rounded-full bg-primary"></div>
-                            <div class="absolute left-0 top-2 w-8 h-0.5 bg-gradient-to-r from-primary to-transparent"></div>
-                            <h4 class="font-bold text-white">March 2023</h4>
-                            <p class="text-gray-400 text-sm">First prototype built with client-side processing as the core feature.</p>
-                        </div>
-                        <div class="timeline-dot pl-6 relative">
-                            <div class="absolute left-0 top-2 w-2 h-2 rounded-full bg-primary"></div>
-                            <div class="absolute left-0 top-2 w-8 h-0.5 bg-gradient-to-r from-primary to-transparent"></div>
-                            <h4 class="font-bold text-white">June 2023</h4>
-                            <p class="text-gray-400 text-sm">Beta testing with photographers, researchers, and privacy advocates.</p>
-                        </div>
-                        <div class="timeline-dot pl-6 relative">
-                            <div class="absolute left-0 top-2 w-2 h-2 rounded-full bg-primary"></div>
-                            <div class="absolute left-0 top-2 w-8 h-0.5 bg-gradient-to-r from-primary to-transparent"></div>
-                            <h4 class="font-bold text-white">September 2023</h4>
-                            <p class="text-gray-400 text-sm">Added PDF/CSV/JSON export capabilities based on user feedback.</p>
-                        </div>
-                        <div class="timeline-dot pl-6 relative">
-                            <div class="absolute left-0 top-2 w-2 h-2 rounded-full bg-primary"></div>
-                            <div class="absolute left-0 top-2 w-8 h-0.5 bg-gradient-to-r from-primary to-transparent"></div>
-                            <h4 class="font-bold text-white">January 2024</h4>
-                            <p class="text-gray-400 text-sm">Public launch of Exif Explorer with complete feature set.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Stats -->
-                <div class="glass-premium rounded-2xl p-8">
-                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                        <i class="fas fa-chart-line text-primary"></i> By The Numbers
-                    </h3>
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="text-center p-4 bg-white/5 rounded-xl">
-                            <div class="stat-number text-4xl font-bold mb-2">50K+</div>
-                            <p class="text-gray-400 text-sm">Images Processed</p>
-                        </div>
-                        <div class="text-center p-4 bg-white/5 rounded-xl">
-                            <div class="stat-number text-4xl font-bold mb-2">100%</div>
-                            <p class="text-gray-400 text-sm">Client-Side Processing</p>
-                        </div>
-                        <div class="text-center p-4 bg-white/5 rounded-xl">
-                            <div class="stat-number text-4xl font-bold mb-2">120+</div>
-                            <p class="text-gray-400 text-sm">Countries Reached</p>
-                        </div>
-                        <div class="text-center p-4 bg-white/5 rounded-xl">
-                            <div class="stat-number text-4xl font-bold mb-2">0</div>
-                            <p class="text-gray-400 text-sm">Images Uploaded to Servers</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Meet The Team -->
-    <section class="py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <span class="inline-block text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full mb-4">
-                    The People Behind the Tool
-                </span>
-                <h2 class="font-poppins font-bold text-4xl text-white mb-4">Meet Our Team</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">The passionate individuals behind Exif Explorer</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <!-- Team Member 1 -->
-                <div class="glass-premium rounded-2xl p-6 text-center">
-                    <div class="w-28 h-28 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-4 text-3xl font-bold text-white">
-                        DE
-                    </div>
-                    <h4 class="text-xl font-bold text-white">Dave Enyi</h4>
-                    <p class="text-primary text-sm mb-2">Founder & Developer</p>
-                    <p class="text-gray-400 text-sm">Web developer turned privacy advocate. Believes technology should serve people, not corporations.</p>
-                    <div class="flex justify-center gap-3 mt-4">
-                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-twitter text-xs"></i></a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-linkedin-in text-xs"></i></a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-github text-xs"></i></a>
-                    </div>
-                </div>
-                
-                <!-- Team Member 2 -->
-                <div class="glass-premium rounded-2xl p-6 text-center">
-                    <div class="w-28 h-28 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-4 text-3xl font-bold text-white">
-                        MS
-                    </div>
-                    <h4 class="text-xl font-bold text-white">Maya Sharma</h4>
-                    <p class="text-primary text-sm mb-2">UX/UI Designer</p>
-                    <p class="text-gray-400 text-sm">Makes complex data beautiful and accessible. Passionate about inclusive design and user experience.</p>
-                    <div class="flex justify-center gap-3 mt-4">
-                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-dribbble text-xs"></i></a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-linkedin-in text-xs"></i></a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-behance text-xs"></i></a>
-                    </div>
-                </div>
-                
-                <!-- Team Member 3 -->
-                <div class="glass-premium rounded-2xl p-6 text-center">
-                    <div class="w-28 h-28 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-4 text-3xl font-bold text-white">
-                        DR
-                    </div>
-                    <h4 class="text-xl font-bold text-white">David Rodriguez</h4>
-                    <p class="text-primary text-sm mb-2">Privacy Specialist</p>
-                    <p class="text-gray-400 text-sm">Digital rights advocate ensuring every feature respects user privacy. Former security consultant.</p>
-                    <div class="flex justify-center gap-3 mt-4">
-                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-twitter text-xs"></i></a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-linkedin-in text-xs"></i></a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition"><i class="fas fa-globe text-xs"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Call to Action -->
-    <section class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto text-center">
-                <div class="gradient-border">
-                    <div class="p-10">
-                        <h3 class="font-poppins font-bold text-3xl text-white mb-4">Join Our Mission</h3>
-                        <p class="text-gray-400 mb-6">Help us make photo metadata accessible while protecting privacy for everyone.</p>
-                        <div class="flex flex-wrap gap-4 justify-center">
-                            <a href="#" class="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 px-6 py-3 rounded-full font-semibold text-white transition-all duration-300">
-                                <i class="fas fa-handshake"></i> Partner With Us
-                            </a>
-                            <a href="#" class="inline-flex items-center gap-2 border border-white/30 hover:bg-white/10 px-6 py-3 rounded-full font-semibold text-white transition-all duration-300">
-                                <i class="fas fa-bolt"></i> Try Exif Explorer
-                            </a>
-                        </div>
+                    <!-- Navigation Buttons -->
+                    <div class="text-center mt-4">
+                        <a href="index.html" class="btn btn-primary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Home
+                        </a>
+                        <a href="privacy-policy.html" class="btn btn-outline-primary ms-2">
+                            <i class="fas fa-shield-alt me-2"></i>View Privacy Policy
+                        </a>
                     </div>
                 </div>
             </div>
@@ -457,100 +458,73 @@
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-white/10 py-12 bg-black/30">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div>
-                    <i class="fas fa-camera text-primary text-2xl"></i>
-                    <h5 class="font-bold text-lg mt-2">Exif Explorer</h5>
-                    <p class="text-gray-500 text-sm mt-2">Making photo metadata accessible while protecting your privacy.</p>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-camera me-2"></i>Exif Explorer</h5>
+                    <p class="mt-3">Extract valuable metadata from your images with our professional tool. Discover camera settings, location data, and more.</p>
                 </div>
-                <div>
-                    <h5 class="font-semibold">Quick Links</h5>
-                    <ul class="space-y-1 mt-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-primary">Home</a></li>
-                        <li><a href="#" class="hover:text-primary">Features</a></li>
-                        <li><a href="#" class="hover:text-primary">How It Works</a></li>
-                        <li><a href="#" class="hover:text-primary">Blog</a></li>
-                        <li><a href="#" class="hover:text-primary">Contact</a></li>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-light">Home</a></li>
+                        <li><a href="features.html" class="text-light">Features</a></li>
+                        <li><a href="how-it-works.html" class="text-light">How It Works</a></li>
+                        <li><a href="contact.html" class="text-light">Contact</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h5 class="font-semibold">Legal</h5>
-                    <ul class="space-y-1 mt-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-primary">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-primary">Terms of Use</a></li>
+                <div class="col-md-3">
+                    <h5>Legal</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="privacy-policy.html" class="text-light">Privacy Policy</a></li>
+                        <li><a href="terms-of-use.html" class="text-light">Terms of Use</a></li>
                     </ul>
-                </div>
-                <div>
-                    <h5 class="font-semibold">Connect</h5>
-                    <div class="flex gap-4 mt-2">
-                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-twitter fa-lg"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-github fa-lg"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-instagram fa-lg"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                    </div>
                 </div>
             </div>
-            <hr class="border-white/10 my-8">
-            <div class="text-center text-gray-500 text-sm">© <span id="currentYear"></span> Exif Explorer — All rights reserved.</div>
+            <hr class="mt-4 mb-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">© <span id="currentYear">2023</span> Exif Explorer. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="privacy-policy.html" class="text-light me-3">Privacy Policy</a>
+                    <a href="terms-of-use.html" class="text-light">Terms of Service</a>
+                </div>
+            </div>
         </div>
     </footer>
 
     <!-- Back to Top Button -->
-    <button id="backToTop" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gradient-to-r from-primary to-secondary text-white flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:scale-110 z-50 shadow-lg">
+    <a href="#" class="back-to-top" id="backToTop">
         <i class="fas fa-chevron-up"></i>
-    </button>
+    </a>
 
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        // Mobile menu toggle
-        const mobileBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        let menuOpen = false;
-        mobileBtn.addEventListener('click', () => {
-            menuOpen = !menuOpen;
-            mobileMenu.classList.toggle('open');
-            mobileBtn.innerHTML = menuOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-        });
+        // Update current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
         
-        document.querySelectorAll('#mobileMenu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('open');
-                menuOpen = false;
-                mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
-            });
-        });
+        // Back to top button functionality
+        const backToTopButton = document.getElementById('backToTop');
         
-        // Back to top button
-        const backToTop = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
             if (window.pageYOffset > 300) {
-                backToTop.style.opacity = '1';
-                backToTop.style.visibility = 'visible';
+                backToTopButton.classList.add('show');
             } else {
-                backToTop.style.opacity = '0';
-                backToTop.style.visibility = 'hidden';
+                backToTopButton.classList.remove('show');
             }
         });
         
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-        
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+        backToTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         });
-        
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
