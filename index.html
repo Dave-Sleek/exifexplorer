@@ -5,40 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="title" content="Exif Explorer | Professional Image Metadata Extractor - Free Online Tool">
 <meta name="description" content="Extract image metadata for free with Exif Explorer. Get GPS coordinates, camera settings, date taken, and more from your photos. No registration required.">
-<meta name="keywords" content="image metadata extractor, EXIF data, GPS coordinates extraction, camera settings, photo metadata, image information, free online tool, metadata viewer, photo details">
+<meta name="keywords" content="image metadata extractor, EXIF data, GPS coordinates extraction, camera settings, photo metadata, image information, free online tool">
 <meta name="author" content="Exif Explorer">
-<meta name="robots" content="index, follow">
-<!-- Open Graph / Facebook -->
+<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.exifexplorer.com/">
 <meta property="og:title" content="Exif Explorer | Professional Image Metadata Extractor">
 <meta property="og:description" content="Free online tool to extract metadata from images. Get GPS, camera info, and more from your photos instantly.">
-<meta property="og:image" content="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=1200&h=630&fit=crop">
-<meta property="og:site_name" content="Exif Explorer">
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Exif Explorer | Professional Image Metadata Extractor">
-<meta name="twitter:description" content="Free online tool to extract metadata from images. Get GPS, camera info, and more from your photos instantly.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1200&h=630&fit=crop">
 <!-- Canonical -->
 <link rel="canonical" href="https://www.exifexplorer.com/">
-<!-- Preconnect & Resources -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8918616047230546" crossorigin="anonymous"></script>
-<!-- Tailwind CSS + Fonts + Icons + Libraries -->
+<!-- Tailwind CSS + Custom Config -->
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- Custom Tailwind Config Override (premium black theme) -->
 <script>
   tailwind.config = {
     theme: {
       extend: {
         colors: {
-          primary: '#8B5CF6',    // vivid purple
-          secondary: '#06B6D4',  // cyan accent
-          darkBg: '#030014',     // rich black with slight violet
-          cardBg: '#0F0A1F',
-          surface: '#1A142F',
-          glow: 'rgba(139, 92, 246, 0.3)'
+          primary: '#A855F7',
+          secondary: '#EC4899',
+          dark: '#0A0A0F',
+          card: '#111115',
+          surface: '#1A1A1F',
         },
         fontFamily: {
           'poppins': ['Poppins', 'sans-serif'],
@@ -46,258 +34,245 @@
         },
         animation: {
           'float': 'float 6s ease-in-out infinite',
-          'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+          'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          'gradient': 'gradient 8s ease infinite',
         },
         keyframes: {
           float: {
             '0%, 100%': { transform: 'translateY(0px)' },
-            '50%': { transform: 'translateY(-10px)' },
+            '50%': { transform: 'translateY(-20px)' },
           },
-          glowPulse: {
-            '0%, 100%': { boxShadow: '0 0 5px rgba(139, 92, 246, 0.3)' },
-            '50%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.6)' },
+          gradient: {
+            '0%, 100%': { backgroundPosition: '0% 50%' },
+            '50%': { backgroundPosition: '100% 50%' },
           }
         }
       }
     }
   }
 </script>
-<!-- Google Fonts + Font Awesome + EXIF + Leaflet -->
+<!-- Google Fonts + Icons + Libraries -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<!-- Additional utility: html2canvas + jspdf for PDF export -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
-  /* custom smooth scroll & glass effect overrides */
-  html {
-    scroll-behavior: smooth;
-  }
   body {
-    background: radial-gradient(circle at 10% 20%, #050010, #000000);
+    background: linear-gradient(135deg, #050508 0%, #0A0A0F 50%, #050508 100%);
   }
-  .glass-card {
-    background: rgba(15, 10, 31, 0.75);
+  .glass-premium {
+    background: rgba(17, 17, 21, 0.75);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .glass-premium:hover {
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow: 0 20px 40px -15px rgba(168, 85, 247, 0.15);
+  }
+  .upload-zone {
     transition: all 0.3s ease;
   }
-  .glass-card:hover {
-    border-color: rgba(139, 92, 246, 0.5);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(139, 92, 246, 0.2);
+  .upload-zone.drag-over {
+    border-color: #A855F7 !important;
+    background: rgba(168, 85, 247, 0.08);
+    transform: scale(0.98);
   }
-  .upload-glow {
-    transition: all 0.3s;
-  }
-  .upload-glow:hover {
-    border-color: #8B5CF6;
-    box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
-  }
-  .hero-gradient-text {
-    background: linear-gradient(135deg, #FFFFFF 0%, #C084FC 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .map-container {
+  .gradient-border {
+    position: relative;
+    background: linear-gradient(135deg, rgba(168,85,247,0.3), rgba(236,72,153,0.3));
+    padding: 1px;
     border-radius: 1.5rem;
-    overflow: hidden;
+  }
+  .gradient-border > div {
+    background: #0A0A0F;
+    border-radius: 1.5rem;
   }
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #0F0A1F;
+    background: #111115;
   }
   ::-webkit-scrollbar-thumb {
-    background: #8B5CF6;
+    background: #A855F7;
     border-radius: 10px;
+  }
+  @keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
   }
 </style>
 </head>
-<body class="font-inter bg-darkBg text-gray-200 antialiased">
+<body class="font-inter text-gray-200">
 
-  <!-- Navigation - Premium Glassmorphism -->
-  <nav class="sticky top-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
-    <div class="container mx-auto px-5 lg:px-8 py-4 flex justify-between items-center">
-      <a href="#" class="flex items-center gap-2 text-2xl font-poppins font-bold tracking-tight">
-        <i class="fas fa-search text-primary"></i>
-        <span class="bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">Exif Explorer</span>
-      </a>
-      <div class="hidden md:flex space-x-7 text-gray-300 font-medium">
-        <a href="#" class="hover:text-primary transition">Home</a>
-        <a href="#" class="hover:text-primary transition">Features</a>
-        <a href="#" class="hover:text-primary transition">How It Works</a>
-        <a href="#" class="hover:text-primary transition">Blog</a>
-        <a href="#" class="hover:text-primary transition">Contact</a>
-        <a href="#" class="text-primary border-b-2 border-primary">About</a>
+  <!-- Navigation - Sleek Glass -->
+  <nav class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-xl border-b border-white/5">
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+            <i class="fas fa-camera-retro text-white text-sm"></i>
+          </div>
+          <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
+        </a>
+        <div class="hidden md:flex gap-8 text-sm font-medium">
+          <a href="#" class="hover:text-primary transition">Home</a>
+          <a href="#" class="hover:text-primary transition">Features</a>
+          <a href="#" class="hover:text-primary transition">How it Works</a>
+          <a href="#" class="hover:text-primary transition">Blog</a>
+          <a href="#" class="text-primary border-b-2 border-primary pb-1">About</a>
+        </div>
+        <button class="md:hidden text-white"><i class="fas fa-bars text-xl"></i></button>
       </div>
-      <button class="md:hidden text-white text-2xl"><i class="fas fa-bars"></i></button>
     </div>
   </nav>
 
-  <!-- Hero Section - Modern, sleek, animated -->
-  <section class="relative overflow-hidden pt-20 pb-24 lg:pt-28 lg:pb-32">
-    <div class="absolute top-0 left-0 w-full h-full opacity-20 bg-[url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=2000')] bg-cover bg-center blur-3xl"></div>
-    <div class="container mx-auto px-5 lg:px-8 relative z-2">
+  <!-- Hero Section - Elegant, Modern, Cinematic -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <!-- Animated Background Gradient -->
+    <div class="absolute inset-0 bg-gradient-to-br from-purple-950/20 via-transparent to-pink-950/20 animate-gradient"></div>
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse-slow"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+    
+    <div class="container mx-auto px-6 relative z-10">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <h1 class="font-poppins font-extrabold text-4xl md:text-5xl lg:text-6xl leading-tight">
-            <span class="hero-gradient-text">Extract Image Metadata</span><br>
-            <span class="text-white">with <span class="text-primary">Precision</span></span>
+        <div class="text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 mb-6">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+            </span>
+            <span class="text-xs font-medium tracking-wide">AI-Powered EXIF Analysis</span>
+          </div>
+          
+          <h1 class="font-poppins font-black text-5xl md:text-6xl lg:text-7xl leading-tight">
+            <span class="bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">Uncover Hidden</span><br>
+            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Photo Secrets</span>
           </h1>
-          <p class="text-gray-300 text-lg mt-6 leading-relaxed">Uncover hidden details — GPS coordinates, camera settings, date taken, and more. Professional EXIF extraction, completely free.</p>
-          <div class="mt-8 flex flex-wrap gap-4">
-            <a href="#extractor" class="inline-flex items-center gap-2 bg-primary hover:bg-purple-700 text-white font-semibold px-8 py-4 rounded-full transition-all shadow-lg hover:shadow-purple-500/30 text-lg">
-              Get Started <i class="fas fa-arrow-right"></i>
+          
+          <p class="text-gray-400 text-lg mt-6 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            Extract GPS coordinates, camera settings, timestamps, and hidden metadata from any image. Professional-grade tool, completely free.
+          </p>
+          
+          <div class="flex flex-wrap gap-4 justify-center lg:justify-start mt-8">
+            <a href="#extractor" class="group relative inline-flex items-center gap-2 bg-gradient-to-r from-primary to-secondary px-8 py-4 rounded-full font-semibold text-white shadow-lg hover:shadow-primary/30 transition-all duration-300 hover:scale-105">
+              <span>Start Extracting</span>
+              <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i>
             </a>
-            <a href="#" class="inline-flex items-center gap-2 border border-white/30 backdrop-blur-sm hover:bg-white/10 px-7 py-4 rounded-full transition-all">
-              <i class="fas fa-play"></i> Watch Demo
+            <a href="#" class="inline-flex items-center gap-2 border border-white/20 backdrop-blur-sm px-8 py-4 rounded-full font-semibold hover:bg-white/5 transition-all">
+              <i class="fas fa-play-circle"></i>
+              Watch Demo
             </a>
           </div>
+          
+          <!-- Stats Badges -->
+          <div class="flex gap-6 justify-center lg:justify-start mt-10">
+            <div class="text-center"><div class="text-2xl font-bold text-primary">1M+</div><div class="text-xs text-gray-500">Images Processed</div></div>
+            <div class="text-center"><div class="text-2xl font-bold text-primary">100%</div><div class="text-xs text-gray-500">Free Forever</div></div>
+            <div class="text-center"><div class="text-2xl font-bold text-primary">Instant</div><div class="text-xs text-gray-500">Results</div></div>
+          </div>
         </div>
-        <div class="relative flex justify-center animate-float">
-          <div class="absolute inset-0 bg-gradient-to-r from-primary/30 to-secondary/30 blur-3xl rounded-full"></div>
-          <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Camera lens" class="relative rounded-2xl shadow-2xl border border-white/20 w-full max-w-md object-cover">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Feature Cards (Premium) -->
-  <section class="py-20">
-    <div class="container mx-auto px-5 lg:px-8">
-      <div class="text-center mb-14">
-        <span class="text-primary font-semibold tracking-wider uppercase text-sm border border-primary/30 px-4 py-1 rounded-full inline-block">What You Discover</span>
-        <h2 class="font-poppins font-bold text-3xl md:text-4xl mt-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">Unlock Hidden Photo Secrets</h2>
-      </div>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="glass-card rounded-2xl p-6 text-center">
-          <div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto text-primary text-2xl"><i class="fas fa-map-marker-alt"></i></div>
-          <h3 class="text-xl font-bold mt-5">Location Data</h3>
-          <p class="text-gray-400 mt-2">Precise GPS coordinates & reverse geocoding — see exactly where memories were made.</p>
-        </div>
-        <div class="glass-card rounded-2xl p-6 text-center">
-          <div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto text-primary text-2xl"><i class="fas fa-camera"></i></div>
-          <h3 class="text-xl font-bold mt-5">Camera Details</h3>
-          <p class="text-gray-400 mt-2">Model, lens, aperture, shutter speed, ISO — every technical nuance.</p>
-        </div>
-        <div class="glass-card rounded-2xl p-6 text-center">
-          <div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto text-primary text-2xl"><i class="fas fa-calendar-alt"></i></div>
-          <h3 class="text-xl font-bold mt-5">Date & Time</h3>
-          <p class="text-gray-400 mt-2">Exact capture timestamp including timezone and original date taken.</p>
+        
+        <div class="relative flex justify-center">
+          <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 blur-3xl rounded-full"></div>
+          <div class="relative animate-float">
+            <div class="gradient-border">
+              <div class="p-2">
+                <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&h=600&fit=crop" alt="Camera lens" class="rounded-2xl w-full max-w-md shadow-2xl">
+              </div>
+            </div>
+            <!-- Floating badges -->
+            <div class="absolute -top-6 -right-6 glass-premium rounded-2xl px-4 py-2 flex items-center gap-2">
+              <i class="fas fa-map-marker-alt text-primary text-sm"></i>
+              <span class="text-xs font-medium">GPS Location</span>
+            </div>
+            <div class="absolute -bottom-6 -left-6 glass-premium rounded-2xl px-4 py-2 flex items-center gap-2">
+              <i class="fas fa-camera text-secondary text-sm"></i>
+              <span class="text-xs font-medium">Camera Settings</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Main Extractor Section with Tailwind & modern styling -->
-  <section id="extractor" class="py-16 relative">
-    <div class="container mx-auto px-5 lg:px-8">
+  <!-- Extractor Section -->
+  <section id="extractor" class="py-20">
+    <div class="container mx-auto px-6">
       <div class="text-center mb-12">
-        <h2 class="font-poppins font-bold text-3xl md:text-4xl">Extract <span class="text-primary">Metadata</span> Instantly</h2>
-        <p class="text-gray-400 mt-2 max-w-2xl mx-auto">Upload any image — JPG, PNG, WebP — and get full EXIF report in seconds.</p>
+        <span class="text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full">Extract Now</span>
+        <h2 class="font-poppins font-bold text-4xl md:text-5xl mt-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">Analyze Your Image</h2>
+        <p class="text-gray-400 mt-3 max-w-2xl mx-auto">Upload any JPEG, PNG, or WebP image and unlock all hidden metadata instantly</p>
       </div>
 
-      <!-- Toast Notification -->
-      <div id="successToast" class="fixed top-5 right-5 z-[100] bg-gradient-to-r from-primary/90 to-purple-800 text-white px-6 py-3 rounded-xl shadow-2xl backdrop-blur-sm hidden transition-all">
-        <div class="flex items-center gap-2"><i class="fas fa-check-circle"></i> Metadata extracted successfully!</div>
-      </div>
+      <!-- Toast -->
+      <div id="toastMsg" class="fixed top-24 right-6 z-[100] bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-2xl shadow-2xl backdrop-blur-sm hidden transition-all"></div>
 
-      <div class="grid lg:grid-cols-2 gap-8 items-start">
-        <!-- Left Upload Area -->
+      <div class="grid lg:grid-cols-2 gap-8">
+        <!-- Upload Area -->
         <div>
-          <div id="uploadArea" class="glass-card rounded-2xl p-8 text-center border-dashed border-2 border-white/20 hover:border-primary/70 transition-all cursor-pointer upload-glow">
-            <div class="text-primary text-5xl mb-4"><i class="fas fa-cloud-upload-alt"></i></div>
-            <h4 class="text-2xl font-semibold">Upload Your Image</h4>
-            <p class="text-gray-400 my-3">Drag & drop or click to browse</p>
+          <div id="uploadArea" class="glass-premium rounded-2xl p-8 text-center border-2 border-dashed border-white/20 cursor-pointer upload-zone transition-all">
+            <i class="fas fa-cloud-upload-alt text-6xl text-primary mb-4"></i>
+            <h3 class="text-2xl font-semibold">Drop your image here</h3>
+            <p class="text-gray-400 my-3">or click to browse</p>
             <input type="file" id="imageUpload" class="hidden" accept="image/jpeg,image/png,image/jpg,image/webp">
-            <button id="uploadButton" class="bg-primary hover:bg-purple-700 px-8 py-3 rounded-full font-medium transition-all shadow-md mt-2 inline-flex items-center gap-2"><i class="fas fa-folder-open"></i> Choose Image</button>
-            <p class="text-xs text-gray-500 mt-4">Supports JPG, PNG, WebP, JPEG</p>
+            <button id="uploadBtn" class="bg-primary hover:bg-purple-700 px-8 py-3 rounded-full font-medium transition-all inline-flex items-center gap-2"><i class="fas fa-folder-open"></i> Choose File</button>
+            <p class="text-xs text-gray-500 mt-4">Supports JPG, PNG, WebP (Max 50MB)</p>
           </div>
 
-          <!-- Loading -->
           <div id="loadingSpinner" class="hidden mt-6 text-center py-8">
-            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-primary border-r-2 mx-auto"></div>
-            <p class="mt-3 text-gray-300">Reading metadata...</p>
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-primary border-r-2"></div>
+            <p class="mt-3 text-gray-400">Extracting metadata...</p>
           </div>
 
-          <!-- Image Preview -->
-          <div id="imagePreview" class="hidden mt-6 rounded-2xl overflow-hidden border border-white/20 shadow-xl">
-            <img id="previewImg" class="w-full object-contain max-h-72 bg-black/40" alt="Preview">
+          <div id="imagePreview" class="hidden mt-6">
+            <div class="glass-premium rounded-2xl overflow-hidden">
+              <img id="previewImg" class="w-full max-h-80 object-contain bg-black/40" alt="Preview">
+            </div>
           </div>
 
-          <!-- File Info Card -->
-          <div id="fileInfo" class="hidden mt-6 glass-card rounded-xl p-5">
-            <h5 class="text-lg font-semibold flex items-center gap-2"><i class="fas fa-file-alt text-primary"></i> File Information</h5>
+          <div id="fileInfo" class="hidden mt-6 glass-premium rounded-2xl p-5">
+            <h4 class="font-semibold flex items-center gap-2"><i class="fas fa-file-alt text-primary"></i> File Details</h4>
             <div class="grid grid-cols-2 gap-3 mt-3 text-sm">
-              <span class="text-gray-400">File Name</span><span id="fileName" class="text-white font-mono">-</span>
+              <span class="text-gray-400">File Name</span><span id="fileName" class="font-mono">-</span>
               <span class="text-gray-400">File Size</span><span id="fileSize">-</span>
               <span class="text-gray-400">File Type</span><span id="fileType">-</span>
             </div>
           </div>
         </div>
 
-        <!-- Right Metadata Cards -->
+        <!-- Metadata Cards -->
         <div class="space-y-6">
-          <!-- Location Card -->
-          <div class="glass-card rounded-xl p-5">
-            <div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-3">
-              <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary"><i class="fas fa-map-marker-alt"></i></div>
-              <h3 class="text-xl font-bold">Location Information</h3>
-            </div>
-            <div class="space-y-3 text-sm">
-              <div class="flex justify-between"><span class="text-gray-400">GPS Coordinates</span><span id="gpsCoords" class="font-mono">-</span></div>
-              <div class="flex justify-between"><span class="text-gray-400">Address</span><span id="address" class="text-right max-w-[60%]">-</span></div>
-              <div class="flex justify-between"><span class="text-gray-400">Altitude</span><span id="altitude">-</span></div>
-            </div>
+          <div class="glass-premium rounded-2xl p-6">
+            <div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-4"><div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"><i class="fas fa-map-marker-alt text-primary"></i></div><h3 class="text-xl font-bold">Location Data</h3></div>
+            <div class="space-y-3 text-sm"><div class="flex justify-between"><span class="text-gray-400">GPS Coordinates</span><span id="gpsCoords" class="font-mono">-</span></div><div class="flex justify-between"><span class="text-gray-400">Address</span><span id="address" class="text-right max-w-[60%]">-</span></div><div class="flex justify-between"><span class="text-gray-400">Altitude</span><span id="altitude">-</span></div></div>
           </div>
-          <!-- Camera Card -->
-          <div class="glass-card rounded-xl p-5">
-            <div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-3">
-              <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary"><i class="fas fa-camera"></i></div>
-              <h3 class="text-xl font-bold">Camera Information</h3>
-            </div>
-            <div class="grid grid-cols-2 gap-y-3 gap-x-4 text-sm">
-              <span class="text-gray-400">Camera Model</span><span id="cameraModel">-</span>
-              <span class="text-gray-400">Lens</span><span id="lens">-</span>
-              <span class="text-gray-400">Aperture</span><span id="aperture">-</span>
-              <span class="text-gray-400">Shutter Speed</span><span id="shutterSpeed">-</span>
-              <span class="text-gray-400">ISO</span><span id="iso">-</span>
-            </div>
+          <div class="glass-premium rounded-2xl p-6">
+            <div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-4"><div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"><i class="fas fa-camera text-primary"></i></div><h3 class="text-xl font-bold">Camera Info</h3></div>
+            <div class="grid grid-cols-2 gap-y-3 text-sm"><span class="text-gray-400">Model</span><span id="cameraModel">-</span><span class="text-gray-400">Lens</span><span id="lens">-</span><span class="text-gray-400">Aperture</span><span id="aperture">-</span><span class="text-gray-400">Shutter Speed</span><span id="shutterSpeed">-</span><span class="text-gray-400">ISO</span><span id="iso">-</span></div>
           </div>
-          <!-- Image Info Card -->
-          <div class="glass-card rounded-xl p-5">
-            <div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-3">
-              <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary"><i class="fas fa-image"></i></div>
-              <h3 class="text-xl font-bold">Image Information</h3>
-            </div>
-            <div class="grid grid-cols-2 gap-y-3 text-sm">
-              <span class="text-gray-400">Dimensions</span><span id="dimensions">-</span>
-              <span class="text-gray-400">Date Taken</span><span id="dateTaken">-</span>
-              <span class="text-gray-400">Orientation</span><span id="orientation">-</span>
-              <span class="text-gray-400">Color Space</span><span id="colorSpace">-</span>
-            </div>
+          <div class="glass-premium rounded-2xl p-6">
+            <div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-4"><div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"><i class="fas fa-image text-primary"></i></div><h3 class="text-xl font-bold">Image Details</h3></div>
+            <div class="grid grid-cols-2 gap-y-3 text-sm"><span class="text-gray-400">Dimensions</span><span id="dimensions">-</span><span class="text-gray-400">Date Taken</span><span id="dateTaken">-</span><span class="text-gray-400">Orientation</span><span id="orientation">-</span><span class="text-gray-400">Color Space</span><span id="colorSpace">-</span></div>
           </div>
         </div>
       </div>
 
       <!-- Map Section -->
-      <div class="mt-10 glass-card rounded-xl p-5">
+      <div class="mt-8 glass-premium rounded-2xl p-6">
         <div class="flex items-center gap-3 mb-4"><i class="fas fa-map text-primary text-xl"></i><h3 class="text-xl font-bold">Location Map</h3></div>
-        <div id="map" class="map-container h-80 w-full rounded-xl bg-black/40 flex items-center justify-center">
-          <div class="text-center text-gray-400"><i class="fas fa-globe-americas text-4xl mb-2"></i><p>Upload an image with GPS data to view map</p></div>
-        </div>
+        <div id="map" class="h-80 w-full rounded-xl bg-black/40 flex items-center justify-center"><div class="text-center text-gray-400"><i class="fas fa-globe-americas text-4xl mb-2"></i><p>Upload image with GPS data to view map</p></div></div>
       </div>
 
-      <!-- Export Section Premium -->
-      <div class="mt-10 glass-card rounded-xl p-5">
+      <!-- Export Section -->
+      <div class="mt-8 glass-premium rounded-2xl p-6">
         <div class="flex items-center gap-3 mb-5"><i class="fas fa-download text-primary"></i><h3 class="text-xl font-bold">Export Metadata</h3></div>
-        <div class="grid sm:grid-cols-4 gap-4 text-center">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
           <button id="exportCSV" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-file-csv mr-2"></i>CSV</button>
           <button id="exportPDF" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-file-pdf mr-2"></i>PDF</button>
           <button id="exportJSON" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-file-code mr-2"></i>JSON</button>
@@ -307,127 +282,169 @@
     </div>
   </section>
 
-  <!-- Premium Footer -->
-  <footer class="border-t border-white/10 mt-24 py-12 bg-black/40">
-    <div class="container mx-auto px-5 lg:px-8">
+  <!-- Footer -->
+  <footer class="border-t border-white/10 mt-20 py-12 bg-black/30">
+    <div class="container mx-auto px-6">
       <div class="grid md:grid-cols-4 gap-8">
-        <div><i class="fas fa-camera text-primary text-2xl"></i><h5 class="font-bold text-lg mt-2">Exif Explorer</h5><p class="text-gray-500 text-sm mt-2">Professional metadata extraction tool.</p></div>
+        <div><i class="fas fa-camera text-primary text-2xl"></i><h5 class="font-bold text-lg mt-2">Exif Explorer</h5><p class="text-gray-500 text-sm">Professional metadata extraction tool</p></div>
         <div><h5 class="font-semibold">Quick Links</h5><ul class="space-y-1 mt-2 text-sm text-gray-400"><li><a href="#" class="hover:text-primary">Home</a></li><li><a href="#" class="hover:text-primary">Features</a></li><li><a href="#" class="hover:text-primary">How It Works</a></li></ul></div>
-        <div><h5 class="font-semibold">Legal</h5><ul class="space-y-1 mt-2 text-sm text-gray-400"><li><a href="#" class="hover:text-primary">Privacy</a></li><li><a href="#" class="hover:text-primary">Terms</a></li></ul></div>
-        <div><h5 class="font-semibold">Connect</h5><div class="flex gap-4 mt-2"><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-twitter fa-lg"></i></a><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-github fa-lg"></i></a></div></div>
+        <div><h5 class="font-semibold">Legal</h5><ul class="space-y-1 mt-2 text-sm text-gray-400"><li><a href="#" class="hover:text-primary">Privacy Policy</a></li><li><a href="#" class="hover:text-primary">Terms of Service</a></li></ul></div>
+        <div><h5 class="font-semibold">Connect</h5><div class="flex gap-4 mt-2"><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-twitter fa-lg"></i></a><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-github fa-lg"></i></a><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-instagram fa-lg"></i></a></div></div>
       </div>
       <hr class="border-white/10 my-8"><div class="text-center text-gray-500 text-sm">© <span id="currentYear"></span> Exif Explorer — All rights reserved.</div>
     </div>
   </footer>
 
   <script>
-    // Global state
-    let currentMetadata = { file: {}, camera: {}, image: {}, gps: {}, raw: {} };
-    let mapInstance = null, markerInstance = null;
-
-    // DOM elements
-    const uploadBtn = document.getElementById('uploadButton'), fileInput = document.getElementById('imageUpload');
-    const uploadArea = document.getElementById('uploadArea'), loadingSpinner = document.getElementById('loadingSpinner');
-    const imagePreviewDiv = document.getElementById('imagePreview'), previewImg = document.getElementById('previewImg');
+    // DOM Elements
+    const fileInput = document.getElementById('imageUpload');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const uploadArea = document.getElementById('uploadArea');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const imagePreviewDiv = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
     const fileInfoDiv = document.getElementById('fileInfo');
-    const exportCSV = document.getElementById('exportCSV'), exportPDF = document.getElementById('exportPDF'), exportJSON = document.getElementById('exportJSON'), copyAll = document.getElementById('copyAll');
-    const toast = document.getElementById('successToast');
-    function showToast(msg) { toast.querySelector('div').innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`; toast.classList.remove('hidden'); setTimeout(()=>toast.classList.add('hidden'), 2800); }
-
+    const toastDiv = document.getElementById('toastMsg');
+    
+    // Metadata elements
+    const elements = {
+      fileName: document.getElementById('fileName'), fileSize: document.getElementById('fileSize'), fileType: document.getElementById('fileType'),
+      cameraModel: document.getElementById('cameraModel'), lens: document.getElementById('lens'), aperture: document.getElementById('aperture'),
+      shutterSpeed: document.getElementById('shutterSpeed'), iso: document.getElementById('iso'), dimensions: document.getElementById('dimensions'),
+      dateTaken: document.getElementById('dateTaken'), orientation: document.getElementById('orientation'), colorSpace: document.getElementById('colorSpace'),
+      gpsCoords: document.getElementById('gpsCoords'), altitude: document.getElementById('altitude'), address: document.getElementById('address')
+    };
+    
+    let currentMetadata = { file: {}, camera: {}, image: {}, gps: {} };
+    let mapInstance = null, markerInstance = null;
+    
+    function showToast(msg, isError = false) {
+      toastDiv.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'} mr-2"></i>${msg}`;
+      toastDiv.classList.remove('hidden');
+      setTimeout(() => toastDiv.classList.add('hidden'), 3000);
+    }
+    
+    // Upload triggers
     uploadBtn.addEventListener('click', () => fileInput.click());
     uploadArea.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', handleFile);
-
-    function handleFile(e) {
-      const file = e.target.files[0];
+    
+    // Drag & drop
+    uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
+    uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop', (e) => { e.preventDefault(); uploadArea.classList.remove('drag-over'); const file = e.dataTransfer.files[0]; if(file && file.type.startsWith('image/')) handleFileUpload(file); else showToast('Please upload a valid image file', true); });
+    
+    fileInput.addEventListener('change', (e) => { if(e.target.files[0]) handleFileUpload(e.target.files[0]); });
+    
+    function handleFileUpload(file) {
       if(!file) return;
       loadingSpinner.classList.remove('hidden');
-      // reset export buttons
-      [exportCSV, exportPDF, exportJSON, copyAll].forEach(btn => btn.disabled = true);
       
-      // file info
-      document.getElementById('fileName').innerText = file.name;
-      document.getElementById('fileSize').innerText = (file.size/1024).toFixed(2)+" KB";
-      document.getElementById('fileType').innerText = file.type;
+      // Reset export buttons
+      document.getElementById('exportCSV').disabled = true;
+      document.getElementById('exportPDF').disabled = true;
+      document.getElementById('exportJSON').disabled = true;
+      document.getElementById('copyAll').disabled = true;
+      
+      // File info
+      elements.fileName.textContent = file.name;
+      elements.fileSize.textContent = (file.size / 1024).toFixed(2) + " KB";
+      elements.fileType.textContent = file.type || 'image';
       fileInfoDiv.classList.remove('hidden');
       currentMetadata.file = { name: file.name, size: (file.size/1024).toFixed(2)+" KB", type: file.type };
       
-      // preview
+      // Image preview
       const reader = new FileReader();
-      reader.onload = ev => { previewImg.src = ev.target.result; imagePreviewDiv.classList.remove('hidden'); };
+      reader.onload = (e) => { previewImg.src = e.target.result; imagePreviewDiv.classList.remove('hidden'); };
       reader.readAsDataURL(file);
       
+      // EXIF Extraction
       EXIF.getData(file, function() {
         const exif = EXIF.getAllTags(this);
-        currentMetadata.raw = exif;
-        // Camera
-        document.getElementById('cameraModel').innerText = exif.Model || "-";
-        document.getElementById('lens').innerText = exif.LensModel || "-";
-        document.getElementById('aperture').innerText = exif.FNumber ? "f/"+formatFraction(exif.FNumber) : "-";
-        document.getElementById('shutterSpeed').innerText = exif.ExposureTime ? formatExposure(exif.ExposureTime) : "-";
-        document.getElementById('iso').innerText = exif.ISOSpeedRatings || "-";
-        currentMetadata.camera = { model: exif.Model||"-", lens: exif.LensModel||"-", aperture: exif.FNumber ? "f/"+formatFraction(exif.FNumber):"-", shutterSpeed: exif.ExposureTime?formatExposure(exif.ExposureTime):"-", iso: exif.ISOSpeedRatings||"-" };
+        console.log('EXIF Data:', exif);
         
-        // Image
-        const dims = (exif.PixelXDimension && exif.PixelYDimension) ? `${exif.PixelXDimension} × ${exif.PixelYDimension}` : "-";
-        document.getElementById('dimensions').innerText = dims;
-        document.getElementById('dateTaken').innerText = exif.DateTimeOriginal || "-";
-        document.getElementById('orientation').innerText = exif.Orientation || "-";
-        document.getElementById('colorSpace').innerText = exif.ColorSpace || "-";
-        currentMetadata.image = { dimensions: dims, dateTaken: exif.DateTimeOriginal||"-", orientation: exif.Orientation||"-", colorSpace: exif.ColorSpace||"-" };
+        // Camera Info
+        elements.cameraModel.textContent = exif.Model || exif.Make || "-";
+        elements.lens.textContent = exif.LensModel || exif.LensMake || "-";
+        elements.aperture.textContent = exif.FNumber ? formatValue(exif.FNumber) : "-";
+        elements.shutterSpeed.textContent = exif.ExposureTime ? formatExposure(exif.ExposureTime) : "-";
+        elements.iso.textContent = exif.ISOSpeedRatings || "-";
         
-        // GPS
+        currentMetadata.camera = {
+          model: exif.Model || "-", lens: exif.LensModel || "-", aperture: exif.FNumber ? formatValue(exif.FNumber) : "-",
+          shutterSpeed: exif.ExposureTime ? formatExposure(exif.ExposureTime) : "-", iso: exif.ISOSpeedRatings || "-"
+        };
+        
+        // Image Info
+        const dims = (exif.PixelXDimension && exif.PixelYDimension) ? `${exif.PixelXDimension} × ${exif.PixelYDimension}` : 
+                     (exif.ImageWidth ? `${exif.ImageWidth} × ${exif.ImageLength}` : "-");
+        elements.dimensions.textContent = dims;
+        elements.dateTaken.textContent = exif.DateTimeOriginal || exif.DateTimeDigitized || exif.DateTime || "-";
+        elements.orientation.textContent = exif.Orientation || "-";
+        elements.colorSpace.textContent = exif.ColorSpace || "-";
+        
+        currentMetadata.image = { dimensions: dims, dateTaken: elements.dateTaken.textContent, orientation: elements.orientation.textContent, colorSpace: elements.colorSpace.textContent };
+        
+        // GPS Data
         if(exif.GPSLatitude && exif.GPSLongitude) {
           let lat = convertDMSToDD(exif.GPSLatitude, exif.GPSLatitudeRef);
           let lon = convertDMSToDD(exif.GPSLongitude, exif.GPSLongitudeRef);
-          document.getElementById('gpsCoords').innerText = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
-          document.getElementById('altitude').innerText = exif.GPSAltitude ? formatFraction(exif.GPSAltitude)+" m" : "-";
-          currentMetadata.gps = { coordinates: `${lat.toFixed(6)}, ${lon.toFixed(6)}`, altitude: exif.GPSAltitude?formatFraction(exif.GPSAltitude)+" m":"-", address: "Loading..." };
+          elements.gpsCoords.textContent = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+          elements.altitude.textContent = exif.GPSAltitude ? formatValue(exif.GPSAltitude) + " m" : "-";
+          currentMetadata.gps = { coordinates: elements.gpsCoords.textContent, altitude: elements.altitude.textContent, address: "Loading..." };
           initMap(lat, lon);
           reverseGeocode(lat, lon);
         } else {
-          document.getElementById('gpsCoords').innerText = "-"; document.getElementById('altitude').innerText = "-"; document.getElementById('address').innerText = "-";
+          elements.gpsCoords.textContent = "-"; elements.altitude.textContent = "-"; elements.address.textContent = "-";
           currentMetadata.gps = { coordinates: "-", altitude: "-", address: "-" };
-          if(mapInstance) mapInstance.remove();
-          mapInstance=null;
+          if(mapInstance) { mapInstance.remove(); mapInstance = null; }
+          document.getElementById('map').innerHTML = '<div class="text-center text-gray-400"><i class="fas fa-globe-americas text-4xl mb-2"></i><p>No GPS data found in this image</p></div>';
         }
+        
         loadingSpinner.classList.add('hidden');
-        [exportCSV, exportPDF, exportJSON, copyAll].forEach(btn => btn.disabled = false);
-        showToast("Metadata extracted successfully!");
+        document.getElementById('exportCSV').disabled = false;
+        document.getElementById('exportPDF').disabled = false;
+        document.getElementById('exportJSON').disabled = false;
+        document.getElementById('copyAll').disabled = false;
+        showToast('Metadata extracted successfully!');
       });
     }
-
-    function formatFraction(val) { if(val && typeof val === 'object' && val.numerator) return (val.numerator/val.denominator).toFixed(2); return val; }
-    function formatExposure(exp) { if(exp && typeof exp === 'object') { let v = exp.numerator/exp.denominator; return v<1 ? `1/${Math.round(1/v)}` : v.toFixed(3); } return exp; }
-    function convertDMSToDD(dms, ref) { let dd = dms[0] + dms[1]/60 + dms[2]/3600; return (ref==='S'||ref==='W') ? -dd : dd; }
+    
+    function formatValue(val) { if(val && typeof val === 'object' && val.numerator) return (val.numerator/val.denominator).toFixed(2); return val; }
+    function formatExposure(exp) { if(exp && typeof exp === 'object') { let v = exp.numerator/exp.denominator; return v < 1 ? `1/${Math.round(1/v)}` : v.toFixed(2); } return exp; }
+    function convertDMSToDD(dms, ref) { let dd = dms[0] + dms[1]/60 + dms[2]/3600; return (ref === 'S' || ref === 'W') ? -dd : dd; }
+    
     function initMap(lat, lng) {
-      if(mapInstance) { mapInstance.setView([lat,lng], 14); if(markerInstance) markerInstance.setLatLng([lat,lng]); else markerInstance = L.marker([lat,lng]).addTo(mapInstance); }
+      const mapContainer = document.getElementById('map');
+      if(mapInstance) { mapInstance.setView([lat, lng], 14); if(markerInstance) markerInstance.setLatLng([lat, lng]); else markerInstance = L.marker([lat, lng]).addTo(mapInstance); }
       else {
+        mapContainer.innerHTML = '';
         mapInstance = L.map('map').setView([lat, lng], 14);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '©OpenStreetMap' }).addTo(mapInstance);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }).addTo(mapInstance);
         markerInstance = L.marker([lat, lng]).addTo(mapInstance);
       }
     }
+    
     function reverseGeocode(lat, lng) {
-      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1`)
-        .then(r=>r.json()).then(data=>{ let addr = data.display_name || "-"; document.getElementById('address').innerText = addr; currentMetadata.gps.address = addr; })
-        .catch(()=>{ document.getElementById('address').innerText = "-"; currentMetadata.gps.address = "-"; });
+      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+        .then(r => r.json()).then(data => { let addr = data.display_name || "-"; elements.address.textContent = addr; currentMetadata.gps.address = addr; })
+        .catch(() => { elements.address.textContent = "-"; currentMetadata.gps.address = "-"; });
     }
-
-    // Export helpers
-    function generateCSV() { let rows = [['Category','Field','Value']]; for(let cat in currentMetadata) if(currentMetadata[cat] && typeof currentMetadata[cat]==='object') for(let [k,v] of Object.entries(currentMetadata[cat])) rows.push([cat, k, v]); return rows.map(r=>r.map(c=>`"${c}"`).join(',')).join('\n'); }
+    
+    // Export functions
+    function generateCSV() { let rows = [['Category','Field','Value']]; for(let cat in currentMetadata) { if(currentMetadata[cat] && typeof currentMetadata[cat] === 'object') { for(let [k,v] of Object.entries(currentMetadata[cat])) rows.push([cat, k, v]); } } return rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n'); }
     function downloadFile(content, name, type) { let a = document.createElement('a'); let blob = new Blob([content], {type}); a.href = URL.createObjectURL(blob); a.download = name; a.click(); URL.revokeObjectURL(a.href); }
-    exportCSV.addEventListener('click',()=>downloadFile(generateCSV(),'exif_metadata.csv','text/csv'));
-    exportJSON.addEventListener('click',()=>downloadFile(JSON.stringify(currentMetadata,null,2),'exif_metadata.json','application/json'));
-    exportPDF.addEventListener('click',async()=>{
-      const {jsPDF}=window.jspdf; const doc=new jsPDF(); doc.setFontSize(20); doc.text('Exif Explorer Report',105,20,{align:'center'}); doc.setFontSize(10); doc.text(`File: ${currentMetadata.file.name}`,20,30); let y=40;
-      for(let section of ['file','camera','image','gps']){ doc.setFontSize(14); doc.text(section.toUpperCase(),20,y); y+=6; doc.setFontSize(9); for(let [k,v] of Object.entries(currentMetadata[section])){ doc.text(`${k}: ${v}`,25,y); y+=5; if(y>270){ doc.addPage(); y=20; } } y+=5; }
+    document.getElementById('exportCSV').addEventListener('click', () => downloadFile(generateCSV(), 'exif_metadata.csv', 'text/csv'));
+    document.getElementById('exportJSON').addEventListener('click', () => downloadFile(JSON.stringify(currentMetadata, null, 2), 'exif_metadata.json', 'application/json'));
+    document.getElementById('exportPDF').addEventListener('click', async () => {
+      const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.setFontSize(20); doc.text('Exif Explorer Report', 105, 20, { align: 'center' }); doc.setFontSize(10); doc.text(`File: ${currentMetadata.file.name}`, 20, 30); let y = 40;
+      for(let section of ['file','camera','image','gps']) { doc.setFontSize(14); doc.text(section.toUpperCase(), 20, y); y+=6; doc.setFontSize(9); for(let [k,v] of Object.entries(currentMetadata[section] || {})) { doc.text(`${k}: ${v}`, 25, y); y+=5; if(y>270) { doc.addPage(); y=20; } } y+=5; }
       doc.save(`exif_${currentMetadata.file.name.replace(/\..+$/,'')}.pdf`);
     });
-    copyAll.addEventListener('click',()=>{
-      let text = `EXIF EXPLORER REPORT\n${new Date()}\nFile: ${currentMetadata.file.name}\n\nCamera: ${JSON.stringify(currentMetadata.camera,null,2)}\nImage: ${JSON.stringify(currentMetadata.image,null,2)}\nGPS: ${JSON.stringify(currentMetadata.gps,null,2)}`;
-      navigator.clipboard.writeText(text).then(()=>showToast("Copied to clipboard!"));
+    document.getElementById('copyAll').addEventListener('click', () => {
+      let text = `EXIF EXPLORER REPORT\nGenerated: ${new Date()}\nFile: ${currentMetadata.file.name}\n\nCAMERA:\n${JSON.stringify(currentMetadata.camera, null, 2)}\n\nIMAGE:\n${JSON.stringify(currentMetadata.image, null, 2)}\n\nGPS:\n${JSON.stringify(currentMetadata.gps, null, 2)}`;
+      navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!'));
     });
+    
     document.getElementById('currentYear').innerText = new Date().getFullYear();
   </script>
 </body>
