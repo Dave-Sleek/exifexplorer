@@ -920,6 +920,21 @@
         backdrop-filter: blur(12px);
         border: 1px solid rgba(168, 85, 247, 0.2);
     }
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+</style>
+
+     <style>
+    .glass-premium {
+        background: rgba(17, 17, 21, 0.75);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(168, 85, 247, 0.2);
+    }
     
     .faq-toggle.active i {
         transform: rotate(180deg);
