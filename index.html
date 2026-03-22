@@ -322,271 +322,269 @@
   </footer>
 
   <script>
-    // Mobile menu toggle
-    // ================= MOBILE MENU =================
-// ================= MOBILE MENU =================
-const mobileBtn = document.getElementById('mobileMenuBtn');
-const mobileMenu = document.getElementById('mobileMenu');
+document.addEventListener("DOMContentLoaded", () => {
 
-let menuOpen = false;
+    const uploadBtn = document.getElementById('uploadBtn');
+    const imageUpload = document.getElementById('imageUpload');
+    const previewImg = document.getElementById('previewImg');
+    const imagePreview = document.getElementById('imagePreview');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const fileInfo = document.getElementById('fileInfo');
 
-mobileBtn.addEventListener('click', () => {
-  menuOpen = !menuOpen;
-  mobileMenu.classList.toggle('open');
-  mobileBtn.innerHTML = menuOpen
-    ? '<i class="fas fa-times"></i>'
-    : '<i class="fas fa-bars"></i>';
-});
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    const fileType = document.getElementById('fileType');
 
-// ================= DOM =================
-const fileInput = document.getElementById('imageUpload');
-const uploadBtn = document.getElementById('uploadBtn');
-const uploadArea = document.getElementById('uploadArea');
-const loadingSpinner = document.getElementById('loadingSpinner');
-const imagePreviewDiv = document.getElementById('imagePreview');
-const previewImg = document.getElementById('previewImg');
-const fileInfoDiv = document.getElementById('fileInfo');
-const toastDiv = document.getElementById('toastMsg');
+    const cameraModel = document.getElementById('cameraModel');
+    const lens = document.getElementById('lens');
+    const aperture = document.getElementById('aperture');
+    const shutterSpeed = document.getElementById('shutterSpeed');
+    const iso = document.getElementById('iso');
 
-const elements = {
-  fileName: document.getElementById('fileName'),
-  fileSize: document.getElementById('fileSize'),
-  fileType: document.getElementById('fileType'),
-  cameraModel: document.getElementById('cameraModel'),
-  lens: document.getElementById('lens'),
-  aperture: document.getElementById('aperture'),
-  shutterSpeed: document.getElementById('shutterSpeed'),
-  iso: document.getElementById('iso'),
-  dimensions: document.getElementById('dimensions'),
-  dateTaken: document.getElementById('dateTaken'),
-  orientation: document.getElementById('orientation'),
-  colorSpace: document.getElementById('colorSpace'),
-  gpsCoords: document.getElementById('gpsCoords'),
-  altitude: document.getElementById('altitude'),
-  address: document.getElementById('address')
-};
+    const dimensions = document.getElementById('dimensions');
+    const dateTaken = document.getElementById('dateTaken');
+    const orientation = document.getElementById('orientation');
+    const colorSpace = document.getElementById('colorSpace');
 
-let currentMetadata = {};
+    const gpsCoords = document.getElementById('gpsCoords');
+    const altitude = document.getElementById('altitude');
+    const address = document.getElementById('address');
 
-// ================= TOAST =================
-function showToast(msg, isError = false) {
-  toastDiv.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'} mr-2"></i>${msg}`;
-  toastDiv.classList.remove('hidden');
-  setTimeout(() => toastDiv.classList.add('hidden'), 3000);
-}
+    const exportCSV = document.getElementById('exportCSV');
+    const exportPDF = document.getElementById('exportPDF');
+    const exportJSON = document.getElementById('exportJSON');
+    const copyAll = document.getElementById('copyAll');
 
-// ================= UPLOAD =================
-uploadBtn.addEventListener('click', () => fileInput.click());
+    let map, marker;
 
-uploadArea.addEventListener('click', (e) => {
-  if (e.target.id !== 'uploadBtn') fileInput.click();
-});
+    let currentMetadata = {
+        file: {},
+        camera: {},
+        image: {},
+        gps: {},
+        raw: {}
+    };
 
-fileInput.addEventListener('change', (e) => {
-  if (e.target.files[0]) handleFileUpload(e.target.files[0]);
-});
+    uploadBtn.addEventListener('click', () => imageUpload.click());
 
-// ================= MAIN =================
-function handleFileUpload(file) {
-  if (!file) return;
+    imageUpload.addEventListener('change', function () {
+        const file = this.files[0];
+        if (!file) return;
 
-  loadingSpinner.classList.remove('hidden');
+        loadingSpinner.classList.remove("hidden");
 
-  const reader = new FileReader();
+        // Disable export buttons
+        exportCSV.disabled = exportPDF.disabled = exportJSON.disabled = true;
+        copyAll.disabled = true;
 
-  reader.onload = function (e) {
-    previewImg.src = e.target.result;
-    imagePreviewDiv.classList.remove('hidden');
+        // FILE INFO
+        fileName.textContent = file.name;
+        fileSize.textContent = (file.size / 1024).toFixed(2) + " KB";
+        fileType.textContent = file.type;
+        fileInfo.classList.remove("hidden");
 
-    previewImg.onload = function () {
-      EXIF.getData(previewImg, function () {
-        const exif = EXIF.getAllTags(this) || {};
-
-        // ================= BUILD DATA OBJECT =================
-        const camera = {
-          model: exif.Model || exif.Make || "-",
-          lens: exif.LensModel || "-",
-          aperture: exif.FNumber ? formatValue(exif.FNumber) : "-",
-          shutterSpeed: exif.ExposureTime ? formatExposure(exif.ExposureTime) : "-",
-          iso: exif.ISOSpeedRatings || "-"
-        };
-
-        const image = {
-          dimensions: (exif.PixelXDimension && exif.PixelYDimension)
-            ? `${exif.PixelXDimension} × ${exif.PixelYDimension}`
-            : "-",
-          dateTaken: exif.DateTimeOriginal || "-",
-          orientation: exif.Orientation || "-",
-          colorSpace: exif.ColorSpace || "-"
-        };
-
-        let gps = {
-          coordinates: "-",
-          altitude: "-",
-          address: "-"
-        };
-
-        if (exif.GPSLatitude && exif.GPSLongitude) {
-          const lat = convertDMSToDD(exif.GPSLatitude, exif.GPSLatitudeRef);
-          const lon = convertDMSToDD(exif.GPSLongitude, exif.GPSLongitudeRef);
-
-          gps.coordinates = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
-          gps.altitude = exif.GPSAltitude
-            ? formatValue(exif.GPSAltitude) + " m"
-            : "-";
-
-          initMap(lat, lon);
-          reverseGeocode(lat, lon);
-        }
-
-        currentMetadata = {
-          file: {
+        currentMetadata.file = {
             name: file.name,
             size: (file.size / 1024).toFixed(2) + " KB",
             type: file.type
-          },
-          camera,
-          image,
-          gps
         };
 
-        // ================= UPDATE UI =================
-        Object.keys(camera).forEach(k => elements[k === 'model' ? 'cameraModel' : k].textContent = camera[k]);
-        elements.dimensions.textContent = image.dimensions;
-        elements.dateTaken.textContent = image.dateTaken;
-        elements.orientation.textContent = image.orientation;
-        elements.colorSpace.textContent = image.colorSpace;
-        elements.gpsCoords.textContent = gps.coordinates;
-        elements.altitude.textContent = gps.altitude;
+        // PREVIEW
+        const reader = new FileReader();
+        reader.onload = e => {
+            previewImg.src = e.target.result;
+            imagePreview.classList.remove("hidden");
+        };
+        reader.readAsDataURL(file);
 
-        loadingSpinner.classList.add('hidden');
+        // EXIF EXTRACTION
+        EXIF.getData(file, function () {
+            loadingSpinner.classList.add("hidden");
 
-        enableButtons();
+            const exif = EXIF.getAllTags(this);
+            currentMetadata.raw = exif;
 
-        showToast('Metadata extracted!');
-      });
-    };
-  };
+            // CAMERA
+            cameraModel.textContent = exif.Model || "-";
+            lens.textContent = exif.LensModel || "-";
+            aperture.textContent = exif.FNumber ? "f/" + formatFraction(exif.FNumber) : "-";
+            shutterSpeed.textContent = exif.ExposureTime ? formatExposure(exif.ExposureTime) : "-";
+            iso.textContent = exif.ISOSpeedRatings || "-";
 
-  reader.readAsDataURL(file);
-}
+            currentMetadata.camera = {
+                model: cameraModel.textContent,
+                lens: lens.textContent,
+                aperture: aperture.textContent,
+                shutterSpeed: shutterSpeed.textContent,
+                iso: iso.textContent,
+                make: exif.Make || "-",
+                focalLength: exif.FocalLength ? formatFraction(exif.FocalLength) + "mm" : "-"
+            };
 
-// ================= HELPERS =================
-function formatValue(val) {
-  return (val && val.numerator) ? (val.numerator / val.denominator).toFixed(2) : val;
-}
+            // IMAGE
+            const dim = exif.PixelXDimension && exif.PixelYDimension
+                ? `${exif.PixelXDimension} × ${exif.PixelYDimension}`
+                : "-";
 
-function formatExposure(exp) {
-  if (exp && exp.numerator) {
-    let v = exp.numerator / exp.denominator;
-    return v < 1 ? `1/${Math.round(1 / v)}` : v.toFixed(2);
-  }
-  return exp;
-}
+            dimensions.textContent = dim;
+            dateTaken.textContent = exif.DateTimeOriginal || "-";
+            orientation.textContent = exif.Orientation || "-";
+            colorSpace.textContent = exif.ColorSpace || "-";
 
-function convertDMSToDD(dms, ref) {
-  let dd = dms[0] + dms[1]/60 + dms[2]/3600;
-  return (ref === 'S' || ref === 'W') ? -dd : dd;
-}
+            currentMetadata.image = {
+                dimensions: dim,
+                dateTaken: dateTaken.textContent,
+                orientation: orientation.textContent,
+                colorSpace: colorSpace.textContent
+            };
 
-// ================= MAP =================
-let mapInstance, markerInstance;
+            // GPS
+            if (exif.GPSLatitude && exif.GPSLongitude) {
+                const lat = convertDMSToDD(exif.GPSLatitude, exif.GPSLatitudeRef);
+                const lon = convertDMSToDD(exif.GPSLongitude, exif.GPSLongitudeRef);
 
-function initMap(lat, lng) {
-  const mapDiv = document.getElementById('map');
+                gpsCoords.textContent = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+                altitude.textContent = exif.GPSAltitude
+                    ? formatFraction(exif.GPSAltitude) + " m"
+                    : "-";
 
-  if (!mapInstance) {
-    mapDiv.innerHTML = '';
-    mapInstance = L.map('map').setView([lat, lng], 14);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(mapInstance);
-    markerInstance = L.marker([lat, lng]).addTo(mapInstance);
-  } else {
-    mapInstance.setView([lat, lng], 14);
-    markerInstance.setLatLng([lat, lng]);
-  }
-}
+                currentMetadata.gps = {
+                    coordinates: gpsCoords.textContent,
+                    altitude: altitude.textContent,
+                    address: "Loading..."
+                };
 
-function reverseGeocode(lat, lon) {
-  fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
-    .then(r => r.json())
-    .then(d => elements.address.textContent = d.display_name || "-");
-}
+                showMap(lat, lon);
+                reverseLookup(lat, lon);
 
-// ================= EXPORT =================
-function enableButtons() {
-  ['exportCSV','exportPDF','exportJSON','copyAll'].forEach(id => {
-    document.getElementById(id).disabled = false;
-  });
-}
+            } else {
+                gpsCoords.textContent = "-";
+                altitude.textContent = "-";
+                address.textContent = "-";
 
-function generateCSV() {
-  let rows = [['Category','Field','Value']];
-  for (let section in currentMetadata) {
-    for (let key in currentMetadata[section]) {
-      rows.push([section, key, currentMetadata[section][key]]);
+                currentMetadata.gps = {
+                    coordinates: "-",
+                    altitude: "-",
+                    address: "-"
+                };
+            }
+
+            // ENABLE BUTTONS
+            exportCSV.disabled = exportPDF.disabled = exportJSON.disabled = false;
+            copyAll.disabled = false;
+        });
+    });
+
+    // EXPORT CSV
+    exportCSV.addEventListener('click', () => {
+        const rows = [];
+        for (let cat in currentMetadata) {
+            if (typeof currentMetadata[cat] === "object") {
+                for (let key in currentMetadata[cat]) {
+                    rows.push([cat, key, currentMetadata[cat][key]]);
+                }
+            }
+        }
+        const csv = rows.map(r => r.map(c => `"${c}"`).join(",")).join("\n");
+        downloadFile(csv, "metadata.csv", "text/csv");
+    });
+
+    // EXPORT JSON
+    exportJSON.addEventListener('click', () => {
+        downloadFile(JSON.stringify(currentMetadata, null, 2), "metadata.json", "application/json");
+    });
+
+    // EXPORT PDF (FIXED)
+    exportPDF.addEventListener('click', () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        let y = 20;
+
+        doc.setFontSize(18);
+        doc.text("Exif Metadata Report", 105, y, { align: "center" });
+
+        y += 10;
+
+        for (let section in currentMetadata) {
+            doc.setFontSize(14);
+            doc.text(section.toUpperCase(), 14, y);
+            y += 8;
+
+            doc.setFontSize(10);
+            for (let key in currentMetadata[section]) {
+                doc.text(`${key}: ${currentMetadata[section][key]}`, 18, y);
+                y += 6;
+
+                if (y > 280) {
+                    doc.addPage();
+                    y = 20;
+                }
+            }
+            y += 5;
+        }
+
+        doc.save("metadata.pdf");
+    });
+
+    // COPY ALL
+    copyAll.addEventListener('click', () => {
+        navigator.clipboard.writeText(JSON.stringify(currentMetadata, null, 2));
+        alert("Copied!");
+    });
+
+    // HELPERS
+    function downloadFile(content, name, type) {
+        const blob = new Blob([content], { type });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = name;
+        a.click();
     }
-  }
-  return rows.map(r => r.join(',')).join('\n');
-}
 
-function downloadFile(content, name, type) {
-  const blob = new Blob([content], { type });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = name;
-  a.click();
-}
-
-// CSV
-document.getElementById('exportCSV').onclick = () =>
-  downloadFile(generateCSV(), 'metadata.csv', 'text/csv');
-
-// JSON
-document.getElementById('exportJSON').onclick = () =>
-  downloadFile(JSON.stringify(currentMetadata, null, 2), 'metadata.json', 'application/json');
-
-// PDF (FIXED)
-document.getElementById('exportPDF').onclick = () => {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  let y = 20;
-
-  doc.setFontSize(16);
-  doc.text('EXIF REPORT', 105, y, { align: 'center' });
-  y += 10;
-
-  for (let section in currentMetadata) {
-    doc.setFontSize(12);
-    doc.text(section.toUpperCase(), 20, y);
-    y += 6;
-
-    doc.setFontSize(10);
-
-    for (let key in currentMetadata[section]) {
-      doc.text(`${key}: ${currentMetadata[section][key]}`, 25, y);
-      y += 5;
-
-      if (y > 280) {
-        doc.addPage();
-        y = 20;
-      }
+    function formatFraction(val) {
+        return typeof val === "object"
+            ? (val.numerator / val.denominator).toFixed(2)
+            : val;
     }
 
-    y += 5;
-  }
+    function formatExposure(exp) {
+        if (typeof exp === "object") {
+            let v = exp.numerator / exp.denominator;
+            return v < 1 ? `1/${Math.round(1 / v)}` : v.toFixed(2);
+        }
+        return exp;
+    }
 
-  doc.save('metadata.pdf');
-};
+    function convertDMSToDD(dms, ref) {
+        let dd = dms[0] + dms[1]/60 + dms[2]/3600;
+        return (ref === "S" || ref === "W") ? -dd : dd;
+    }
 
-// COPY
-document.getElementById('copyAll').onclick = () => {
-  navigator.clipboard.writeText(JSON.stringify(currentMetadata, null, 2));
-  showToast('Copied!');
-};
+    function showMap(lat, lon) {
+        if (!map) {
+            map = L.map("map").setView([lat, lon], 13);
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+        }
+        if (marker) map.removeLayer(marker);
+        marker = L.marker([lat, lon]).addTo(map);
+    }
 
-// YEAR
-document.getElementById('currentYear').innerText = new Date().getFullYear();
-  </script>
+    function reverseLookup(lat, lon) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
+            .then(r => r.json())
+            .then(data => {
+                const addr = data.display_name || "-";
+                address.textContent = addr;
+                currentMetadata.gps.address = addr;
+            })
+            .catch(() => {
+                address.textContent = "-";
+                currentMetadata.gps.address = "-";
+            });
+    }
+
+});
+</script>
 </body>
 </html>
