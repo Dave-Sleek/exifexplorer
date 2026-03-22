@@ -244,21 +244,6 @@
     </div>
   </section>
 
-  <!-- How It Works Section -->
-  <section id="how-it-works" class="py-20 bg-black/30">
-    <div class="container mx-auto px-6">
-      <div class="text-center mb-12">
-        <span class="text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full">Simple Process</span>
-        <h2 class="font-poppins font-bold text-4xl md:text-5xl mt-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">How It Works</h2>
-      </div>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="text-center"><div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl font-bold mx-auto">1</div><h3 class="text-xl font-bold mt-4">Upload Image</h3><p class="text-gray-400 mt-2">Drag & drop or click to select any image file</p></div>
-        <div class="text-center"><div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl font-bold mx-auto">2</div><h3 class="text-xl font-bold mt-4">Extract Data</h3><p class="text-gray-400 mt-2">Our tool reads all EXIF metadata instantly</p></div>
-        <div class="text-center"><div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl font-bold mx-auto">3</div><h3 class="text-xl font-bold mt-4">View & Export</h3><p class="text-gray-400 mt-2">Explore data or export as CSV, PDF, JSON</p></div>
-      </div>
-    </div>
-  </section>
-
   <!-- Extractor Section -->
   <section id="extractor" class="py-20">
     <div class="container mx-auto px-6">
@@ -294,28 +279,6 @@
       <div class="mt-8 glass-premium rounded-2xl p-6"><div class="flex items-center gap-3 mb-4"><i class="fas fa-map text-primary text-xl"></i><h3 class="text-xl font-bold">Location Map</h3></div><div id="map" class="h-80 w-full rounded-xl bg-black/40 flex items-center justify-center"><div class="text-center text-gray-400"><i class="fas fa-globe-americas text-4xl mb-2"></i><p>Upload image with GPS data to view map</p></div></div></div>
 
       <div class="mt-8 glass-premium rounded-2xl p-6"><div class="flex items-center gap-3 mb-5"><i class="fas fa-download text-primary"></i><h3 class="text-xl font-bold">Export Metadata</h3></div><div class="grid grid-cols-2 md:grid-cols-4 gap-4"><button id="exportCSV" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-file-csv mr-2"></i>CSV</button><button id="exportPDF" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-file-pdf mr-2"></i>PDF</button><button id="exportJSON" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-file-code mr-2"></i>JSON</button><button id="copyAll" disabled class="bg-white/5 hover:bg-primary/20 border border-white/20 rounded-xl py-3 transition disabled:opacity-40"><i class="fas fa-copy mr-2"></i>Copy All</button></div></div>
-    </div>
-  </section>
-
-  <!-- Blog Section -->
-  <section id="blog" class="py-20 bg-black/30">
-    <div class="container mx-auto px-6">
-      <div class="text-center mb-12"><span class="text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full">Blog</span><h2 class="font-poppins font-bold text-4xl md:text-5xl mt-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">Latest Articles</h2></div>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="glass-premium rounded-2xl overflow-hidden"><img src="https://images.unsplash.com/photo-1452780212940-6f5c0d14d848?w=400&h=250&fit=crop" class="w-full h-48 object-cover"><div class="p-6"><h3 class="font-bold text-xl">Understanding EXIF Data</h3><p class="text-gray-400 mt-2">Learn what metadata your photos contain and why it matters.</p><a href="#" class="text-primary mt-3 inline-block">Read more →</a></div></div>
-        <div class="glass-premium rounded-2xl overflow-hidden"><img src="https://images.unsplash.com/photo-1554048612-b6a482bc67f5?w=400&h=250&fit=crop" class="w-full h-48 object-cover"><div class="p-6"><h3 class="font-bold text-xl">Privacy & Photo Metadata</h3><p class="text-gray-400 mt-2">How to protect your location data when sharing photos online.</p><a href="#" class="text-primary mt-3 inline-block">Read more →</a></div></div>
-        <div class="glass-premium rounded-2xl overflow-hidden"><img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=400&h=250&fit=crop" class="w-full h-48 object-cover"><div class="p-6"><h3 class="font-bold text-xl">Photography Tips</h3><p class="text-gray-400 mt-2">Use metadata insights to improve your photography skills.</p><a href="#" class="text-primary mt-3 inline-block">Read more →</a></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact & About Section -->
-  <section id="contact" class="py-20">
-    <div class="container mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-12">
-        <div id="about"><div class="text-center md:text-left"><span class="text-primary text-sm font-semibold tracking-wider uppercase border border-primary/30 px-4 py-1 rounded-full inline-block">About Us</span><h2 class="font-poppins font-bold text-4xl mt-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">Exif Explorer</h2><p class="text-gray-400 mt-4 leading-relaxed">We're dedicated to providing professional-grade metadata extraction tools for photographers, investigators, and privacy-conscious users. Our mission is to make hidden image data accessible to everyone.</p><div class="mt-6 space-y-2"><p><i class="fas fa-check-circle text-primary mr-2"></i> 100% Free & No Registration</p><p><i class="fas fa-check-circle text-primary mr-2"></i> Privacy-Focused - No Data Storage</p><p><i class="fas fa-check-circle text-primary mr-2"></i> Professional EXIF Support</p></div></div></div>
-        <div><div class="glass-premium rounded-2xl p-8"><h3 class="text-2xl font-bold mb-4">Get in Touch</h3><form id="contactForm" onsubmit="event.preventDefault(); alert('Message sent! We will respond shortly.');"><input type="text" placeholder="Your Name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 mb-4 focus:outline-none focus:border-primary"><input type="email" placeholder="Email Address" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 mb-4 focus:outline-none focus:border-primary"><textarea rows="4" placeholder="Your Message" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 mb-4 focus:outline-none focus:border-primary"></textarea><button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary py-3 rounded-xl font-semibold hover:opacity-90 transition">Send Message</button></form></div></div>
-      </div>
     </div>
   </section>
 
