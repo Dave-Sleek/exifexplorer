@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="title" content="Image to PDF Converter | Exif Explorer">
+    <meta name="description" content="Convert multiple images to a single PDF. Arrange order, set page size, orientation, and compress output.">
+    <meta name="google-adsense-account" content="ca-pub-8918616047230546">
+
+    <link rel="canonical" href="https://exifexplorer.com/image-to-pdf">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8918616047230546"
+     crossorigin="anonymous"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#8B5CF6', secondary: '#EC4899' },
+                    fontFamily: { 'poppins': ['Poppins', 'sans-serif'], 'inter': ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        body { background: linear-gradient(135deg, #050508 0%, #0A0A0F 50%, #050508 100%); min-height: 100vh; }
+        .glass-premium { background: rgba(17, 17, 21, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(139, 92, 246, 0.2); transition: all 0.3s; }
+        .glass-premium:hover { border-color: rgba(139, 92, 246, 0.5); }
+        .upload-zone { transition: all 0.3s; cursor: pointer; }
+        .upload-zone.drag-over { border-color: #8B5CF6 !important; background: rgba(139, 92, 246, 0.08); }
+        .image-item { transition: all 0.2s; cursor: grab; }
+        .image-item.dragging { opacity: 0.5; cursor: grabbing; }
+        .image-item.drag-over { border: 2px dashed #8B5CF6; transform: scale(1.02); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #111115; }
+        ::-webkit-scrollbar-thumb { background: #8B5CF6; border-radius: 10px; }
+        /* Mobile menu animation */
+        .mobile-menu {
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="font-inter text-gray-200">
+
+    <!-- Navigation with Mobile Dropdown -->
+  <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+            <i class="fas fa-camera-retro text-white text-sm"></i>
+          </div>
+          <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
+        </a>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex gap-8 text-sm font-medium">
+          <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+          <a href="#features" class="hover:text-primary transition-colors">Features</a>
+          <a href="#how-it-works" class="hover:text-primary transition-colors">How it Works</a>
+          <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+          <a href="about-us.html" class="text-primary border-b-2 border-primary pb-1">About</a>
+        </div>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuBtn" class="md:hidden text-white text-2xl focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobileMenu" class="mobile-menu md:hidden overflow-hidden transition-all duration-300">
+        <div class="flex flex-col gap-3 pt-4 pb-2">
+          <a href="index.html" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Home</a>
+          <a href="#features" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Features</a>
+          <a href="#how-it-works" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">How it Works</a>
+          <a href="contact.html" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Contact</a>
+          <a href="about-us.html" class="px-4 py-2 text-primary bg-white/5 rounded-lg transition-colors">About Us</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+    <section class="relative min-h-[35vh] flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-950/20 via-transparent to-pink-950/20"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 mb-6">
+                <i class="fas fa-file-pdf text-primary text-sm"></i>
+                <span class="text-xs font-medium tracking-wide">Image to PDF Converter</span>
+            </div>
+            <h1 class="font-poppins font-black text-4xl md:text-5xl lg:text-6xl leading-tight mb-4">
+                <span class="bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">Convert Images</span>
+                <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">to PDF</span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">Merge multiple images into a single PDF. Arrange order, set page size, orientation, and compress output.</p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <!-- Upload Area -->
+                <div id="uploadArea" class="glass-premium rounded-2xl p-8 text-center border-2 border-dashed border-white/20 upload-zone">
+                    <i class="fas fa-images text-6xl text-primary mb-4 cursor-pointer" id="uploadIcon"></i>
+                    <h3 class="text-2xl font-semibold text-white mb-2">Upload Images</h3>
+                    <p class="text-gray-400 mb-4">Drag & drop or click to browse</p>
+                    <input type="file" id="imageUpload" class="hidden" accept="image/jpeg,image/png,image/jpg,image/webp" multiple>
+                    <button id="uploadBtn" class="bg-gradient-to-r from-primary to-secondary hover:shadow-lg px-8 py-3 rounded-full font-medium inline-flex items-center gap-2">
+                        <i class="fas fa-folder-open"></i> Choose Images
+                    </button>
+                </div>
+
+                <!-- Settings Panel -->
+                <div class="glass-premium rounded-2xl p-6 mt-8">
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Page Size</label>
+                            <select id="pageSize" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5">
+                                <option value="a4">A4 (210 × 297 mm)</option>
+                                <option value="letter">Letter (8.5 × 11 in)</option>
+                                <option value="legal">Legal (8.5 × 14 in)</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </div>
+                        <div id="customSize" class="hidden">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Custom Size (mm)</label>
+                            <div class="flex gap-2">
+                                <input type="number" id="customWidth" placeholder="Width" class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2">
+                                <input type="number" id="customHeight" placeholder="Height" class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Orientation</label>
+                            <select id="orientation" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5">
+                                <option value="portrait">Portrait</option>
+                                <option value="landscape">Landscape</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Quality</label>
+                            <input type="range" id="quality" min="1" max="100" value="90" class="w-full">
+                            <span id="qualityValue" class="text-primary text-sm">90%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image List with Drag & Drop -->
+                <div id="imageListContainer" class="glass-premium rounded-2xl p-6 mt-4 hidden">
+                    <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-arrows-alt text-primary"></i> Image Order (Drag to Reorder)
+                    </h3>
+                    <div id="imageList" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3"></div>
+                    <div class="flex gap-4 mt-6">
+                        <button id="convertBtn" class="flex-1 bg-gradient-to-r from-primary to-secondary hover:shadow-lg py-3 rounded-xl font-semibold">
+                            <i class="fas fa-file-pdf mr-2"></i>Create PDF
+                        </button>
+                        <button id="clearBtn" class="px-6 py-3 rounded-xl border border-white/20 hover:bg-white/10">Clear All</button>
+                    </div>
+                </div>
+
+                <!-- Loading -->
+                <div id="loadingOverlay" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
+                    <div class="text-center"><div class="animate-spin rounded-full h-16 w-16 border-t-2 border-primary"></div><p id="loadingText" class="mt-4">Creating PDF...</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+  <footer class="border-t border-white/10 py-12 bg-black/30">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-8"><div><i class="fas fa-camera text-primary text-2xl"></i><h5 class="font-bold text-lg mt-2">Exif Explorer</h5><p class="text-gray-500 text-sm">Professional metadata extraction tool</p></div>
+        <div><h5 class="font-semibold">Quick Links</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                <li><a href="index.html" class="hover:text-primary">Home</a></li>
+                <li><a href="#features" class="hover:text-primary">Features</a></li>
+                <li><a href="#how-it-works" class="hover:text-primary">How It Works</a></li>
+                <li><a href="#blog" class="hover:text-primary">Blog</a></li>
+                <li><a href="contact.html" class="hover:text-primary">Contact</a></li>
+                <li><a href="about-us.html" class="hover:text-primary">About</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Tools</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                 <li><a href="screenshot.html"  class="hover:text-primary">Screenshot Tool</a></li>
+                 <li><a href="image-converter.html"  class="hover:text-primary">Image Converter</a></li>
+                 <li><a href="image-forensics.html"  class="hover:text-primary">Image Forensics</a></li>
+                 <li><a href="social-optimizer.html"  class="hover:text-primary">Social Media Image Optimizer</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Legal</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                <li><a href="privacy-policy.html" class="hover:text-primary">Privacy Policy</a></li>
+                <li><a href="terms-of-use.html" class="hover:text-primary">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Connect</h5>
+            <div class="flex gap-4 mt-2"><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-github fa-lg"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-instagram fa-lg"></i></a>
+            </div>
+        </div>
+      </div>
+      <hr class="border-white/10 my-8"><div class="text-center text-gray-500 text-sm">© <span id="currentYear"></span> Exif Explorer — All rights reserved.</div>
+    </div>
+  </footer>
+
+
+    <!-- Cookie Consent Banner -->
+<div id="cookieConsent" class="fixed bottom-0 left-0 right-0 z-[9999] transform translate-y-0 transition-transform duration-500 ease-in-out">
+    <div class="glass-premium rounded-t-2xl mx-4 md:mx-auto md:max-w-3xl lg:max-w-4xl border-b-0">
+        <div class="p-5 md:p-6">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-cookie-bite text-primary text-xl"></i>
+                        <h3 class="font-poppins font-semibold text-white text-lg">We Value Your Privacy</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
+                        By clicking "Accept All", you consent to our use of cookies. 
+                        <a href="#" class="text-primary hover:text-secondary transition-colors inline-flex items-center gap-1">
+                            Learn more <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                    <button id="cookieReject" class="px-5 py-2 rounded-full border border-white/20 hover:bg-white/10 text-white text-sm font-medium transition-all duration-300">
+                        Reject All
+                    </button>
+                    <button id="cookieAccept" class="px-5 py-2 rounded-full bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 text-white text-sm font-medium transition-all duration-300">
+                        Accept All
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .glass-premium {
+        background: rgba(17, 17, 21, 0.95);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-bottom: none;
+    }
+    .cookie-hidden {
+        transform: translateY(100%);
+    }
+</style>
+
+<script>
+
+    
+    // ================= MOBILE MENU =================
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        let menuOpen = false;
+
+        mobileBtn.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        mobileMenu.classList.toggle('open');
+        mobileBtn.innerHTML = menuOpen
+            ? '<i class="fas fa-times"></i>'
+            : '<i class="fas fa-bars"></i>';
+        })
+    // Cookie Consent Management
+    (function() {
+        const COOKIE_CONSENT_KEY = 'exifexplorer_cookie_consent';
+        const COOKIE_EXPIRY_DAYS = 365;
+        
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptBtn = document.getElementById('cookieAccept');
+        const rejectBtn = document.getElementById('cookieReject');
+        
+        // Check if user has already made a choice
+        function hasConsent() {
+            const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
+            return consent !== null;
+        }
+        
+        function getConsent() {
+            return localStorage.getItem(COOKIE_CONSENT_KEY);
+        }
+        
+        function setConsent(choice) {
+            localStorage.setItem(COOKIE_CONSENT_KEY, choice);
+            hideBanner();
+            
+            // Dispatch event for other scripts to know consent status
+            window.dispatchEvent(new CustomEvent('cookieConsentUpdated', { detail: { consent: choice } }));
+        }
+        
+        function hideBanner() {
+            cookieConsent.classList.add('cookie-hidden');
+            setTimeout(() => {
+                cookieConsent.style.display = 'none';
+            }, 500);
+        }
+        
+        // Initialize Google Analytics or other tracking based on consent
+        function initializeTracking() {
+            const consent = getConsent();
+            
+            if (consent === 'accepted') {
+                // Load Google Analytics or other tracking scripts
+                loadAnalytics();
+            } else if (consent === 'rejected') {
+                // Ensure no tracking is loaded
+                console.log('Analytics disabled by user preference');
+            }
+        }
+        
+        function loadAnalytics() {
+            // Example: Load Google Analytics (replace with your actual GA ID)
+            if (!window.gtag && !document.querySelector('script[src*="googletagmanager.com"]')) {
+                const script = document.createElement('script');
+                script.async = true;
+                script.src = 'https://www.googletagmanager.com/gtag/js?id=G-FQ0KP0XDCQ';
+                document.head.appendChild(script);
+                
+                window.dataLayer = window.dataLayer || [];
+                window.gtag = function() { dataLayer.push(arguments); };
+                gtag('js', new Date());
+                gtag('config', 'G-FQ0KP0XDCQ');
+                
+                console.log('Analytics loaded with user consent');
+            }
+        }
+        
+        // Event handlers
+        if (acceptBtn) {
+            acceptBtn.addEventListener('click', () => {
+                setConsent('accepted');
+                initializeTracking();
+            });
+        }
+        
+        if (rejectBtn) {
+            rejectBtn.addEventListener('click', () => {
+                setConsent('rejected');
+            });
+        }
+        
+        // Show banner only if no consent stored
+        if (!hasConsent()) {
+            setTimeout(() => {
+                cookieConsent.style.display = 'block';
+                setTimeout(() => {
+                    cookieConsent.classList.remove('cookie-hidden');
+                }, 100);
+            }, 1000);
+        } else {
+            cookieConsent.style.display = 'none';
+            initializeTracking();
+        }
+        
+        // Optional: Add cookie consent to window object for other scripts to use
+        window.cookieConsent = {
+            hasConsent: () => getConsent() === 'accepted',
+            getConsent: () => getConsent()
+        };
+    })();
+</script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let imageItems = [];
+            let dragSrcIndex = null;
+            
+            const fileInput = document.getElementById('imageUpload');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const uploadIcon = document.getElementById('uploadIcon');
+            const uploadArea = document.getElementById('uploadArea');
+            const imageListContainer = document.getElementById('imageListContainer');
+            const imageList = document.getElementById('imageList');
+            const convertBtn = document.getElementById('convertBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            const pageSize = document.getElementById('pageSize');
+            const customSizeDiv = document.getElementById('customSize');
+            const customWidth = document.getElementById('customWidth');
+            const customHeight = document.getElementById('customHeight');
+            const orientation = document.getElementById('orientation');
+            const qualitySlider = document.getElementById('quality');
+            const qualityValue = document.getElementById('qualityValue');
+            
+            qualitySlider.addEventListener('input', () => { qualityValue.textContent = qualitySlider.value + '%'; });
+            
+            pageSize.addEventListener('change', () => {
+                customSizeDiv.classList.toggle('hidden', pageSize.value !== 'custom');
+            });
+            
+            function triggerFileInput(e) { if(e) { e.preventDefault(); e.stopPropagation(); } fileInput.click(); }
+            uploadBtn?.addEventListener('click', triggerFileInput);
+            uploadIcon?.addEventListener('click', triggerFileInput);
+            uploadArea?.addEventListener('click', (e) => { if(e.target !== uploadBtn && !uploadBtn?.contains(e.target)) fileInput.click(); });
+            
+            uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
+            uploadArea.addEventListener('dragleave', () => { uploadArea.classList.remove('drag-over'); });
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault(); uploadArea.classList.remove('drag-over');
+                const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+                if (files.length) addImages(files);
+            });
+            fileInput.addEventListener('change', (e) => { if(e.target.files.length) addImages(Array.from(e.target.files)); });
+            
+            function addImages(files) {
+                files.forEach(file => {
+                    if (imageItems.some(i => i.file.name === file.name)) return;
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        imageItems.push({ file, previewUrl: e.target.result, element: null });
+                        renderImageList();
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            function renderImageList() {
+                imageList.innerHTML = '';
+                imageItems.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'image-item glass-premium rounded-xl p-2 cursor-grab relative group';
+                    div.draggable = true;
+                    div.setAttribute('data-index', index);
+                    div.innerHTML = `
+                        <img src="${item.previewUrl}" class="w-full h-24 object-cover rounded-lg">
+                        <button class="remove-btn absolute top-1 right-1 w-6 h-6 rounded-full bg-red-500/80 text-white text-xs hidden group-hover:flex items-center justify-center">×</button>
+                        <div class="text-center text-xs text-gray-400 mt-1 truncate">${item.file.name.substring(0, 15)}</div>
+                    `;
+                    div.addEventListener('dragstart', (e) => { dragSrcIndex = index; e.dataTransfer.effectAllowed = 'move'; });
+                    div.addEventListener('dragover', (e) => { e.preventDefault(); div.classList.add('drag-over'); });
+                    div.addEventListener('dragleave', () => { div.classList.remove('drag-over'); });
+                    div.addEventListener('drop', (e) => {
+                        e.preventDefault(); div.classList.remove('drag-over');
+                        if (dragSrcIndex !== null && dragSrcIndex !== index) {
+                            const moved = imageItems.splice(dragSrcIndex, 1)[0];
+                            imageItems.splice(index, 0, moved);
+                            renderImageList();
+                        }
+                    });
+                    div.querySelector('.remove-btn').addEventListener('click', () => {
+                        imageItems.splice(index, 1);
+                        renderImageList();
+                    });
+                    imageList.appendChild(div);
+                    item.element = div;
+                });
+                imageListContainer.classList.toggle('hidden', imageItems.length === 0);
+            }
+            
+            function getPageDimensions() {
+                let width = 210, height = 297;
+                if (pageSize.value === 'letter') { width = 215.9; height = 279.4; }
+                else if (pageSize.value === 'legal') { width = 215.9; height = 355.6; }
+                else if (pageSize.value === 'custom') {
+                    width = parseInt(customWidth.value) || 210;
+                    height = parseInt(customHeight.value) || 297;
+                }
+                if (orientation.value === 'landscape') { [width, height] = [height, width]; }
+                return { width: width * 3.78, height: height * 3.78 };
+            }
+            
+            convertBtn.addEventListener('click', async () => {
+                if (imageItems.length === 0) return;
+                loadingOverlay.classList.remove('hidden');
+                const { jsPDF } = window.jspdf;
+                const dims = getPageDimensions();
+                const quality = parseInt(qualitySlider.value) / 100;
+                
+                let pdf = null;
+                for (let i = 0; i < imageItems.length; i++) {
+                    loadingText.textContent = `Processing image ${i + 1} of ${imageItems.length}...`;
+                    const img = new Image();
+                    await new Promise((resolve) => {
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+                            let imgWidth = dims.width, imgHeight = dims.height;
+                            const ratio = Math.min(imgWidth / img.width, imgHeight / img.height);
+                            imgWidth = img.width * ratio;
+                            imgHeight = img.height * ratio;
+                            canvas.width = imgWidth;
+                            canvas.height = imgHeight;
+                            ctx.drawImage(img, 0, 0, imgWidth, imgHeight);
+                            const imgData = canvas.toDataURL('image/jpeg', quality);
+                            if (!pdf) pdf = new jsPDF({ orientation: orientation.value === 'portrait' ? 'p' : 'l', unit: 'px', format: [dims.width, dims.height] });
+                            else pdf.addPage([dims.width, dims.height]);
+                            pdf.addImage(imgData, 'JPEG', (dims.width - imgWidth) / 2, (dims.height - imgHeight) / 2, imgWidth, imgHeight);
+                            resolve();
+                        };
+                        img.src = imageItems[i].previewUrl;
+                    });
+                }
+                loadingText.textContent = 'Saving PDF...';
+                pdf.save(`converted_${new Date().getTime()}.pdf`);
+                loadingOverlay.classList.add('hidden');
+            });
+            
+            clearBtn.addEventListener('click', () => { imageItems = []; renderImageList(); });
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>

@@ -6,7 +6,8 @@
     <meta name="title" content="Image Format Converter | Exif Explorer - Convert JPG, PNG, WebP, AVIF & More">
     <meta name="description" content="Free online image format converter. Convert between JPG, PNG, WebP, AVIF, HEIC, BMP, TIFF with quality control. Batch conversion and metadata options.">
     <meta name="keywords" content="image converter, format converter, JPG to PNG, WebP converter, AVIF converter, HEIC converter, batch image conversion">
-    
+    <meta name="google-adsense-account" content="ca-pub-8918616047230546">
+
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://exifexplorer.com/image-converter">
@@ -14,6 +15,8 @@
     <meta property="og:description" content="Free online image format converter. Convert between JPG, PNG, WebP, AVIF, HEIC, BMP, TIFF with quality control.">
     
     <link rel="canonical" href="https://exifexplorer.com/image-converter">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8918616047230546"
+     crossorigin="anonymous"></script>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -116,29 +119,63 @@
             position: relative;
             z-index: 10;
         }
+
+        /* Mobile menu animation */
+        .mobile-menu {
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body class="font-inter text-gray-200">
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <a href="index.html" class="flex items-center gap-3 group">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                        <i class="fas fa-camera-retro text-white text-sm"></i>
-                    </div>
-                    <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
-                </a>
-                <div class="hidden md:flex gap-8 text-sm font-medium">
-                    <a href="index.html" class="hover:text-primary transition-colors">Home</a>
-                    <a href="screenshot.html" class="hover:text-primary transition-colors">Screenshot Tool</a>
-                    <a href="image-converter.html" class="text-primary border-b-2 border-primary pb-1">Converter</a>
-                    <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
-                </div>
-            </div>
+    <!-- Navigation with Mobile Dropdown -->
+  <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+            <i class="fas fa-camera-retro text-white text-sm"></i>
+          </div>
+          <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
+        </a>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex gap-8 text-sm font-medium">
+          <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+          <a href="#features" class="hover:text-primary transition-colors">Features</a>
+          <a href="#how-it-works" class="hover:text-primary transition-colors">How it Works</a>
+          <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+          <a href="about-us.html" class="text-primary border-b-2 border-primary pb-1">About</a>
         </div>
-    </nav>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuBtn" class="md:hidden text-white text-2xl focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobileMenu" class="mobile-menu md:hidden overflow-hidden transition-all duration-300">
+        <div class="flex flex-col gap-3 pt-4 pb-2">
+          <a href="index.html" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Home</a>
+          <a href="#features" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Features</a>
+          <a href="#how-it-works" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">How it Works</a>
+          <a href="contact.html" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Contact</a>
+          <a href="about-us.html" class="px-4 py-2 text-primary bg-white/5 rounded-lg transition-colors">About Us</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
     <!-- Hero Section -->
     <section class="relative min-h-[35vh] flex items-center justify-center overflow-hidden pt-20">
@@ -665,5 +702,162 @@
             console.log("Image Converter initialized - All click handlers ready");
         });
     </script>
+
+    <!-- Cookie Consent Banner -->
+<div id="cookieConsent" class="fixed bottom-0 left-0 right-0 z-[9999] transform translate-y-0 transition-transform duration-500 ease-in-out">
+    <div class="glass-premium rounded-t-2xl mx-4 md:mx-auto md:max-w-3xl lg:max-w-4xl border-b-0">
+        <div class="p-5 md:p-6">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-cookie-bite text-primary text-xl"></i>
+                        <h3 class="font-poppins font-semibold text-white text-lg">We Value Your Privacy</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
+                        By clicking "Accept All", you consent to our use of cookies. 
+                        <a href="#" class="text-primary hover:text-secondary transition-colors inline-flex items-center gap-1">
+                            Learn more <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                    <button id="cookieReject" class="px-5 py-2 rounded-full border border-white/20 hover:bg-white/10 text-white text-sm font-medium transition-all duration-300">
+                        Reject All
+                    </button>
+                    <button id="cookieAccept" class="px-5 py-2 rounded-full bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 text-white text-sm font-medium transition-all duration-300">
+                        Accept All
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .glass-premium {
+        background: rgba(17, 17, 21, 0.95);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-bottom: none;
+    }
+    .cookie-hidden {
+        transform: translateY(100%);
+    }
+</style>
+
+<script>
+    
+    // ================= MOBILE MENU =================
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        let menuOpen = false;
+
+        mobileBtn.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        mobileMenu.classList.toggle('open');
+        mobileBtn.innerHTML = menuOpen
+            ? '<i class="fas fa-times"></i>'
+            : '<i class="fas fa-bars"></i>';
+        })
+    // Cookie Consent Management
+    (function() {
+        const COOKIE_CONSENT_KEY = 'exifexplorer_cookie_consent';
+        const COOKIE_EXPIRY_DAYS = 365;
+        
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptBtn = document.getElementById('cookieAccept');
+        const rejectBtn = document.getElementById('cookieReject');
+        
+        // Check if user has already made a choice
+        function hasConsent() {
+            const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
+            return consent !== null;
+        }
+        
+        function getConsent() {
+            return localStorage.getItem(COOKIE_CONSENT_KEY);
+        }
+        
+        function setConsent(choice) {
+            localStorage.setItem(COOKIE_CONSENT_KEY, choice);
+            hideBanner();
+            
+            // Dispatch event for other scripts to know consent status
+            window.dispatchEvent(new CustomEvent('cookieConsentUpdated', { detail: { consent: choice } }));
+        }
+        
+        function hideBanner() {
+            cookieConsent.classList.add('cookie-hidden');
+            setTimeout(() => {
+                cookieConsent.style.display = 'none';
+            }, 500);
+        }
+        
+        // Initialize Google Analytics or other tracking based on consent
+        function initializeTracking() {
+            const consent = getConsent();
+            
+            if (consent === 'accepted') {
+                // Load Google Analytics or other tracking scripts
+                loadAnalytics();
+            } else if (consent === 'rejected') {
+                // Ensure no tracking is loaded
+                console.log('Analytics disabled by user preference');
+            }
+        }
+        
+        function loadAnalytics() {
+            // Example: Load Google Analytics (replace with your actual GA ID)
+            if (!window.gtag && !document.querySelector('script[src*="googletagmanager.com"]')) {
+                const script = document.createElement('script');
+                script.async = true;
+                script.src = 'https://www.googletagmanager.com/gtag/js?id=G-FQ0KP0XDCQ';
+                document.head.appendChild(script);
+                
+                window.dataLayer = window.dataLayer || [];
+                window.gtag = function() { dataLayer.push(arguments); };
+                gtag('js', new Date());
+                gtag('config', 'G-FQ0KP0XDCQ');
+                
+                console.log('Analytics loaded with user consent');
+            }
+        }
+        
+        // Event handlers
+        if (acceptBtn) {
+            acceptBtn.addEventListener('click', () => {
+                setConsent('accepted');
+                initializeTracking();
+            });
+        }
+        
+        if (rejectBtn) {
+            rejectBtn.addEventListener('click', () => {
+                setConsent('rejected');
+            });
+        }
+        
+        // Show banner only if no consent stored
+        if (!hasConsent()) {
+            setTimeout(() => {
+                cookieConsent.style.display = 'block';
+                setTimeout(() => {
+                    cookieConsent.classList.remove('cookie-hidden');
+                }, 100);
+            }, 1000);
+        } else {
+            cookieConsent.style.display = 'none';
+            initializeTracking();
+        }
+        
+        // Optional: Add cookie consent to window object for other scripts to use
+        window.cookieConsent = {
+            hasConsent: () => getConsent() === 'accepted',
+            getConsent: () => getConsent()
+        };
+    })();
+</script>
 </body>
 </html>
