@@ -486,8 +486,12 @@
         window.addEventListener('scroll', () => {
             if (window.pageYOffset > 300) {
                 backToTopButton.classList.add('show');
+                backToTopButton.style.opacity = '1';
+                backToTopButton.style.visibility = 'visible';
             } else {
                 backToTopButton.classList.remove('show');
+                backToTopButton.style.opacity = '0';
+                backToTopButton.style.visibility = 'hidden';
             }
         });
         
@@ -504,7 +508,7 @@
     const contactForm = document.getElementById('contactForm');
     const successToast = document.getElementById('successToast');
     
-    if (contactForm && successToast) {
+    if (contactForm) {
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -540,8 +544,13 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    const toast = new bootstrap.Toast(successToast);
-                    toast.show();
+                    // Show success message using custom toast or alert
+                    if (successToast) {
+                        successToast.classList.remove('hidden');
+                        setTimeout(() => successToast.classList.add('hidden'), 3000);
+                    } else {
+                        alert('Message sent successfully!');
+                    }
                     contactForm.reset();
 
                     // Reset reCAPTCHA
@@ -557,6 +566,24 @@
             }
         });
     }
+    
+    // FAQ Toggle (if FAQ elements exist)
+    document.querySelectorAll('.faq-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            if (answer && icon) {
+                answer.classList.toggle('open');
+                if (answer.classList.contains('open')) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    answer.style.maxHeight = '0';
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            }
+        });
+    });
     
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
