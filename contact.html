@@ -457,12 +457,32 @@
     const mobileMenu = document.getElementById('mobileMenu');
     let menuOpen = false;
     
-        // Update current year in footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('open');
+            mobileBtn.innerHTML = menuOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
         
-        // Back to top button functionality
-        const backToTopButton = document.getElementById('backToTop');
-        
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                menuOpen = false;
+                mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+    }
+    
+    // Update current year in footer
+    const currentYearSpan = document.getElementById('currentYear');
+    if (currentYearSpan) {
+        currentYearSpan.textContent = new Date().getFullYear();
+    }
+    
+    // Back to top button functionality
+    const backToTopButton = document.getElementById('backToTop');
+    
+    if (backToTopButton) {
         window.addEventListener('scroll', () => {
             if (window.pageYOffset > 300) {
                 backToTopButton.classList.add('show');
@@ -478,99 +498,84 @@
                 behavior: 'smooth'
             });
         });
-        
-        // // Contact form submission
-        // const contactForm = document.getElementById('contactForm');
-        // const successToast = document.getElementById('successToast');
-        
-        // contactForm.addEventListener('submit', function(e) {
-        //     e.preventDefault();
-            
-        //     // Get form values
-        //     const name = document.getElementById('name').value;
-        //     const email = document.getElementById('email').value;
-        //     const subject = document.getElementById('subject').value;
-        //     const message = document.getElementById('message').value;
-        //     const newsletter = document.getElementById('newsletter').checked;
-            
-        //     // Validate form
-        //     if (!name || !email || !subject || !message) {
-        //         alert('Please fill in all required fields.');
-        //         return;
-        //     }
-            
-        //     // In a real application, you would send this data to a server
-        //     // For now, we'll simulate submission
-        //     console.log('Contact Form Submission:', { name, email, subject, message, newsletter });
-            
-        //     // Show success toast
-        //     const toast = new bootstrap.Toast(successToast);
-        //     toast.show();
-            
-        //     // Reset form
-        //     this.reset();
-        // });
-
-
-    contactForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    // Get the reCAPTCHA response
-    const recaptchaResponse = grecaptcha.getResponse();
-
-    if (!recaptchaResponse) {
-        alert('Please complete the reCAPTCHA.');
-        return;
     }
+    
+    // Contact form submission
+    const contactForm = document.getElementById('contactForm');
+    const successToast = document.getElementById('successToast');
+    
+    if (contactForm && successToast) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value;
-    const newsletter = document.getElementById('newsletter').checked;
+            // Get the reCAPTCHA response
+            const recaptchaResponse = typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '';
+            
+            if (!recaptchaResponse && typeof grecaptcha !== 'undefined') {
+                alert('Please complete the reCAPTCHA.');
+                return;
+            }
 
-    const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-            name, email, subject, message, newsletter,
-            recaptcha: recaptchaResponse // send token to server
-        })
-    });
+            const name = document.getElementById('name')?.value || '';
+            const email = document.getElementById('email')?.value || '';
+            const subject = document.getElementById('subject')?.value || '';
+            const message = document.getElementById('message')?.value || '';
+            const newsletter = document.getElementById('newsletter')?.checked || false;
 
-    const result = await response.json();
+            if (!name || !email || !subject || !message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
 
-    if (response.ok) {
-        const toast = new bootstrap.Toast(successToast);
-        toast.show();
-        contactForm.reset();
+            try {
+                const response = await fetch("/api/contact", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        name, email, subject, message, newsletter,
+                        recaptcha: recaptchaResponse
+                    })
+                });
 
-        // Reset reCAPTCHA
-        grecaptcha.reset();
-    } else {
-        alert(result.message || "Something went wrong.");
-    }
-});
+                const result = await response.json();
 
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+                if (response.ok) {
+                    const toast = new bootstrap.Toast(successToast);
+                    toast.show();
+                    contactForm.reset();
+
+                    // Reset reCAPTCHA
+                    if (typeof grecaptcha !== 'undefined') {
+                        grecaptcha.reset();
+                    }
+                } else {
+                    alert(result.message || "Something went wrong.");
                 }
-            });
+            } catch (error) {
+                console.error('Form submission error:', error);
+                alert('An error occurred. Please try again later.');
+            }
         });
-    </script>
+    }
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
