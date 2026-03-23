@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="title" content="Social Media Image Optimizer | Exif Explorer">
+    <meta name="description" content="Optimize images for Instagram, Facebook, Twitter, LinkedIn, TikTok, and Pinterest. Platform-specific presets, compression, and metadata stripping.">
+    
+    <link rel="canonical" href="https://exifexplorer.com/social-optimizer">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#8B5CF6', secondary: '#EC4899' },
+                    fontFamily: { 'poppins': ['Poppins', 'sans-serif'], 'inter': ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+    
+    <style>
+        body { background: linear-gradient(135deg, #050508 0%, #0A0A0F 50%, #050508 100%); min-height: 100vh; }
+        .glass-premium { background: rgba(17, 17, 21, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(139, 92, 246, 0.2); transition: all 0.3s; }
+        .glass-premium:hover { border-color: rgba(139, 92, 246, 0.5); }
+        .upload-zone { transition: all 0.3s; cursor: pointer; }
+        .upload-zone.drag-over { border-color: #8B5CF6 !important; background: rgba(139, 92, 246, 0.08); }
+        .platform-card { transition: all 0.2s; cursor: pointer; }
+        .platform-card.selected { border-color: #8B5CF6; background: rgba(139, 92, 246, 0.15); }
+        .optimization-item { animation: fadeInUp 0.3s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="font-inter text-gray-200">
+
+    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                        <i class="fas fa-camera-retro text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
+                </a>
+                <div class="hidden md:flex gap-8 text-sm font-medium">
+                    <a href="index.html" class="hover:text-primary">Home</a>
+                    <a href="screenshot.html" class="hover:text-primary">Screenshot</a>
+                    <a href="image-converter.html" class="hover:text-primary">Converter</a>
+                    <a href="image-forensics.html" class="hover:text-primary">Forensics</a>
+                    <a href="social-optimizer.html" class="text-primary border-b-2 border-primary pb-1">Social Optimizer</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative min-h-[35vh] flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-950/20 via-transparent to-pink-950/20"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 mb-6">
+                <i class="fab fa-instagram text-primary text-sm"></i>
+                <span class="text-xs font-medium tracking-wide">Social Media Optimizer</span>
+            </div>
+            <h1 class="font-poppins font-black text-4xl md:text-5xl lg:text-6xl leading-tight mb-4">
+                <span class="bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">Optimize for</span>
+                <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Social Media</span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">Platform-specific sizes, compression, and metadata stripping for Instagram, Facebook, Twitter, LinkedIn, TikTok, Pinterest</p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <!-- Upload Area -->
+                <div id="uploadArea" class="glass-premium rounded-2xl p-8 text-center border-2 border-dashed border-white/20 upload-zone">
+                    <i id="uploadIcon" class="fas fa-cloud-upload-alt text-6xl text-primary mb-4 cursor-pointer"></i>
+                    <h3 class="text-2xl font-semibold text-white mb-2">Upload Images</h3>
+                    <p class="text-gray-400 mb-4">Drag & drop multiple images</p>
+                    <input type="file" id="imageUpload" class="hidden" accept="image/jpeg,image/png,image/jpg" multiple>
+                    <button id="uploadBtn" class="bg-gradient-to-r from-primary to-secondary hover:shadow-lg px-8 py-3 rounded-full font-medium inline-flex items-center gap-2">
+                        <i class="fas fa-folder-open"></i> Choose Images
+                    </button>
+                </div>
+
+                <!-- Platform Selection -->
+                <div class="glass-premium rounded-2xl p-6 mt-8">
+                    <h3 class="text-xl font-bold text-white mb-4">Select Platforms</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                        <div data-platform="instagram" class="platform-card glass-premium rounded-xl p-3 text-center cursor-pointer border border-white/10 hover:border-primary/50">
+                            <i class="fab fa-instagram text-2xl text-pink-500"></i>
+                            <p class="text-xs mt-1">Instagram</p>
+                        </div>
+                        <div data-platform="facebook" class="platform-card glass-premium rounded-xl p-3 text-center cursor-pointer border border-white/10">
+                            <i class="fab fa-facebook text-2xl text-blue-500"></i>
+                            <p class="text-xs mt-1">Facebook</p>
+                        </div>
+                        <div data-platform="twitter" class="platform-card glass-premium rounded-xl p-3 text-center cursor-pointer border border-white/10">
+                            <i class="fab fa-twitter text-2xl text-sky-500"></i>
+                            <p class="text-xs mt-1">Twitter/X</p>
+                        </div>
+                        <div data-platform="linkedin" class="platform-card glass-premium rounded-xl p-3 text-center cursor-pointer border border-white/10">
+                            <i class="fab fa-linkedin text-2xl text-blue-600"></i>
+                            <p class="text-xs mt-1">LinkedIn</p>
+                        </div>
+                        <div data-platform="tiktok" class="platform-card glass-premium rounded-xl p-3 text-center cursor-pointer border border-white/10">
+                            <i class="fab fa-tiktok text-2xl text-white"></i>
+                            <p class="text-xs mt-1">TikTok</p>
+                        </div>
+                        <div data-platform="pinterest" class="platform-card glass-premium rounded-xl p-3 text-center cursor-pointer border border-white/10">
+                            <i class="fab fa-pinterest text-2xl text-red-500"></i>
+                            <p class="text-xs mt-1">Pinterest</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Options Panel -->
+                <div class="glass-premium rounded-2xl p-6 mt-4">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Quality</label>
+                            <input type="range" id="quality" min="1" max="100" value="85" class="w-full">
+                            <span id="qualityValue" class="text-primary text-sm">85%</span>
+                        </div>
+                        <div>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" id="stripMetadata" checked class="text-primary">
+                                <span class="text-sm">Strip Metadata (for privacy)</span>
+                            </label>
+                            <p class="text-xs text-gray-500 mt-1">Removes EXIF data including GPS coordinates</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Batch Actions -->
+                <div class="flex gap-4 justify-between items-center mt-6">
+                    <button id="optimizeAllBtn" class="px-6 py-3 rounded-xl bg-gradient-to-r from-primary to-secondary hover:shadow-lg font-medium disabled:opacity-50" disabled>
+                        <i class="fas fa-magic mr-2"></i>Optimize All (<span id="fileCount">0</span>)
+                    </button>
+                    <button id="clearAllBtn" class="px-4 py-2 rounded-xl border border-white/20 hover:bg-white/10">Clear All</button>
+                </div>
+
+                <!-- Loading -->
+                <div id="loadingOverlay" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
+                    <div class="text-center"><div class="animate-spin rounded-full h-16 w-16 border-t-2 border-primary"></div><p id="loadingText" class="mt-4">Optimizing...</p></div>
+                </div>
+
+                <!-- Image List -->
+                <div id="imageList" class="mt-8 space-y-4"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/10 py-12 bg-black/30 mt-8">
+        <div class="container mx-auto px-6 text-center text-gray-500 text-sm">© <span id="currentYear"></span> Exif Explorer — Social Media Image Optimizer</div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const platformSizes = {
+                instagram: { width: 1080, height: 1080, name: 'Instagram Post' },
+                facebook: { width: 1200, height: 630, name: 'Facebook Share' },
+                twitter: { width: 1600, height: 900, name: 'Twitter Card' },
+                linkedin: { width: 1200, height: 627, name: 'LinkedIn Post' },
+                tiktok: { width: 1080, height: 1920, name: 'TikTok Video Cover' },
+                pinterest: { width: 1000, height: 1500, name: 'Pinterest Pin' }
+            };
+            
+            let selectedPlatforms = new Set();
+            let imageItems = [];
+            
+            const fileInput = document.getElementById('imageUpload');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const uploadIcon = document.getElementById('uploadIcon');
+            const uploadArea = document.getElementById('uploadArea');
+            const imageList = document.getElementById('imageList');
+            const optimizeAllBtn = document.getElementById('optimizeAllBtn');
+            const clearAllBtn = document.getElementById('clearAllBtn');
+            const qualitySlider = document.getElementById('quality');
+            const qualityValue = document.getElementById('qualityValue');
+            const stripMetadata = document.getElementById('stripMetadata');
+            const fileCountSpan = document.getElementById('fileCount');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            
+            qualitySlider.addEventListener('input', () => { qualityValue.textContent = qualitySlider.value + '%'; });
+            
+            document.querySelectorAll('.platform-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const platform = card.dataset.platform;
+                    if (selectedPlatforms.has(platform)) selectedPlatforms.delete(platform);
+                    else selectedPlatforms.add(platform);
+                    card.classList.toggle('selected');
+                });
+            });
+            
+            function triggerFileInput(e) { if(e) { e.preventDefault(); e.stopPropagation(); } fileInput.click(); }
+            uploadBtn?.addEventListener('click', triggerFileInput);
+            uploadIcon?.addEventListener('click', triggerFileInput);
+            uploadArea?.addEventListener('click', (e) => { if(e.target !== uploadBtn && !uploadBtn?.contains(e.target)) fileInput.click(); });
+            
+            uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
+            uploadArea.addEventListener('dragleave', () => { uploadArea.classList.remove('drag-over'); });
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault(); uploadArea.classList.remove('drag-over');
+                const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+                if (files.length) addImages(files);
+            });
+            fileInput.addEventListener('change', (e) => { if(e.target.files.length) addImages(Array.from(e.target.files)); });
+            
+            function addImages(files) {
+                files.forEach(file => {
+                    if (imageItems.some(i => i.file.name === file.name && i.file.size === file.size)) return;
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const element = createImageItem(file, e.target.result);
+                        imageList.appendChild(element);
+                        imageItems.push({ file, element, previewUrl: e.target.result, optimized: false, blobs: {} });
+                        updateCount();
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            function createImageItem(file, previewUrl) {
+                const div = document.createElement('div');
+                div.className = 'glass-premium rounded-xl p-4 optimization-item';
+                div.innerHTML = `
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <img src="${previewUrl}" class="w-20 h-20 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <p class="font-medium text-white truncate">${file.name}</p>
+                            <p class="text-sm text-gray-400">${(file.size/1024).toFixed(2)} KB</p>
+                            <div class="optimization-status text-xs text-gray-500 mt-1"></div>
+                        </div>
+                        <button class="remove-btn px-3 py-1.5 rounded-lg bg-white/5 hover:bg-red-500/20 text-red-400"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="downloads-container hidden mt-3 pt-3 border-t border-white/10 grid grid-cols-2 md:grid-cols-3 gap-2"></div>
+                `;
+                div.querySelector('.remove-btn').addEventListener('click', () => {
+                    const index = imageItems.findIndex(i => i.element === div);
+                    if (index !== -1) imageItems.splice(index, 1);
+                    div.remove();
+                    updateCount();
+                });
+                return div;
+            }
+            
+            async function optimizeImage(item, platform, size) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = size.width, height = size.height;
+                        const ratio = Math.min(width / img.width, height / img.height);
+                        width = Math.floor(img.width * ratio);
+                        height = Math.floor(img.height * ratio);
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        const quality = parseInt(qualitySlider.value) / 100;
+                        canvas.toBlob((blob) => {
+                            resolve(blob);
+                        }, 'image/jpeg', quality);
+                    };
+                    img.src = item.previewUrl;
+                });
+            }
+            
+            optimizeAllBtn.addEventListener('click', async () => {
+                if (selectedPlatforms.size === 0) { alert('Please select at least one platform'); return; }
+                if (imageItems.length === 0) return;
+                
+                optimizeAllBtn.disabled = true;
+                loadingOverlay.classList.remove('hidden');
+                
+                let total = 0;
+                for (const item of imageItems) {
+                    const downloadsContainer = item.element.querySelector('.downloads-container');
+                    const statusDiv = item.element.querySelector('.optimization-status');
+                    downloadsContainer.innerHTML = '';
+                    statusDiv.innerHTML = '<span class="text-yellow-400">Optimizing...</span>';
+                    
+                    for (const platform of selectedPlatforms) {
+                        const size = platformSizes[platform];
+                        loadingText.textContent = `Optimizing ${item.file.name} for ${size.name}...`;
+                        const optimizedBlob = await optimizeImage(item, platform, size);
+                        item.blobs[platform] = optimizedBlob;
+                        
+                        const downloadUrl = URL.createObjectURL(optimizedBlob);
+                        const ext = 'jpg';
+                        const newName = `${item.file.name.replace(/\.[^/.]+$/, '')}_${platform}.${ext}`;
+                        
+                        const downloadBtn = document.createElement('a');
+                        downloadBtn.href = downloadUrl;
+                        downloadBtn.download = newName;
+                        downloadBtn.className = 'px-2 py-1 rounded-lg bg-primary/20 hover:bg-primary/40 text-primary text-xs text-center transition-all';
+                        downloadBtn.innerHTML = `<i class="fab fa-${platform} mr-1"></i>${platformSizes[platform].name}`;
+                        downloadsContainer.appendChild(downloadBtn);
+                        total++;
+                    }
+                    
+                    downloadsContainer.classList.remove('hidden');
+                    statusDiv.innerHTML = `<span class="text-green-400">✓ Optimized for ${selectedPlatforms.size} platforms</span>`;
+                    item.optimized = true;
+                }
+                
+                loadingOverlay.classList.add('hidden');
+                optimizeAllBtn.disabled = false;
+                alert(`✓ Optimized ${imageItems.length} images for ${selectedPlatforms.size} platforms each`);
+            });
+            
+            clearAllBtn.addEventListener('click', () => {
+                imageItems.forEach(item => item.element.remove());
+                imageItems = [];
+                updateCount();
+            });
+            
+            function updateCount() {
+                fileCountSpan.textContent = imageItems.length;
+                optimizeAllBtn.disabled = imageItems.length === 0 || selectedPlatforms.size === 0;
+            }
+            
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>
