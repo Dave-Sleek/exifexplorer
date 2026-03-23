@@ -369,7 +369,6 @@
     </div>
   </footer>
 <!--<script src="https://cdn.jsdelivr.net/npm/exif-js"></script>-->
-
 <script>
 const fileInput = document.getElementById('screenshotUpload');
 const uploadBtn = document.getElementById('uploadBtn');
@@ -381,7 +380,7 @@ const resultsContainer = document.getElementById('resultsContainer');
 const noDataMessage = document.getElementById('noDataMessage');
 
 // --------------------
-// SMART FALLBACK DETECTION
+// FALLBACK DETECTION
 // --------------------
 function detectFromFallback(file, img) {
     const name = file.name.toLowerCase();
@@ -394,9 +393,7 @@ function detectFromFallback(file, img) {
     let sourceApp = 'Unknown';
 
     // File name patterns
-    if (name.includes('screenshot')) {
-        deviceOS = 'Android/Windows';
-    }
+    if (name.includes('screenshot')) deviceOS = 'Android/Windows';
     if (name.includes('img_')) {
         deviceMake = 'Apple';
         deviceOS = 'iOS';
@@ -408,7 +405,7 @@ function detectFromFallback(file, img) {
     else if (name.includes('instagram')) sourceApp = 'Instagram';
     else if (name.includes('facebook')) sourceApp = 'Facebook';
 
-    // Resolution-based guesses (common devices)
+    // Resolution detection
     if (width === 1170 && height === 2532) {
         deviceModel = 'iPhone 12/13/14';
         deviceMake = 'Apple';
@@ -433,34 +430,29 @@ function detectDeviceFromEXIF(exif) {
     let deviceModel = 'Unknown';
     let deviceMake = 'Unknown';
     let deviceOS = 'Unknown';
-    let captureTool = 'Unknown';
 
     if (model.includes('iPhone')) {
         deviceMake = 'Apple';
         deviceModel = model;
         deviceOS = 'iOS';
-        captureTool = 'iOS Screenshot';
     } 
     else if (make.toLowerCase().includes('samsung') || make.toLowerCase().includes('xiaomi') || make.toLowerCase().includes('google')) {
         deviceMake = make;
         deviceModel = model;
         deviceOS = 'Android';
-        captureTool = 'Android Screenshot';
     } 
     else if (software.includes('Windows')) {
         deviceMake = 'Microsoft';
         deviceModel = model || 'Windows PC';
         deviceOS = 'Windows';
-        captureTool = 'Windows Screenshot';
     } 
     else if (software.includes('Mac')) {
         deviceMake = 'Apple';
         deviceModel = model || 'Mac';
         deviceOS = 'macOS';
-        captureTool = 'Mac Screenshot';
     }
 
-    return { deviceModel, deviceMake, deviceOS, captureTool };
+    return { deviceModel, deviceMake, deviceOS };
 }
 
 // --------------------
@@ -481,80 +473,84 @@ function handleFileUpload(file) {
     reader.onload = (e) => {
         previewImg.src = e.target.result;
 
+        // ✅ WAIT for image load
         previewImg.onload = () => {
+            const width = previewImg.naturalWidth;
+            const height = previewImg.naturalHeight;
+
+            console.log("Image loaded:", width, height);
+
             imagePreviewDiv.classList.remove('hidden');
 
-            // Always show base info
+            // Base info (always show)
             document.getElementById('imageFormat').textContent = file.type;
             document.getElementById('fileSize').textContent = (file.size / 1024).toFixed(2) + ' KB';
-            document.getElementById('imageDimensions').textContent =
-                `${previewImg.naturalWidth} × ${previewImg.naturalHeight}`;
-        };
+            document.getElementById('imageDimensions').textContent = `${width} × ${height}`;
+            document.getElementById('screenResolution').textContent = `${width} × ${height}`;
 
-        // Try EXIF (only works mostly for JPEG)
-        try {
-            EXIF.getData(file, function () {
-                const exif = EXIF.getAllTags(this) || {};
-                console.log("EXIF:", exif);
+            try {
+                EXIF.getData(file, function () {
+                    const exif = EXIF.getAllTags(this) || {};
+                    console.log("EXIF:", exif);
 
+                    const hasData = exif.Make || exif.Model || exif.Software || exif.DateTimeOriginal;
+
+                    let device = { deviceModel: 'Unknown', deviceMake: 'Unknown', deviceOS: 'Unknown' };
+                    let sourceApp = 'Unknown';
+
+                    if (hasData) {
+                        device = detectDeviceFromEXIF(exif);
+                    } else {
+                        const fallback = detectFromFallback(file, previewImg);
+                        device = fallback;
+                        sourceApp = fallback.sourceApp;
+                    }
+
+                    // Populate UI
+                    document.getElementById('deviceModel').textContent = device.deviceModel;
+                    document.getElementById('deviceMake').textContent = device.deviceMake;
+                    document.getElementById('deviceOS').textContent = device.deviceOS;
+
+                    document.getElementById('captureTool').textContent =
+                        hasData ? (exif.Software || 'Screenshot Tool') : 'Screenshot (No EXIF)';
+
+                    document.getElementById('softwareVersion').textContent =
+                        exif.Software || 'Not available';
+
+                    document.getElementById('captureDate').textContent =
+                        exif.DateTimeOriginal || 'Not available';
+
+                    document.getElementById('sourceApp').textContent =
+                        sourceApp || 'Unknown';
+
+                    document.getElementById('windowTitle').textContent = 'Not detected';
+                    document.getElementById('contentType').textContent = 'Screen Capture';
+                    document.getElementById('sourceUrl').textContent = 'Not available';
+
+                    document.getElementById('colorSpace').textContent =
+                        exif.ColorSpace || 'sRGB';
+
+                    document.getElementById('dpi').textContent =
+                        exif.XResolution ? `${exif.XResolution} DPI` : '72 DPI';
+
+                    document.getElementById('compression').textContent =
+                        exif.Compression === 6 ? 'JPEG' : file.type;
+
+                    // Confidence score
+                    const confidence = hasData ? 80 : 50;
+                    document.getElementById('confidenceBar').style.width = `${confidence}%`;
+                    document.getElementById('confidenceScore').textContent = `${confidence}%`;
+
+                    loadingSpinner.classList.add('hidden');
+                    resultsContainer.classList.remove('hidden');
+                });
+
+            } catch (err) {
+                console.error("EXIF error:", err);
                 loadingSpinner.classList.add('hidden');
-
-                const hasData = exif.Make || exif.Model || exif.Software || exif.DateTimeOriginal;
-
-                let device, sourceApp = 'Unknown';
-
-                if (hasData) {
-                    device = detectDeviceFromEXIF(exif);
-                } else {
-                    device = detectFromFallback(file, previewImg);
-                    sourceApp = device.sourceApp;
-                }
-
-                // Populate UI
-                document.getElementById('deviceModel').textContent = device.deviceModel;
-                document.getElementById('deviceMake').textContent = device.deviceMake;
-                document.getElementById('deviceOS').textContent = device.deviceOS;
-
-                document.getElementById('captureTool').textContent =
-                    hasData ? (exif.Software || 'Screenshot Tool') : 'Screenshot (No EXIF)';
-
-                document.getElementById('softwareVersion').textContent =
-                    exif.Software || 'Not available';
-
-                document.getElementById('captureDate').textContent =
-                    exif.DateTimeOriginal || 'Not available';
-
-                document.getElementById('sourceApp').textContent =
-                    sourceApp || 'Unknown';
-
-                document.getElementById('windowTitle').textContent = 'Not detected';
-                document.getElementById('contentType').textContent = 'Screen Capture';
-                document.getElementById('sourceUrl').textContent = 'Not available';
-
-                document.getElementById('screenResolution').textContent =
-                    `${previewImg.naturalWidth} × ${previewImg.naturalHeight}`;
-
-                document.getElementById('colorSpace').textContent =
-                    exif.ColorSpace || 'sRGB';
-
-                document.getElementById('dpi').textContent =
-                    exif.XResolution ? `${exif.XResolution} DPI` : '72 DPI';
-
-                document.getElementById('compression').textContent =
-                    exif.Compression === 6 ? 'JPEG' : file.type;
-
-                // Confidence
-                let confidence = hasData ? 80 : 40;
-                document.getElementById('confidenceBar').style.width = `${confidence}%`;
-                document.getElementById('confidenceScore').textContent = `${confidence}%`;
-
-                resultsContainer.classList.remove('hidden');
-            });
-        } catch (err) {
-            console.error("EXIF error:", err);
-            loadingSpinner.classList.add('hidden');
-            noDataMessage.classList.remove('hidden');
-        }
+                noDataMessage.classList.remove('hidden');
+            }
+        };
     };
 
     reader.readAsDataURL(file);
@@ -592,6 +588,6 @@ fileInput.addEventListener('change', (e) => {
 
 document.getElementById('currentYear').textContent = new Date().getFullYear();
 </script>
-  
+
 </body>
 </html>
