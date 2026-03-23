@@ -88,6 +88,51 @@
         <priority>0.6</priority>
     </url>
 
+     <url>
+        <loc>https://www.exifexplorer.com/background-remover.html</loc>
+        <lastmod>2026-03-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
 
+     <url>
+        <loc>https://www.exifexplorer.com/image-upscaler.html</loc>
+        <lastmod>2026-03-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+     <url>
+        <loc>https://www.exifexplorer.com/social-optimizer.html</loc>
+        <lastmod>2026-03-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+     <url>
+        <loc>https://www.exifexplorer.com/image-converter.html</loc>
+        <lastmod>2026-03-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+     <url>
+        <loc>https://www.exifexplorer.com/image-forensics.html</loc>
+        <lastmod>2026-03-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://www.exifexplorer.com/image-pdf.html</loc>
+        <lastmod>2026-03-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://www.exifexplorer.com/image-forensics.html</loc>
+        <lastmod>2026-03-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
     
 </urlset>
