@@ -144,9 +144,15 @@
                     <h3 class="text-2xl font-semibold text-white mb-2">Upload a Screenshot</h3>
                     <p class="text-gray-400 mb-4">Drag & drop or click to browse</p>
                     <input type="file" id="screenshotUpload" class="hidden" accept="image/jpeg,image/png,image/jpg,image/webp">
-                    <button id="uploadBtn" class="bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 px-8 py-3 rounded-full font-medium transition-all inline-flex items-center gap-2">
+                    <!--<button id="uploadBtn" class="bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 px-8 py-3 rounded-full font-medium transition-all inline-flex items-center gap-2">
                         <i class="fas fa-folder-open"></i> Choose Screenshot
-                    </button>
+                    </button>-->
+                    <label for="screenshotUpload" 
+    id="uploadBtn"
+    class="bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 px-8 py-3 rounded-full font-medium transition-all inline-flex items-center gap-2 cursor-pointer">
+    
+    <i class="fas fa-folder-open"></i> Choose Screenshot
+</label>
                     <p class="text-xs text-gray-500 mt-4">Supports JPG, PNG, WebP — All processing happens locally</p>
                 </div>
 
