@@ -369,38 +369,46 @@
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-white/10 py-12 bg-black/30">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div><i class="fas fa-camera text-primary text-2xl"></i><h5 class="font-bold text-lg mt-2">Exif Explorer</h5><p class="text-gray-500 text-sm">Professional metadata extraction tool</p></div>
-                <div><h5 class="font-semibold">Quick Links</h5>
-                    <ul class="space-y-1 mt-2 text-sm text-gray-400">
-                        <li><a href="screenshot.html"  class="hover:text-primary">Screenshot Tool</a></li>
-                        <li><a href="image-converter.html"  class="hover:text-primary">Image Converter</a></li>
-                        <li><a href="image-forensics.html"  class="hover:text-primary">Image Forensics</a></li>
-                        <li><a href="social-optimizer.html"  class="hover:text-primary">Social Media Image Optimizer</a></li>
-                        <li><a href="image-to-pdf.html"  class="hover:text-primary">Image to PDF Converter</a></li>
-                        <li><a href="image-upscaler.html"  class="hover:text-primary">Image UpScaler</a></li>
-                        <li><a href="background-remover.html"  class="hover:text-primary">Image Background Remover</a></li>
-                    </ul>
-                </div>
-                <div><h5 class="font-semibold">Tools</h5>
-                    <ul class="space-y-1 mt-2 text-sm text-gray-400">
-                         <li><a href="index.html" class="hover:text-primary">Exif Extractor</a></li>
-                         <li><a href="screenshot.html" class="hover:text-primary">Screenshot</a></li>
-                    </ul>
-                </div>
-                <div><h5 class="font-semibold">Legal</h5>
-                    <ul class="space-y-1 mt-2 text-sm text-gray-400">
-                        <li><a href="privacy-policy.html" class="hover:text-primary">Privacy Policy</a></li>
-                        <li><a href="terms-of-use.html" class="hover:text-primary">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            <hr class="border-white/10 my-8">
-            <div class="text-center text-gray-500 text-sm">© <span id="currentYear"></span> Exif Explorer — All rights reserved.</div>
+  <footer class="border-t border-white/10 py-12 bg-black/30">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-8"><div><i class="fas fa-camera text-primary text-2xl"></i><h5 class="font-bold text-lg mt-2">Exif Explorer</h5><p class="text-gray-500 text-sm">Professional metadata extraction tool</p></div>
+        <div><h5 class="font-semibold">Quick Links</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                <li><a href="index.html" class="hover:text-primary">Home</a></li>
+                <li><a href="#features" class="hover:text-primary">Features</a></li>
+                <li><a href="#how-it-works" class="hover:text-primary">How It Works</a></li>
+                <li><a href="#blog" class="hover:text-primary">Blog</a></li>
+                <li><a href="contact.html" class="hover:text-primary">Contact</a></li>
+                <li><a href="about-us.html" class="hover:text-primary">About</a></li>
+            </ul>
         </div>
-    </footer>
+        <div><h5 class="font-semibold">Tools</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                 <li><a href="screenshot.html"  class="hover:text-primary">Screenshot Tool</a></li>
+                 <li><a href="image-converter.html"  class="hover:text-primary">Image Converter</a></li>
+                 <li><a href="image-forensics.html"  class="hover:text-primary">Image Forensics</a></li>
+                 <li><a href="social-optimizer.html"  class="hover:text-primary">Social Media Image Optimizer</a></li>
+                 <li><a href="image-to-pdf.html"  class="hover:text-primary">Image to PDF Converter</a></li>
+                 <li><a href="image-upscaler.html"  class="hover:text-primary">Image UpScaler</a></li>
+                 <li><a href="background-remover.html"  class="hover:text-primary">Image Background Remover</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Legal</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                <li><a href="privacy-policy.html" class="hover:text-primary">Privacy Policy</a></li>
+                <li><a href="terms-of-use.html" class="hover:text-primary">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Connect</h5>
+            <div class="flex gap-4 mt-2"><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-github fa-lg"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-instagram fa-lg"></i></a>
+            </div>
+        </div>
+      </div>
+      <hr class="border-white/10 my-8"><div class="text-center text-gray-500 text-sm">© <span id="currentYear"></span> Exif Explorer — All rights reserved.</div>
+    </div>
+  </footer>
 
     <!-- Cookie Consent Banner -->
 <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 z-[9999] transform translate-y-0 transition-transform duration-500 ease-in-out">
@@ -547,6 +555,20 @@
 </script>
 
     <script>
+
+         // ================= MOBILE MENU =================
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        let menuOpen = false;
+
+        mobileBtn.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        mobileMenu.classList.toggle('open');
+        mobileBtn.innerHTML = menuOpen
+            ? '<i class="fas fa-times"></i>'
+            : '<i class="fas fa-bars"></i>';
+        })      
         // Wait for DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', function() {
             // Get all elements

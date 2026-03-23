@@ -59,17 +59,17 @@
         .risk-medium { background: rgba(245, 158, 11, 0.2); border-left: 3px solid #f59e0b; }
         .risk-low { background: rgba(16, 185, 129, 0.2); border-left: 3px solid #10b981; }
         /* Mobile menu animation */
-  .mobile-menu {
-    max-height: 0;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .mobile-menu.open {
-    max-height: 400px;
-    opacity: 1;
-    visibility: visible;
-  }
+        .mobile-menu {
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body class="font-inter text-gray-200">
@@ -310,21 +310,6 @@
 </style>
 
 <script>
-            
-            // ================= MOBILE MENU =================
-        const mobileBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-
-        let menuOpen = false;
-
-        mobileBtn.addEventListener('click', () => {
-        menuOpen = !menuOpen;
-        mobileMenu.classList.toggle('open');
-        mobileBtn.innerHTML = menuOpen
-            ? '<i class="fas fa-times"></i>'
-            : '<i class="fas fa-bars"></i>';
-        })      
-
     // Cookie Consent Management
     (function() {
         const COOKIE_CONSENT_KEY = 'exifexplorer_cookie_consent';
@@ -425,6 +410,21 @@
 </script>
 
     <script>
+
+           // ================= MOBILE MENU =================
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        let menuOpen = false;
+
+        mobileBtn.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        mobileMenu.classList.toggle('open');
+        mobileBtn.innerHTML = menuOpen
+            ? '<i class="fas fa-times"></i>'
+            : '<i class="fas fa-bars"></i>';
+        })      
+
         document.addEventListener('DOMContentLoaded', function() {
             const fileInput = document.getElementById('imageUpload');
             const uploadBtn = document.getElementById('uploadBtn');

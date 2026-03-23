@@ -36,28 +36,60 @@
         .comparison-slider { position: relative; overflow: hidden; cursor: ew-resize; }
         .comparison-slider img { display: block; width: 100%; height: auto; }
         .comparison-slider .slider-img { position: absolute; top: 0; left: 0; width: 50%; height: 100%; object-fit: cover; overflow: hidden; }
+         /* Mobile menu animation */
+        .mobile-menu {
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body class="font-inter text-gray-200">
 
     <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <a href="index.html" class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                        <i class="fas fa-camera-retro text-white text-sm"></i>
-                    </div>
-                    <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
-                </a>
-                <div class="hidden md:flex gap-8 text-sm font-medium">
-                    <a href="index.html" class="hover:text-primary">Home</a>
-                    <a href="image-to-pdf.html" class="hover:text-primary">Image to PDF</a>
-                    <a href="background-remover.html" class="hover:text-primary">BG Remover</a>
-                    <a href="image-upscaler.html" class="text-primary border-b-2 border-primary pb-1">Upscaler</a>
-                </div>
-            </div>
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+            <i class="fas fa-camera-retro text-white text-sm"></i>
+          </div>
+          <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
+        </a>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex gap-8 text-sm font-medium">
+          <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+          <a href="#features" class="hover:text-primary transition-colors">Features</a>
+          <a href="#how-it-works" class="hover:text-primary transition-colors">How it Works</a>
+          <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+          <a href="about-us.html" class="text-primary border-b-2 border-primary pb-1">About</a>
         </div>
-    </nav>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuBtn" class="md:hidden text-white text-2xl focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobileMenu" class="mobile-menu md:hidden overflow-hidden transition-all duration-300">
+        <div class="flex flex-col gap-3 pt-4 pb-2">
+          <a href="index.html" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Home</a>
+          <a href="#features" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Features</a>
+          <a href="#how-it-works" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">How it Works</a>
+          <a href="contact.html" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Contact</a>
+          <a href="about-us.html" class="px-4 py-2 text-primary bg-white/5 rounded-lg transition-colors">About Us</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
     <section class="relative min-h-[35vh] flex items-center justify-center overflow-hidden pt-20">
         <div class="absolute inset-0 bg-gradient-to-br from-purple-950/20 via-transparent to-pink-950/20"></div>
@@ -323,6 +355,19 @@
 
 
     <script>
+        // ================= MOBILE MENU =================
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        let menuOpen = false;
+
+        mobileBtn.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        mobileMenu.classList.toggle('open');
+        mobileBtn.innerHTML = menuOpen
+            ? '<i class="fas fa-times"></i>'
+            : '<i class="fas fa-bars"></i>';
+        })
         document.addEventListener('DOMContentLoaded', function() {
             let originalImageData = null;
             let upscaledBlob = null;
