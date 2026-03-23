@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="title" content="Screenshot Metadata Extractor | Exif Explorer - Analyze Screenshot Details">
+    <meta name="description" content="Extract hidden metadata from screenshots. Detect device model, capture method, app source, and technical details from any screenshot.">
+    <meta name="keywords" content="screenshot metadata, device detection, capture method, screenshot analyzer, image forensics">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://exifexplorer.com/screenshot-metadata">
+    <meta property="og:title" content="Screenshot Metadata Extractor | Exif Explorer">
+    <meta property="og:description" content="Extract hidden metadata from screenshots. Detect device model, capture method, app source, and more.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5CF6',
+                        secondary: '#EC4899',
+                        darkBg: '#030014',
+                        cardBg: '#0F0A1F',
+                        surface: '#1A142F',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts + Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #050508 0%, #0A0A0F 50%, #050508 100%);
+        }
+        .glass-premium {
+            background: rgba(17, 17, 21, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-premium:hover {
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 20px 40px -15px rgba(139, 92, 246, 0.15);
+        }
+        .upload-zone {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .upload-zone.drag-over {
+            border-color: #8B5CF6 !important;
+            background: rgba(139, 92, 246, 0.08);
+            transform: scale(0.98);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #111115; }
+        ::-webkit-scrollbar-thumb { background: #8B5CF6; border-radius: 10px; }
+        
+        .result-card {
+            animation: fadeInUp 0.5s ease-out;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="font-inter text-gray-200">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                        <i class="fas fa-camera-retro text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
+                </a>
+                <div class="hidden md:flex gap-8 text-sm font-medium">
+                    <a href="screenshot.html" class="hover:text-primary transition-colors">Home</a>
+                    <a href="index.html#features" class="hover:text-primary transition-colors">Features</a>
+                    <a href="screenshot.html" class="text-primary border-b-2 border-primary pb-1">Screenshot Tool</a>
+                    <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[40vh] flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-950/20 via-transparent to-pink-950/20"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 mb-6">
+                <i class="fas fa-desktop text-primary text-sm"></i>
+                <span class="text-xs font-medium tracking-wide">Screenshot Analysis Tool</span>
+            </div>
+            <h1 class="font-poppins font-black text-4xl md:text-5xl lg:text-6xl leading-tight mb-4">
+                <span class="bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">Screenshot</span>
+                <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Metadata Extractor</span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                Extract hidden metadata from screenshots. Detect device model, capture method, app source, and technical details.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Tool Section -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="max-w-5xl mx-auto">
+                <!-- Upload Area -->
+                <div id="uploadArea" class="glass-premium rounded-2xl p-10 text-center border-2 border-dashed border-white/20 upload-zone transition-all">
+                    <i class="fas fa-camera-retro text-6xl text-primary mb-4"></i>
+                    <h3 class="text-2xl font-semibold text-white mb-2">Upload a Screenshot</h3>
+                    <p class="text-gray-400 mb-4">Drag & drop or click to browse</p>
+                    <input type="file" id="screenshotUpload" class="hidden" accept="image/jpeg,image/png,image/jpg,image/webp">
+                    <button id="uploadBtn" class="bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 px-8 py-3 rounded-full font-medium transition-all inline-flex items-center gap-2">
+                        <i class="fas fa-folder-open"></i> Choose Screenshot
+                    </button>
+                    <p class="text-xs text-gray-500 mt-4">Supports JPG, PNG, WebP — All processing happens locally</p>
+                </div>
+
+                <!-- Loading Spinner -->
+                <div id="loadingSpinner" class="hidden mt-8 text-center py-8">
+                    <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-primary border-r-2"></div>
+                    <p class="mt-3 text-gray-400">Analyzing screenshot metadata...</p>
+                </div>
+
+                <!-- Image Preview -->
+                <div id="imagePreview" class="hidden mt-6">
+                    <div class="glass-premium rounded-2xl overflow-hidden">
+                        <img id="previewImg" class="w-full max-h-64 object-contain bg-black/40 p-4" alt="Screenshot Preview">
+                    </div>
+                </div>
+
+                <!-- Results Grid -->
+                <div id="resultsContainer" class="hidden mt-8 space-y-6">
+                    <!-- Device Detection Card -->
+                    <div class="glass-premium rounded-2xl p-6 result-card">
+                        <div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                                <i class="fas fa-mobile-alt text-primary text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Device Detection</h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Device Model</p>
+                                <p id="deviceModel" class="text-white font-semibold text-lg">—</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Device Manufacturer</p>
+                                <p id="deviceMake" class="text-white font-semibold">—</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">OS / Platform</p>
+                                <p id="deviceOS" class="text-white font-semibold">—</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Screen Resolution</p>
+                                <p id="screenResolution" class="text-white font-semibold">—</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Capture Method Card -->
+                    <div class="glass-premium rounded-2xl p-6 result-card">
+                        <div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                                <i class="fas fa-camera text-primary text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Capture Method</h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Capture Tool / Software</p>
+                                <p id="captureTool" class="text-white font-semibold">—</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Capture Date & Time</p>
+                                <p id="captureDate" class="text-white font-semibold">—</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Capture Method</p>
+                                <p id="captureMethod" class="text-white font-semibold"><span class="inline-flex items-center gap-1"><i class="fas fa-print text-primary"></i> Screenshot</span></p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Software Version</p>
+                                <p id="softwareVersion" class="text-white font-semibold">—</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- App/Source Identification Card -->
+                    <div class="glass-premium rounded-2xl p-6 result-card">
+                        <div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                                <i class="fas fa-code text-primary text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">App & Source Identification</h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Application / Browser</p>
+                                <p id="sourceApp" class="text-white font-semibold">—</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Window Title / Tab Name</p>
+                                <p id="windowTitle" class="text-white font-semibold">—</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Content Type</p>
+                                <p id="contentType" class="text-white font-semibold">—</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Source URL (if applicable)</p>
+                                <p id="sourceUrl" class="text-white font-semibold text-sm break-all">—</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technical Details Card -->
+                    <div class="glass-premium rounded-2xl p-6 result-card">
+                        <div class="flex items-center gap-3 border-b border-white/10 pb-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                                <i class="fas fa-chart-line text-primary text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Technical Details</h3>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Image Format</p>
+                                <p id="imageFormat" class="text-white font-semibold">—</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Dimensions</p>
+                                <p id="imageDimensions" class="text-white font-semibold">—</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">File Size</p>
+                                <p id="fileSize" class="text-white font-semibold">—</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Color Space</p>
+                                <p id="colorSpace" class="text-white font-semibold">—</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">DPI / Resolution</p>
+                                <p id="dpi" class="text-white font-semibold">—</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm mb-1">Compression</p>
+                                <p id="compression" class="text-white font-semibold">—</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Confidence Score -->
+                    <div class="glass-premium rounded-2xl p-6 text-center result-card">
+                        <h3 class="text-lg font-semibold text-white mb-2">Analysis Confidence</h3>
+                        <div class="w-full bg-white/10 rounded-full h-3 mb-2">
+                            <div id="confidenceBar" class="bg-gradient-to-r from-primary to-secondary h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                        <p id="confidenceScore" class="text-primary font-semibold">0%</p>
+                        <p class="text-gray-500 text-xs mt-2">Based on available metadata and pattern detection</p>
+                    </div>
+                </div>
+
+                <!-- No Data Message -->
+                <div id="noDataMessage" class="hidden text-center py-12">
+                    <i class="fas fa-image text-5xl text-gray-600 mb-4"></i>
+                    <p class="text-gray-400">No screenshot metadata detected. This image may not contain capture information, or it was saved without preserving metadata.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-16 bg-black/30">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="font-poppins font-bold text-3xl text-white mb-4">What We Detect</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Our tool analyzes EXIF data and image patterns to extract screenshot-specific information</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-4"><i class="fas fa-mobile-alt text-primary text-2xl"></i></div>
+                    <h3 class="font-semibold text-white mb-2">Device Detection</h3>
+                    <p class="text-gray-400 text-sm">Identifies iPhone, Android, Windows, Mac models from screenshot patterns and metadata</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-4"><i class="fas fa-camera text-primary text-2xl"></i></div>
+                    <h3 class="font-semibold text-white mb-2">Capture Method</h3>
+                    <p class="text-gray-400 text-sm">Detects native screenshot tools, third-party apps, or browser extensions</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-4"><i class="fas fa-chrome text-primary text-2xl"></i></div>
+                    <h3 class="font-semibold text-white mb-2">Source Identification</h3>
+                    <p class="text-gray-400 text-sm">Identifies browser, application, and content source from embedded metadata</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Footer -->
+  <footer class="border-t border-white/10 py-12 bg-black/30">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-8"><div><i class="fas fa-camera text-primary text-2xl"></i><h5 class="font-bold text-lg mt-2">Exif Explorer</h5><p class="text-gray-500 text-sm">Professional metadata extraction tool</p></div>
+        <div><h5 class="font-semibold">Quick Links</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                <li><a href="index.html" class="hover:text-primary">Home</a></li>
+                <li><a href="#features" class="hover:text-primary">Features</a></li>
+                <li><a href="#how-it-works" class="hover:text-primary">How It Works</a></li>
+                <li><a href="#blog" class="hover:text-primary">Blog</a></li>
+                <li><a href="contact.html" class="hover:text-primary">Contact</a></li>
+                <li><a href="about-us.html" class="hover:text-primary">About</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Tools</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                 <li><a href="index.html"  class="hover:text-primary">Exif Extractor</a></li>
+                 <li><a href="screenshot.html"  class="hover:text-primary">Screenshot</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Legal</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                <li><a href="privacy-policy.html" class="hover:text-primary">Privacy Policy</a></li>
+                <li><a href="terms-of-use.html" class="hover:text-primary">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Connect</h5>
+            <div class="flex gap-4 mt-2"><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-github fa-lg"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-instagram fa-lg"></i></a>
+            </div>
+        </div>
+      </div>
+      <hr class="border-white/10 my-8"><div class="text-center text-gray-500 text-sm">© <span id="currentYear"></span> Exif Explorer — All rights reserved.</div>
+    </div>
+  </footer>
+
+    <script>
+        const fileInput = document.getElementById('screenshotUpload');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const uploadArea = document.getElementById('uploadArea');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const imagePreviewDiv = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const noDataMessage = document.getElementById('noDataMessage');
+
+        // Device and screenshot detection patterns
+        function detectDeviceFromEXIF(exif) {
+            const make = exif.Make || '';
+            const model = exif.Model || '';
+            const software = exif.Software || '';
+            
+            let deviceModel = 'Unknown';
+            let deviceMake = 'Unknown';
+            let deviceOS = 'Unknown';
+            let captureTool = 'Unknown';
+            
+            // iPhone detection
+            if (model.includes('iPhone') || (make.includes('Apple') && model.includes('iPhone'))) {
+                deviceMake = 'Apple';
+                deviceModel = model;
+                deviceOS = 'iOS';
+                captureTool = 'iOS Screenshot';
+            }
+            // Android detection
+            else if (make.includes('samsung') || make.includes('Samsung') || make.includes('Google') || make.includes('OnePlus') || make.includes('Xiaomi')) {
+                deviceMake = make;
+                deviceModel = model;
+                deviceOS = 'Android';
+                captureTool = 'Android Screenshot';
+            }
+            // Windows detection
+            else if (software.includes('Windows') || make.includes('Microsoft')) {
+                deviceMake = 'Microsoft';
+                deviceModel = model || 'Windows PC';
+                deviceOS = 'Windows';
+                captureTool = software.includes('Snipping') ? 'Snipping Tool' : 'Windows Screenshot';
+            }
+            // Mac detection
+            else if (make.includes('Apple') || software.includes('Mac')) {
+                deviceMake = 'Apple';
+                deviceModel = model || 'Mac';
+                deviceOS = 'macOS';
+                captureTool = software.includes('Screenshot') ? 'macOS Screenshot' : 'Mac Screenshot';
+            }
+            
+            return { deviceModel, deviceMake, deviceOS, captureTool };
+        }
+
+        function detectCaptureMethod(exif, fileName) {
+            const software = exif.Software || '';
+            let captureMethod = 'Unknown';
+            let softwareVersion = '';
+            
+            if (software.includes('Screenshot')) captureMethod = 'Native Screenshot Tool';
+            else if (software.includes('Snipping')) captureMethod = 'Snipping Tool';
+            else if (software.includes('Snagit')) captureMethod = 'Snagit';
+            else if (software.includes('Lightshot')) captureMethod = 'Lightshot';
+            else if (software.includes('Greenshot')) captureMethod = 'Greenshot';
+            else if (software.includes('ShareX')) captureMethod = 'ShareX';
+            else if (software.includes('Chrome') || software.includes('Firefox')) captureMethod = 'Browser Extension';
+            else if (software && software !== '') captureMethod = software;
+            
+            softwareVersion = software;
+            
+            return { captureMethod, softwareVersion };
+        }
+
+        function detectSource(exif, fileName) {
+            const software = exif.Software || '';
+            let sourceApp = 'Unknown';
+            let windowTitle = 'Not detected';
+            let contentType = 'Screenshot';
+            let sourceUrl = 'Not available';
+            
+            // Browser detection
+            if (software.includes('Chrome')) sourceApp = 'Google Chrome';
+            else if (software.includes('Firefox')) sourceApp = 'Mozilla Firefox';
+            else if (software.includes('Safari')) sourceApp = 'Apple Safari';
+            else if (software.includes('Edge')) sourceApp = 'Microsoft Edge';
+            else if (software.includes('Opera')) sourceApp = 'Opera';
+            
+            // App detection from filename patterns
+            if (fileName.toLowerCase().includes('whatsapp')) sourceApp = 'WhatsApp';
+            else if (fileName.toLowerCase().includes('twitter')) sourceApp = 'Twitter/X';
+            else if (fileName.toLowerCase().includes('instagram')) sourceApp = 'Instagram';
+            else if (fileName.toLowerCase().includes('facebook')) sourceApp = 'Facebook';
+            else if (fileName.toLowerCase().includes('discord')) sourceApp = 'Discord';
+            
+            contentType = 'Screen Capture';
+            
+            return { sourceApp, windowTitle, contentType, sourceUrl };
+        }
+
+        function calculateConfidence(exif) {
+            let confidence = 0;
+            let factors = 0;
+            
+            if (exif.Make) { confidence += 20; factors++; }
+            if (exif.Model) { confidence += 20; factors++; }
+            if (exif.Software) { confidence += 25; factors++; }
+            if (exif.DateTimeOriginal) { confidence += 15; factors++; }
+            if (exif.ImageWidth && exif.ImageLength) { confidence += 10; factors++; }
+            if (exif.XResolution) { confidence += 10; factors++; }
+            
+            // Screenshot specific indicators
+            if (exif.Software && (exif.Software.includes('Screenshot') || exif.Software.includes('Snipping'))) {
+                confidence += 20;
+            }
+            
+            return Math.min(confidence, 100);
+        }
+
+        function handleFileUpload(file) {
+            if (!file) return;
+            
+            loadingSpinner.classList.remove('hidden');
+            resultsContainer.classList.add('hidden');
+            noDataMessage.classList.add('hidden');
+            imagePreviewDiv.classList.add('hidden');
+            
+            // Preview image
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImg.src = e.target.result;
+                imagePreviewDiv.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+            
+            // Extract EXIF data
+            EXIF.getData(file, function() {
+                const exif = EXIF.getAllTags(this);
+                loadingSpinner.classList.add('hidden');
+                
+                // Check if any meaningful data exists
+                const hasData = exif.Make || exif.Model || exif.Software || exif.DateTimeOriginal;
+                
+                if (!hasData) {
+                    noDataMessage.classList.remove('hidden');
+                    return;
+                }
+                
+                // Device Detection
+                const device = detectDeviceFromEXIF(exif);
+                document.getElementById('deviceModel').textContent = device.deviceModel;
+                document.getElementById('deviceMake').textContent = device.deviceMake;
+                document.getElementById('deviceOS').textContent = device.deviceOS;
+                
+                // Capture Method
+                const capture = detectCaptureMethod(exif, file.name);
+                document.getElementById('captureTool').textContent = capture.captureMethod;
+                document.getElementById('softwareVersion').textContent = capture.softwareVersion || 'Not specified';
+                document.getElementById('captureMethod').innerHTML = '<span class="inline-flex items-center gap-1"><i class="fas fa-print text-primary"></i> Screenshot</span>';
+                
+                // Capture Date
+                const dateTime = exif.DateTimeOriginal || exif.DateTimeDigitized || exif.DateTime || 'Not available';
+                document.getElementById('captureDate').textContent = dateTime;
+                
+                // Source Identification
+                const source = detectSource(exif, file.name);
+                document.getElementById('sourceApp').textContent = source.sourceApp;
+                document.getElementById('windowTitle').textContent = source.windowTitle;
+                document.getElementById('contentType').textContent = source.contentType;
+                document.getElementById('sourceUrl').textContent = source.sourceUrl;
+                
+                // Technical Details
+                document.getElementById('imageFormat').textContent = file.type || 'Unknown';
+                document.getElementById('imageDimensions').textContent = exif.PixelXDimension && exif.PixelYDimension ? 
+                    `${exif.PixelXDimension} × ${exif.PixelYDimension}` : 'Unknown';
+                document.getElementById('fileSize').textContent = (file.size / 1024).toFixed(2) + ' KB';
+                document.getElementById('colorSpace').textContent = exif.ColorSpace || 'sRGB (assumed)';
+                document.getElementById('dpi').textContent = exif.XResolution ? `${exif.XResolution} × ${exif.YResolution || exif.XResolution} DPI` : '72 DPI (standard)';
+                document.getElementById('compression').textContent = exif.Compression === 6 ? 'JPEG' : (exif.Compression || 'Unknown');
+                
+                // Screen resolution from dimensions
+                if (exif.PixelXDimension && exif.PixelYDimension) {
+                    document.getElementById('screenResolution').textContent = `${exif.PixelXDimension} × ${exif.PixelYDimension}`;
+                } else {
+                    document.getElementById('screenResolution').textContent = 'Not detected';
+                }
+                
+                // Confidence Score
+                const confidence = calculateConfidence(exif);
+                document.getElementById('confidenceBar').style.width = `${confidence}%`;
+                document.getElementById('confidenceScore').textContent = `${confidence}%`;
+                
+                resultsContainer.classList.remove('hidden');
+            });
+        }
+        
+        // Event listeners
+        uploadBtn.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('drag-over');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                handleFileUpload(file);
+                fileInput.files = e.dataTransfer.files;
+            }
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files[0]) handleFileUpload(e.target.files[0]);
+        });
+        
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
