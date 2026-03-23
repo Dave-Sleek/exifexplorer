@@ -890,6 +890,150 @@
   </footer>
 
 
+  <!-- Cookie Consent Banner -->
+<div id="cookieConsent" class="fixed bottom-0 left-0 right-0 z-[9999] transform translate-y-0 transition-transform duration-500 ease-in-out">
+    <div class="glass-premium rounded-t-2xl mx-4 md:mx-auto md:max-w-3xl lg:max-w-4xl border-b-0">
+        <div class="p-5 md:p-6">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-cookie-bite text-primary text-xl"></i>
+                        <h3 class="font-poppins font-semibold text-white text-lg">We Value Your Privacy</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
+                        By clicking "Accept All", you consent to our use of cookies. 
+                        <a href="#" class="text-primary hover:text-secondary transition-colors inline-flex items-center gap-1">
+                            Learn more <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                    <button id="cookieReject" class="px-5 py-2 rounded-full border border-white/20 hover:bg-white/10 text-white text-sm font-medium transition-all duration-300">
+                        Reject All
+                    </button>
+                    <button id="cookieAccept" class="px-5 py-2 rounded-full bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 text-white text-sm font-medium transition-all duration-300">
+                        Accept All
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .glass-premium {
+        background: rgba(17, 17, 21, 0.95);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-bottom: none;
+    }
+    .cookie-hidden {
+        transform: translateY(100%);
+    }
+</style>
+
+<script>
+    // Cookie Consent Management
+    (function() {
+        const COOKIE_CONSENT_KEY = 'exifexplorer_cookie_consent';
+        const COOKIE_EXPIRY_DAYS = 365;
+        
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptBtn = document.getElementById('cookieAccept');
+        const rejectBtn = document.getElementById('cookieReject');
+        
+        // Check if user has already made a choice
+        function hasConsent() {
+            const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
+            return consent !== null;
+        }
+        
+        function getConsent() {
+            return localStorage.getItem(COOKIE_CONSENT_KEY);
+        }
+        
+        function setConsent(choice) {
+            localStorage.setItem(COOKIE_CONSENT_KEY, choice);
+            hideBanner();
+            
+            // Dispatch event for other scripts to know consent status
+            window.dispatchEvent(new CustomEvent('cookieConsentUpdated', { detail: { consent: choice } }));
+        }
+        
+        function hideBanner() {
+            cookieConsent.classList.add('cookie-hidden');
+            setTimeout(() => {
+                cookieConsent.style.display = 'none';
+            }, 500);
+        }
+        
+        // Initialize Google Analytics or other tracking based on consent
+        function initializeTracking() {
+            const consent = getConsent();
+            
+            if (consent === 'accepted') {
+                // Load Google Analytics or other tracking scripts
+                loadAnalytics();
+            } else if (consent === 'rejected') {
+                // Ensure no tracking is loaded
+                console.log('Analytics disabled by user preference');
+            }
+        }
+        
+        function loadAnalytics() {
+            // Example: Load Google Analytics (replace with your actual GA ID)
+            if (!window.gtag && !document.querySelector('script[src*="googletagmanager.com"]')) {
+                const script = document.createElement('script');
+                script.async = true;
+                script.src = 'https://www.googletagmanager.com/gtag/js?id=G-FQ0KP0XDCQ';
+                document.head.appendChild(script);
+                
+                window.dataLayer = window.dataLayer || [];
+                window.gtag = function() { dataLayer.push(arguments); };
+                gtag('js', new Date());
+                gtag('config', 'G-FQ0KP0XDCQ');
+                
+                console.log('Analytics loaded with user consent');
+            }
+        }
+        
+        // Event handlers
+        if (acceptBtn) {
+            acceptBtn.addEventListener('click', () => {
+                setConsent('accepted');
+                initializeTracking();
+            });
+        }
+        
+        if (rejectBtn) {
+            rejectBtn.addEventListener('click', () => {
+                setConsent('rejected');
+            });
+        }
+        
+        // Show banner only if no consent stored
+        if (!hasConsent()) {
+            setTimeout(() => {
+                cookieConsent.style.display = 'block';
+                setTimeout(() => {
+                    cookieConsent.classList.remove('cookie-hidden');
+                }, 100);
+            }, 1000);
+        } else {
+            cookieConsent.style.display = 'none';
+            initializeTracking();
+        }
+        
+        // Optional: Add cookie consent to window object for other scripts to use
+        window.cookieConsent = {
+            hasConsent: () => getConsent() === 'accepted',
+            getConsent: () => getConsent()
+        };
+    })();
+</script>
+
+
   <style>
     .glass-premium {
         background: rgba(17, 17, 21, 0.75);
