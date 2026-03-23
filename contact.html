@@ -144,7 +144,7 @@
             <div id="mobileMenu" class="mobile-menu md:hidden overflow-hidden transition-all duration-300">
                 <div class="flex flex-col gap-3 pt-4 pb-2">
                     <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Home</a>
-                    <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Features</a>
+                    <a href="index.html" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Features</a>
                     <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">How it Works</a>
                     <a href="#" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Blog</a>
                     <a href="#" class="px-4 py-2 text-primary bg-white/5 rounded-lg transition-colors">Contact</a>
@@ -452,10 +452,12 @@
     </footer>
 
     <script>
-        // Mobile menu toggle
-        const mobileBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        let menuOpen = false;
+    // Mobile menu toggle
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    let menuOpen = false;
+    
+    if (mobileBtn && mobileMenu) {
         mobileBtn.addEventListener('click', () => {
             menuOpen = !menuOpen;
             mobileMenu.classList.toggle('open');
@@ -469,12 +471,14 @@
                 mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
             });
         });
-        
-        // FAQ Toggle
-        document.querySelectorAll('.faq-toggle').forEach(button => {
-            button.addEventListener('click', () => {
-                const answer = button.nextElementSibling;
-                const icon = button.querySelector('i');
+    }
+    
+    // FAQ Toggle
+    document.querySelectorAll('.faq-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            if (answer && icon) {
                 answer.classList.toggle('open');
                 if (answer.classList.contains('open')) {
                     answer.style.maxHeight = answer.scrollHeight + 'px';
@@ -483,13 +487,15 @@
                     answer.style.maxHeight = '0';
                     icon.style.transform = 'rotate(0deg)';
                 }
-            });
+            }
         });
-        
-        // Form submission
-        const contactForm = document.getElementById('contactForm');
-        const successToast = document.getElementById('successToast');
-        
+    });
+    
+    // Form submission
+    const contactForm = document.getElementById('contactForm');
+    const successToast = document.getElementById('successToast');
+    
+    if (contactForm && successToast) {
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -500,10 +506,10 @@
                 return;
             }
             
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
+            const name = document.getElementById('name')?.value || '';
+            const email = document.getElementById('email')?.value || '';
+            const subject = document.getElementById('subject')?.value || '';
+            const message = document.getElementById('message')?.value || '';
             
             if (!name || !email || !subject || !message) {
                 alert('Please fill in all required fields.');
@@ -521,34 +527,30 @@
             contactForm.reset();
             if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
         });
-        
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const.preventDefault();
-                const targetId = this targetId = this.getAttribute.getAttribute('href('href');
-               ');
-                if ( if (targetIdtargetId === '# === '#') return;
-                const targetElement = document.querySelector(targetId);
-               ') return;
-                const targetElement = document.querySelector(targetId);
-                if if ( (targetElementtargetElement) {
-) {
-                    target                    targetElement.scrollIntoElement.scView({rollIntoView({ behavior: 's behavior: 'smooth', block: 'startmooth', block: 'start' });
-                }
-' });
-                }
-            });
+    }
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
         });
-            });
-        
-               });
-        
-        document document.getElementById('.getElementById('currentYearcurrentYear').text').textContent =Content = new Date new Date().get().getFullYearFullYear();
-   ();
-    </script>
-</ </scriptbody>
->
+    });
+    
+    // Update current year in footer
+    const currentYearSpan = document.getElementById('currentYear');
+    if (currentYearSpan) {
+        currentYearSpan.textContent = new Date().getFullYear();
+    }
+</script>
+
 </body>
 </html>
