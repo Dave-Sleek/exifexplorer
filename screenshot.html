@@ -31,16 +31,6 @@
                     fontFamily: {
                         'poppins': ['Poppins', 'sans-serif'],
                         'inter': ['Inter', 'sans-serif'],
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        }
                     }
                 }
             }
@@ -55,6 +45,7 @@
     <style>
         body {
             background: linear-gradient(135deg, #050508 0%, #0A0A0F 50%, #050508 100%);
+            min-height: 100vh;
         }
         .glass-premium {
             background: rgba(17, 17, 21, 0.75);
@@ -92,6 +83,15 @@
                 transform: translateY(0);
             }
         }
+        
+        .cursor-pointer {
+            cursor: pointer;
+        }
+        
+        /* Make sure button doesn't cause double events */
+        #uploadBtn, #uploadArea {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="font-inter text-gray-200">
@@ -107,7 +107,7 @@
                     <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
                 </a>
                 <div class="hidden md:flex gap-8 text-sm font-medium">
-                    <a href="screenshot.html" class="hover:text-primary transition-colors">Home</a>
+                    <a href="index.html" class="hover:text-primary transition-colors">Home</a>
                     <a href="index.html#features" class="hover:text-primary transition-colors">Features</a>
                     <a href="screenshot.html" class="text-primary border-b-2 border-primary pb-1">Screenshot Tool</a>
                     <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
@@ -140,19 +140,13 @@
             <div class="max-w-5xl mx-auto">
                 <!-- Upload Area -->
                 <div id="uploadArea" class="glass-premium rounded-2xl p-10 text-center border-2 border-dashed border-white/20 upload-zone transition-all">
-                    <i class="fas fa-camera-retro text-6xl text-primary mb-4"></i>
+                    <i id="uploadIcon" class="fas fa-camera-retro text-6xl text-primary mb-4 cursor-pointer"></i>
                     <h3 class="text-2xl font-semibold text-white mb-2">Upload a Screenshot</h3>
                     <p class="text-gray-400 mb-4">Drag & drop or click to browse</p>
                     <input type="file" id="screenshotUpload" class="hidden" accept="image/jpeg,image/png,image/jpg,image/webp">
-                    <!--<button id="uploadBtn" class="bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 px-8 py-3 rounded-full font-medium transition-all inline-flex items-center gap-2">
+                    <button id="uploadBtn" class="bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 px-8 py-3 rounded-full font-medium transition-all inline-flex items-center gap-2 cursor-pointer">
                         <i class="fas fa-folder-open"></i> Choose Screenshot
-                    </button>-->
-                    <label for="screenshotUpload" 
-    id="uploadBtn"
-    class="bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 px-8 py-3 rounded-full font-medium transition-all inline-flex items-center gap-2 cursor-pointer">
-    
-    <i class="fas fa-folder-open"></i> Choose Screenshot
-</label>
+                    </button>
                     <p class="text-xs text-gray-500 mt-4">Supports JPG, PNG, WebP — All processing happens locally</p>
                 </div>
 
@@ -338,262 +332,298 @@
         </div>
     </section>
 
-<!-- Footer -->
-  <footer class="border-t border-white/10 py-12 bg-black/30">
-    <div class="container mx-auto px-6">
-      <div class="grid md:grid-cols-4 gap-8"><div><i class="fas fa-camera text-primary text-2xl"></i><h5 class="font-bold text-lg mt-2">Exif Explorer</h5><p class="text-gray-500 text-sm">Professional metadata extraction tool</p></div>
-        <div><h5 class="font-semibold">Quick Links</h5>
-            <ul class="space-y-1 mt-2 text-sm text-gray-400">
-                <li><a href="index.html" class="hover:text-primary">Home</a></li>
-                <li><a href="#features" class="hover:text-primary">Features</a></li>
-                <li><a href="#how-it-works" class="hover:text-primary">How It Works</a></li>
-                <li><a href="#blog" class="hover:text-primary">Blog</a></li>
-                <li><a href="contact.html" class="hover:text-primary">Contact</a></li>
-                <li><a href="about-us.html" class="hover:text-primary">About</a></li>
-            </ul>
-        </div>
-        <div><h5 class="font-semibold">Tools</h5>
-            <ul class="space-y-1 mt-2 text-sm text-gray-400">
-                 <li><a href="index.html"  class="hover:text-primary">Exif Extractor</a></li>
-                 <li><a href="screenshot.html"  class="hover:text-primary">Screenshot</a></li>
-            </ul>
-        </div>
-        <div><h5 class="font-semibold">Legal</h5>
-            <ul class="space-y-1 mt-2 text-sm text-gray-400">
-                <li><a href="privacy-policy.html" class="hover:text-primary">Privacy Policy</a></li>
-                <li><a href="terms-of-use.html" class="hover:text-primary">Terms of Service</a></li>
-            </ul>
-        </div>
-        <div><h5 class="font-semibold">Connect</h5>
-            <div class="flex gap-4 mt-2"><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-twitter fa-lg"></i></a>
-                <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-github fa-lg"></i></a>
-                <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-instagram fa-lg"></i></a>
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-12 bg-black/30">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div><i class="fas fa-camera text-primary text-2xl"></i><h5 class="font-bold text-lg mt-2">Exif Explorer</h5><p class="text-gray-500 text-sm">Professional metadata extraction tool</p></div>
+                <div><h5 class="font-semibold">Quick Links</h5>
+                    <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                        <li><a href="index.html" class="hover:text-primary">Home</a></li>
+                        <li><a href="#features" class="hover:text-primary">Features</a></li>
+                        <li><a href="#how-it-works" class="hover:text-primary">How It Works</a></li>
+                        <li><a href="contact.html" class="hover:text-primary">Contact</a></li>
+                    </ul>
+                </div>
+                <div><h5 class="font-semibold">Tools</h5>
+                    <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                         <li><a href="index.html" class="hover:text-primary">Exif Extractor</a></li>
+                         <li><a href="screenshot.html" class="hover:text-primary">Screenshot</a></li>
+                    </ul>
+                </div>
+                <div><h5 class="font-semibold">Legal</h5>
+                    <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                        <li><a href="privacy-policy.html" class="hover:text-primary">Privacy Policy</a></li>
+                        <li><a href="terms-of-use.html" class="hover:text-primary">Terms of Service</a></li>
+                    </ul>
+                </div>
             </div>
+            <hr class="border-white/10 my-8">
+            <div class="text-center text-gray-500 text-sm">© <span id="currentYear"></span> Exif Explorer — All rights reserved.</div>
         </div>
-      </div>
-      <hr class="border-white/10 my-8"><div class="text-center text-gray-500 text-sm">© <span id="currentYear"></span> Exif Explorer — All rights reserved.</div>
-    </div>
-  </footer>
-<!--<script src="https://cdn.jsdelivr.net/npm/exif-js"></script>-->
-<script>
-const fileInput = document.getElementById('screenshotUpload');
-const uploadBtn = document.getElementById('uploadBtn');
-const uploadArea = document.getElementById('uploadArea');
-const loadingSpinner = document.getElementById('loadingSpinner');
-const imagePreviewDiv = document.getElementById('imagePreview');
-const previewImg = document.getElementById('previewImg');
-const resultsContainer = document.getElementById('resultsContainer');
-const noDataMessage = document.getElementById('noDataMessage');
+    </footer>
 
-// --------------------
-// FALLBACK DETECTION
-// --------------------
-function detectFromFallback(file, img) {
-    const name = file.name.toLowerCase();
-    const width = img.naturalWidth;
-    const height = img.naturalHeight;
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all elements
+            const fileInput = document.getElementById('screenshotUpload');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const uploadArea = document.getElementById('uploadArea');
+            const uploadIcon = document.getElementById('uploadIcon');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const imagePreviewDiv = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const noDataMessage = document.getElementById('noDataMessage');
 
-    let deviceModel = 'Unknown';
-    let deviceMake = 'Unknown';
-    let deviceOS = 'Unknown';
-    let sourceApp = 'Unknown';
-
-    // File name patterns
-    if (name.includes('screenshot')) deviceOS = 'Android/Windows';
-    if (name.includes('img_')) {
-        deviceMake = 'Apple';
-        deviceOS = 'iOS';
-    }
-
-    // App detection
-    if (name.includes('whatsapp')) sourceApp = 'WhatsApp';
-    else if (name.includes('twitter') || name.includes('x')) sourceApp = 'Twitter/X';
-    else if (name.includes('instagram')) sourceApp = 'Instagram';
-    else if (name.includes('facebook')) sourceApp = 'Facebook';
-
-    // Resolution detection
-    if (width === 1170 && height === 2532) {
-        deviceModel = 'iPhone 12/13/14';
-        deviceMake = 'Apple';
-        deviceOS = 'iOS';
-    } else if (width === 1080 && height === 2400) {
-        deviceModel = 'Android Device';
-        deviceMake = 'Samsung/Xiaomi/etc';
-        deviceOS = 'Android';
-    }
-
-    return { deviceModel, deviceMake, deviceOS, sourceApp };
-}
-
-// --------------------
-// EXIF DETECTION
-// --------------------
-function detectDeviceFromEXIF(exif) {
-    const make = exif.Make || '';
-    const model = exif.Model || '';
-    const software = exif.Software || '';
-
-    let deviceModel = 'Unknown';
-    let deviceMake = 'Unknown';
-    let deviceOS = 'Unknown';
-
-    if (model.includes('iPhone')) {
-        deviceMake = 'Apple';
-        deviceModel = model;
-        deviceOS = 'iOS';
-    } 
-    else if (make.toLowerCase().includes('samsung') || make.toLowerCase().includes('xiaomi') || make.toLowerCase().includes('google')) {
-        deviceMake = make;
-        deviceModel = model;
-        deviceOS = 'Android';
-    } 
-    else if (software.includes('Windows')) {
-        deviceMake = 'Microsoft';
-        deviceModel = model || 'Windows PC';
-        deviceOS = 'Windows';
-    } 
-    else if (software.includes('Mac')) {
-        deviceMake = 'Apple';
-        deviceModel = model || 'Mac';
-        deviceOS = 'macOS';
-    }
-
-    return { deviceModel, deviceMake, deviceOS };
-}
-
-// --------------------
-// MAIN HANDLER
-// --------------------
-function handleFileUpload(file) {
-    if (!file) return;
-
-    console.log("File:", file);
-
-    loadingSpinner.classList.remove('hidden');
-    resultsContainer.classList.add('hidden');
-    noDataMessage.classList.add('hidden');
-    imagePreviewDiv.classList.add('hidden');
-
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-        previewImg.src = e.target.result;
-
-        // ✅ WAIT for image load
-        previewImg.onload = () => {
-            const width = previewImg.naturalWidth;
-            const height = previewImg.naturalHeight;
-
-            console.log("Image loaded:", width, height);
-
-            imagePreviewDiv.classList.remove('hidden');
-
-            // Base info (always show)
-            document.getElementById('imageFormat').textContent = file.type;
-            document.getElementById('fileSize').textContent = (file.size / 1024).toFixed(2) + ' KB';
-            document.getElementById('imageDimensions').textContent = `${width} × ${height}`;
-            document.getElementById('screenResolution').textContent = `${width} × ${height}`;
-
-            try {
-                EXIF.getData(file, function () {
-                    const exif = EXIF.getAllTags(this) || {};
-                    console.log("EXIF:", exif);
-
-                    const hasData = exif.Make || exif.Model || exif.Software || exif.DateTimeOriginal;
-
-                    let device = { deviceModel: 'Unknown', deviceMake: 'Unknown', deviceOS: 'Unknown' };
-                    let sourceApp = 'Unknown';
-
-                    if (hasData) {
-                        device = detectDeviceFromEXIF(exif);
-                    } else {
-                        const fallback = detectFromFallback(file, previewImg);
-                        device = fallback;
-                        sourceApp = fallback.sourceApp;
-                    }
-
-                    // Populate UI
-                    document.getElementById('deviceModel').textContent = device.deviceModel;
-                    document.getElementById('deviceMake').textContent = device.deviceMake;
-                    document.getElementById('deviceOS').textContent = device.deviceOS;
-
-                    document.getElementById('captureTool').textContent =
-                        hasData ? (exif.Software || 'Screenshot Tool') : 'Screenshot (No EXIF)';
-
-                    document.getElementById('softwareVersion').textContent =
-                        exif.Software || 'Not available';
-
-                    document.getElementById('captureDate').textContent =
-                        exif.DateTimeOriginal || 'Not available';
-
-                    document.getElementById('sourceApp').textContent =
-                        sourceApp || 'Unknown';
-
-                    document.getElementById('windowTitle').textContent = 'Not detected';
-                    document.getElementById('contentType').textContent = 'Screen Capture';
-                    document.getElementById('sourceUrl').textContent = 'Not available';
-
-                    document.getElementById('colorSpace').textContent =
-                        exif.ColorSpace || 'sRGB';
-
-                    document.getElementById('dpi').textContent =
-                        exif.XResolution ? `${exif.XResolution} DPI` : '72 DPI';
-
-                    document.getElementById('compression').textContent =
-                        exif.Compression === 6 ? 'JPEG' : file.type;
-
-                    // Confidence score
-                    const confidence = hasData ? 80 : 50;
-                    document.getElementById('confidenceBar').style.width = `${confidence}%`;
-                    document.getElementById('confidenceScore').textContent = `${confidence}%`;
-
-                    loadingSpinner.classList.add('hidden');
-                    resultsContainer.classList.remove('hidden');
-                });
-
-            } catch (err) {
-                console.error("EXIF error:", err);
-                loadingSpinner.classList.add('hidden');
-                noDataMessage.classList.remove('hidden');
+            // Function to trigger file input
+            function triggerFileInput() {
+                console.log("Triggering file input");
+                fileInput.click();
             }
-        };
-    };
 
-    reader.readAsDataURL(file);
-}
+            // Add click event to the button
+            if (uploadBtn) {
+                uploadBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log("Upload button clicked");
+                    triggerFileInput();
+                });
+            }
 
-// --------------------
-// EVENTS
-// --------------------
-uploadBtn.addEventListener('click', () => fileInput.click());
-uploadArea.addEventListener('click', () => fileInput.click());
+            // Add click event to the camera icon
+            if (uploadIcon) {
+                uploadIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log("Camera icon clicked");
+                    triggerFileInput();
+                });
+            }
 
-uploadArea.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    uploadArea.classList.add('drag-over');
-});
+            // Add click event to the entire upload area (but not on the button to avoid double triggers)
+            if (uploadArea) {
+                uploadArea.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on the button (already handled)
+                    if (e.target === uploadBtn || uploadBtn.contains(e.target)) {
+                        return;
+                    }
+                    console.log("Upload area clicked");
+                    triggerFileInput();
+                });
+            }
 
-uploadArea.addEventListener('dragleave', () => {
-    uploadArea.classList.remove('drag-over');
-});
+            // FALLBACK DETECTION function
+            function detectFromFallback(file, img) {
+                const name = file.name.toLowerCase();
+                const width = img.naturalWidth;
+                const height = img.naturalHeight;
 
-uploadArea.addEventListener('drop', (e) => {
-    e.preventDefault();
-    uploadArea.classList.remove('drag-over');
+                let deviceModel = 'Unknown';
+                let deviceMake = 'Unknown';
+                let deviceOS = 'Unknown';
+                let sourceApp = 'Unknown';
 
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
-        handleFileUpload(file);
-        fileInput.files = e.dataTransfer.files;
-    }
-});
+                // File name patterns
+                if (name.includes('screenshot')) deviceOS = 'Android/Windows';
+                if (name.includes('img_')) {
+                    deviceMake = 'Apple';
+                    deviceOS = 'iOS';
+                }
 
-fileInput.addEventListener('change', (e) => {
-    if (e.target.files[0]) handleFileUpload(e.target.files[0]);
-});
+                // App detection
+                if (name.includes('whatsapp')) sourceApp = 'WhatsApp';
+                else if (name.includes('twitter') || name.includes('x_')) sourceApp = 'Twitter/X';
+                else if (name.includes('instagram')) sourceApp = 'Instagram';
+                else if (name.includes('facebook')) sourceApp = 'Facebook';
 
-document.getElementById('currentYear').textContent = new Date().getFullYear();
-</script>
+                // Resolution detection for common devices
+                if (width === 1170 && height === 2532) {
+                    deviceModel = 'iPhone 12/13/14';
+                    deviceMake = 'Apple';
+                    deviceOS = 'iOS';
+                } else if (width === 1080 && height === 2400) {
+                    deviceModel = 'Android Device';
+                    deviceMake = 'Samsung/Xiaomi';
+                    deviceOS = 'Android';
+                } else if (width === 1920 && height === 1080) {
+                    deviceModel = 'Desktop';
+                    deviceMake = 'PC';
+                    deviceOS = 'Windows/macOS';
+                }
 
+                return { deviceModel, deviceMake, deviceOS, sourceApp };
+            }
+
+            // EXIF DETECTION function
+            function detectDeviceFromEXIF(exif) {
+                const make = exif.Make || '';
+                const model = exif.Model || '';
+                const software = exif.Software || '';
+
+                let deviceModel = 'Unknown';
+                let deviceMake = 'Unknown';
+                let deviceOS = 'Unknown';
+
+                if (model.includes('iPhone')) {
+                    deviceMake = 'Apple';
+                    deviceModel = model;
+                    deviceOS = 'iOS';
+                } 
+                else if (make.toLowerCase().includes('samsung') || make.toLowerCase().includes('xiaomi') || make.toLowerCase().includes('google')) {
+                    deviceMake = make;
+                    deviceModel = model;
+                    deviceOS = 'Android';
+                } 
+                else if (software.includes('Windows')) {
+                    deviceMake = 'Microsoft';
+                    deviceModel = model || 'Windows PC';
+                    deviceOS = 'Windows';
+                } 
+                else if (software.includes('Mac') || make.includes('Apple')) {
+                    deviceMake = 'Apple';
+                    deviceModel = model || 'Mac';
+                    deviceOS = 'macOS';
+                }
+
+                return { deviceModel, deviceMake, deviceOS };
+            }
+
+            // MAIN HANDLER
+            function handleFileUpload(file) {
+                if (!file) return;
+
+                console.log("File selected:", file.name, file.type, file.size);
+
+                // Reset UI
+                loadingSpinner.classList.remove('hidden');
+                resultsContainer.classList.add('hidden');
+                noDataMessage.classList.add('hidden');
+                imagePreviewDiv.classList.add('hidden');
+
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+
+                    // Wait for image to load
+                    previewImg.onload = function() {
+                        const width = previewImg.naturalWidth;
+                        const height = previewImg.naturalHeight;
+
+                        console.log("Image loaded - Dimensions:", width, "x", height);
+
+                        imagePreviewDiv.classList.remove('hidden');
+
+                        // Always show basic info
+                        document.getElementById('imageFormat').textContent = file.type || 'Unknown';
+                        document.getElementById('fileSize').textContent = (file.size / 1024).toFixed(2) + ' KB';
+                        document.getElementById('imageDimensions').textContent = `${width} × ${height}`;
+                        document.getElementById('screenResolution').textContent = `${width} × ${height}`;
+
+                        // Try to extract EXIF data
+                        try {
+                            EXIF.getData(file, function() {
+                                const exif = EXIF.getAllTags(this) || {};
+                                console.log("EXIF data:", exif);
+
+                                const hasData = exif.Make || exif.Model || exif.Software || exif.DateTimeOriginal;
+
+                                let device = { deviceModel: 'Unknown', deviceMake: 'Unknown', deviceOS: 'Unknown' };
+                                let sourceApp = 'Unknown';
+
+                                if (hasData) {
+                                    device = detectDeviceFromEXIF(exif);
+                                } else {
+                                    const fallback = detectFromFallback(file, previewImg);
+                                    device = fallback;
+                                    sourceApp = fallback.sourceApp;
+                                }
+
+                                // Populate all fields
+                                document.getElementById('deviceModel').textContent = device.deviceModel;
+                                document.getElementById('deviceMake').textContent = device.deviceMake;
+                                document.getElementById('deviceOS').textContent = device.deviceOS;
+
+                                document.getElementById('captureTool').textContent = hasData ? (exif.Software || 'Screenshot Tool') : 'Screenshot (No EXIF)';
+                                document.getElementById('softwareVersion').textContent = exif.Software || 'Not available';
+                                document.getElementById('captureDate').textContent = exif.DateTimeOriginal || 'Not available';
+                                document.getElementById('sourceApp').textContent = sourceApp || 'Unknown';
+                                document.getElementById('windowTitle').textContent = 'Not detected';
+                                document.getElementById('contentType').textContent = 'Screen Capture';
+                                document.getElementById('sourceUrl').textContent = 'Not available';
+                                document.getElementById('colorSpace').textContent = exif.ColorSpace || 'sRGB';
+                                document.getElementById('dpi').textContent = exif.XResolution ? `${exif.XResolution} DPI` : '72 DPI';
+                                document.getElementById('compression').textContent = exif.Compression === 6 ? 'JPEG' : file.type || 'Unknown';
+
+                                // Confidence score
+                                const confidence = hasData ? 80 : 45;
+                                document.getElementById('confidenceBar').style.width = `${confidence}%`;
+                                document.getElementById('confidenceScore').textContent = `${confidence}%`;
+
+                                loadingSpinner.classList.add('hidden');
+                                resultsContainer.classList.remove('hidden');
+                            });
+                        } catch (err) {
+                            console.error("EXIF error:", err);
+                            loadingSpinner.classList.add('hidden');
+                            noDataMessage.classList.remove('hidden');
+                        }
+                    };
+                };
+
+                reader.onerror = function() {
+                    console.error("Error reading file");
+                    loadingSpinner.classList.add('hidden');
+                    noDataMessage.classList.remove('hidden');
+                };
+
+                reader.readAsDataURL(file);
+            }
+
+            // File input change event
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    console.log("File input changed");
+                    handleFileUpload(e.target.files[0]);
+                }
+            });
+
+            // Drag and drop
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.classList.add('drag-over');
+            });
+
+            uploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+            });
+
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+                
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    console.log("File dropped");
+                    handleFileUpload(file);
+                    fileInput.files = e.dataTransfer.files;
+                } else {
+                    alert('Please drop a valid image file (JPG, PNG, WebP)');
+                }
+            });
+
+            // Update current year
+            const yearSpan = document.getElementById('currentYear');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+
+            console.log("Screenshot tool initialized - All click handlers ready");
+        });
+    </script>
 </body>
 </html>
