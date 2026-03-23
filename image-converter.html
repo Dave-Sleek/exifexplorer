@@ -15,8 +15,25 @@
     <meta property="og:description" content="Free online image format converter. Convert between JPG, PNG, WebP, AVIF, HEIC, BMP, TIFF with quality control.">
     
     <link rel="canonical" href="https://exifexplorer.com/image-converter">
+    <link rel="manifest" href="site.webmanifest">
+<!-- <meta name="theme-color" content="#13131A"> -->
+
+<!-- Standard favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="images/icons/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="images/icons/favicon-32x32.png">
+
+<!-- Optional -->
+<link rel="icon" type="image/png" sizes="48x48" href="images/icons/favicon-48x48.png">
+
+<!-- Apple Touch Icon (iOS) -->
+<link rel="apple-touch-icon" sizes="180x180" href="images/icons/apple-touch-icon.png">
+
+<!-- Android / Chrome -->
+<link rel="icon" type="image/png" sizes="192x192" href="images/icons/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="images/icons/android-chrome-512x512.png">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8918616047230546"
      crossorigin="anonymous"></script>
+
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -143,10 +160,10 @@
       <div class="flex items-center justify-between">
         <!-- Logo -->
         <a href="index.html" class="flex items-center gap-3 group">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-            <i class="fas fa-camera-retro text-white text-sm"></i>
-          </div>
-          <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
+          <!-- <div class="w-9 h-9 rounded-xl bg-white flex items-center justify-center"> -->
+            <img src="images/icons/apple-touch-icon.png" alt="Exif Explorer" class="w-[80px] cursor-pointer">
+          <!-- </div> -->
+          <!-- <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span> -->
         </a>
         
         <!-- Desktop Menu -->
@@ -321,7 +338,7 @@
     <footer class="border-t border-white/10 py-12 bg-black/30">
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-8">
-                <div><i class="fas fa-camera text-primary text-2xl"></i><h5 class="font-bold text-lg mt-2">Exif Explorer</h5><p class="text-gray-500 text-sm">Professional image tools</p></div>
+                <div><img src="images/icons/apple-touch-icon.png" alt="Exif Explorer" class="w-[100px] cursor-pointer"><p class="text-gray-500 text-sm">Professional image tools</p></div>
                 <div><h5 class="font-semibold">Quick Links</h5>
                     <ul class="space-y-1 mt-2 text-sm text-gray-400">
                         <li><a href="screenshot.html"  class="hover:text-primary">Screenshot Tool</a></li>

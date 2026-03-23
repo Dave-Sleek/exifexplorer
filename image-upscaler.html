@@ -8,7 +8,24 @@
     <meta name="google-adsense-account" content="ca-pub-8918616047230546">
 
     <link rel="canonical" href="https://exifexplorer.com/image-upscaler">
-     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8918616047230546"
+    <link rel="manifest" href="site.webmanifest">
+<!-- <meta name="theme-color" content="#13131A"> -->
+
+<!-- Standard favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="images/icons/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="images/icons/favicon-32x32.png">
+
+<!-- Optional -->
+<link rel="icon" type="image/png" sizes="48x48" href="images/icons/favicon-48x48.png">
+
+<!-- Apple Touch Icon (iOS) -->
+<link rel="apple-touch-icon" sizes="180x180" href="images/icons/apple-touch-icon.png">
+
+<!-- Android / Chrome -->
+<link rel="icon" type="image/png" sizes="192x192" href="images/icons/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="images/icons/android-chrome-512x512.png">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8918616047230546"
      crossorigin="anonymous"></script>
      
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,15 +45,11 @@
     <style>
         body { background: linear-gradient(135deg, #050508 0%, #0A0A0F 50%, #050508 100%); min-height: 100vh; }
         .glass-premium { background: rgba(17, 17, 21, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(139, 92, 246, 0.2); transition: all 0.3s; }
+        .glass-premium:hover { border-color: rgba(139, 92, 246, 0.5); }
         .upload-zone { transition: all 0.3s; cursor: pointer; }
         .upload-zone.drag-over { border-color: #8B5CF6 !important; background: rgba(139, 92, 246, 0.08); }
-        .result-item { animation: fadeInUp 0.3s ease-out; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         canvas { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-        .comparison-slider { position: relative; overflow: hidden; cursor: ew-resize; }
-        .comparison-slider img { display: block; width: 100%; height: auto; }
-        .comparison-slider .slider-img { position: absolute; top: 0; left: 0; width: 50%; height: 100%; object-fit: cover; overflow: hidden; }
-         /* Mobile menu animation */
+        /* Mobile menu animation */
         .mobile-menu {
             max-height: 0;
             opacity: 0;
@@ -48,48 +61,43 @@
             opacity: 1;
             visibility: visible;
         }
+        .result-item { animation: fadeInUp 0.3s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="font-inter text-gray-200">
 
     <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
-    <div class="container mx-auto px-6 py-4">
-      <div class="flex items-center justify-between">
-        <!-- Logo -->
-        <a href="index.html" class="flex items-center gap-3 group">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-            <i class="fas fa-camera-retro text-white text-sm"></i>
-          </div>
-          <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
-        </a>
-        
-        <!-- Desktop Menu -->
-        <div class="hidden md:flex gap-8 text-sm font-medium">
-          <a href="index.html" class="hover:text-primary transition-colors">Home</a>
-          <a href="#features" class="hover:text-primary transition-colors">Features</a>
-          <a href="#how-it-works" class="hover:text-primary transition-colors">How it Works</a>
-          <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
-          <a href="about-us.html" class="text-primary border-b-2 border-primary pb-1">About</a>
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3 group">
+                <!-- <div class="w-9 h-9 rounded-xl bg-white flex items-center justify-center"> -->
+                    <img src="images/icons/apple-touch-icon.png" alt="Exif Explorer" class="w-[80px] cursor-pointer">
+                <!-- </div> -->
+                <!-- <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span> -->
+                </a>
+                <div class="hidden md:flex gap-8 text-sm font-medium">
+                    <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+                    <a href="#features" class="hover:text-primary transition-colors">Features</a>
+                    <a href="#how-it-works" class="hover:text-primary transition-colors">How it Works</a>
+                    <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+                    <a href="about-us.html" class="text-primary border-b-2 border-primary pb-1">About</a>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden text-white text-2xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div id="mobileMenu" class="mobile-menu md:hidden overflow-hidden transition-all duration-300">
+                <div class="flex flex-col gap-3 pt-4 pb-2">
+                    <a href="index.html" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Home</a>
+                    <a href="#features" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Features</a>
+                    <a href="#how-it-works" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">How it Works</a>
+                    <a href="contact.html" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Contact</a>
+                    <a href="about-us.html" class="px-4 py-2 text-primary bg-white/5 rounded-lg transition-colors">About Us</a>
+                </div>
+            </div>
         </div>
-        
-        <!-- Mobile Menu Button -->
-        <button id="mobileMenuBtn" class="md:hidden text-white text-2xl focus:outline-none">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-      
-      <!-- Mobile Dropdown Menu -->
-      <div id="mobileMenu" class="mobile-menu md:hidden overflow-hidden transition-all duration-300">
-        <div class="flex flex-col gap-3 pt-4 pb-2">
-          <a href="index.html" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Home</a>
-          <a href="#features" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Features</a>
-          <a href="#how-it-works" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">How it Works</a>
-          <a href="contact.html" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Contact</a>
-          <a href="about-us.html" class="px-4 py-2 text-primary bg-white/5 rounded-lg transition-colors">About Us</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+    </nav>
 
     <section class="relative min-h-[35vh] flex items-center justify-center overflow-hidden pt-20">
         <div class="absolute inset-0 bg-gradient-to-br from-purple-950/20 via-transparent to-pink-950/20"></div>
@@ -122,6 +130,7 @@
 
                 <!-- Settings Panel -->
                 <div id="optionsPanel" class="glass-premium rounded-2xl p-6 mt-8 hidden">
+                    <h3 class="text-lg font-bold text-white mb-4">Upscale Settings</h3>
                     <div class="grid md:grid-cols-3 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-gray-300 mb-2">Upscale Factor</label>
@@ -151,12 +160,18 @@
                 <!-- Preview & Results -->
                 <div id="resultsContainer" class="hidden mt-8">
                     <div class="glass-premium rounded-2xl p-6">
-                        <h3 class="text-lg font-bold text-white mb-4">Comparison (Drag to Compare)</h3>
-                        <div class="relative mb-6">
-                            <canvas id="originalCanvas" class="w-full rounded-xl border border-white/10"></canvas>
-                            <canvas id="upscaledCanvas" class="w-full rounded-xl border border-white/10 mt-4"></canvas>
+                        <h3 class="text-lg font-bold text-white mb-4">Comparison</h3>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <p class="text-sm text-gray-400 mb-2">Original Image</p>
+                                <canvas id="originalCanvas" class="w-full rounded-xl border border-white/10 bg-black/40"></canvas>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400 mb-2">Upscaled Image</p>
+                                <canvas id="upscaledCanvas" class="w-full rounded-xl border border-white/10 bg-black/40"></canvas>
+                            </div>
                         </div>
-                        <div class="flex gap-4">
+                        <div class="flex gap-4 mt-6">
                             <button id="downloadBtn" class="flex-1 bg-gradient-to-r from-primary to-secondary hover:shadow-lg py-3 rounded-xl font-semibold">
                                 <i class="fas fa-download mr-2"></i>Download Upscaled Image
                             </button>
@@ -170,32 +185,29 @@
 
                 <!-- Loading -->
                 <div id="loadingOverlay" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
-                    <div class="text-center"><div class="animate-spin rounded-full h-16 w-16 border-t-2 border-primary"></div><p id="loadingText" class="mt-4">Upscaling image with AI enhancement...</p></div>
+                    <div class="text-center">
+                        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-primary border-r-2"></div>
+                        <p id="loadingText" class="mt-4 text-white">Upscaling image...</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-   <!-- Footer -->
-    <footer class="border-t border-white/10 py-12 bg-black/30">
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-12 bg-black/30 mt-8">
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-8">
-                <div><i class="fas fa-camera text-primary text-2xl"></i><h5 class="font-bold text-lg mt-2">Exif Explorer</h5><p class="text-gray-500 text-sm">Professional metadata extraction tool</p></div>
+                <div><img src="images/icons/apple-touch-icon.png" alt="Exif Explorer" class="w-[100px] cursor-pointer"><p class="text-gray-500 text-sm">Professional image tools</p></div>
                 <div><h5 class="font-semibold">Quick Links</h5>
                     <ul class="space-y-1 mt-2 text-sm text-gray-400">
-                        <li><a href="screenshot.html"  class="hover:text-primary">Screenshot Tool</a></li>
-                        <li><a href="image-converter.html"  class="hover:text-primary">Image Converter</a></li>
-                        <li><a href="image-forensics.html"  class="hover:text-primary">Image Forensics</a></li>
-                        <li><a href="social-optimizer.html"  class="hover:text-primary">Social Media Image Optimizer</a></li>
-                        <li><a href="image-to-pdf.html"  class="hover:text-primary">Image to PDF Converter</a></li>
-                        <li><a href="image-upscaler.html"  class="hover:text-primary">Image UpScaler</a></li>
-                        <li><a href="background-remover.html"  class="hover:text-primary">Image Background Remover</a></li>
-                    </ul>
-                </div>
-                <div><h5 class="font-semibold">Tools</h5>
-                    <ul class="space-y-1 mt-2 text-sm text-gray-400">
-                         <li><a href="index.html" class="hover:text-primary">Exif Extractor</a></li>
-                         <li><a href="screenshot.html" class="hover:text-primary">Screenshot</a></li>
+                        <li><a href="screenshot.html" class="hover:text-primary">Screenshot Tool</a></li>
+                        <li><a href="image-converter.html" class="hover:text-primary">Image Converter</a></li>
+                        <li><a href="image-forensics.html" class="hover:text-primary">Image Forensics</a></li>
+                        <li><a href="social-optimizer.html" class="hover:text-primary">Social Optimizer</a></li>
+                        <li><a href="image-to-pdf.html" class="hover:text-primary">Image to PDF</a></li>
+                        <li><a href="image-upscaler.html" class="hover:text-primary">Image Upscaler</a></li>
+                        <li><a href="background-remover.html" class="hover:text-primary">BG Remover</a></li>
                     </ul>
                 </div>
                 <div><h5 class="font-semibold">Legal</h5>
@@ -211,163 +223,80 @@
     </footer>
 
     <!-- Cookie Consent Banner -->
-<div id="cookieConsent" class="fixed bottom-0 left-0 right-0 z-[9999] transform translate-y-0 transition-transform duration-500 ease-in-out">
-    <div class="glass-premium rounded-t-2xl mx-4 md:mx-auto md:max-w-3xl lg:max-w-4xl border-b-0">
-        <div class="p-5 md:p-6">
-            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <div class="flex-1">
-                    <div class="flex items-center gap-2 mb-2">
-                        <i class="fas fa-cookie-bite text-primary text-xl"></i>
-                        <h3 class="font-poppins font-semibold text-white text-lg">We Value Your Privacy</h3>
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 z-[9999] transform translate-y-0 transition-transform duration-500 ease-in-out">
+        <div class="glass-premium rounded-t-2xl mx-4 md:mx-auto md:max-w-3xl border-b-0">
+            <div class="p-5 md:p-6">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fas fa-cookie-bite text-primary text-xl"></i>
+                            <h3 class="font-poppins font-semibold text-white text-lg">We Value Your Privacy</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            We use cookies to enhance your browsing experience. By clicking "Accept All", you consent to our use of cookies.
+                        </p>
                     </div>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
-                        By clicking "Accept All", you consent to our use of cookies. 
-                        <a href="#" class="text-primary hover:text-secondary transition-colors inline-flex items-center gap-1">
-                            Learn more <i class="fas fa-arrow-right text-xs"></i>
-                        </a>
-                    </p>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-                    <button id="cookieReject" class="px-5 py-2 rounded-full border border-white/20 hover:bg-white/10 text-white text-sm font-medium transition-all duration-300">
-                        Reject All
-                    </button>
-                    <button id="cookieAccept" class="px-5 py-2 rounded-full bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 text-white text-sm font-medium transition-all duration-300">
-                        Accept All
-                    </button>
+                    <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                        <button id="cookieReject" class="px-5 py-2 rounded-full border border-white/20 hover:bg-white/10 text-white text-sm font-medium transition-all">Reject All</button>
+                        <button id="cookieAccept" class="px-5 py-2 rounded-full bg-gradient-to-r from-primary to-secondary hover:shadow-lg text-white text-sm font-medium transition-all">Accept All</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<style>
-    .glass-premium {
-        background: rgba(17, 17, 21, 0.95);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        border-bottom: none;
-    }
-    .cookie-hidden {
-        transform: translateY(100%);
-    }
-</style>
-
-<script>
-    // Cookie Consent Management
-    (function() {
-        const COOKIE_CONSENT_KEY = 'exifexplorer_cookie_consent';
-        const COOKIE_EXPIRY_DAYS = 365;
-        
-        const cookieConsent = document.getElementById('cookieConsent');
-        const acceptBtn = document.getElementById('cookieAccept');
-        const rejectBtn = document.getElementById('cookieReject');
-        
-        // Check if user has already made a choice
-        function hasConsent() {
-            const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
-            return consent !== null;
-        }
-        
-        function getConsent() {
-            return localStorage.getItem(COOKIE_CONSENT_KEY);
-        }
-        
-        function setConsent(choice) {
-            localStorage.setItem(COOKIE_CONSENT_KEY, choice);
-            hideBanner();
-            
-            // Dispatch event for other scripts to know consent status
-            window.dispatchEvent(new CustomEvent('cookieConsentUpdated', { detail: { consent: choice } }));
-        }
-        
-        function hideBanner() {
-            cookieConsent.classList.add('cookie-hidden');
-            setTimeout(() => {
-                cookieConsent.style.display = 'none';
-            }, 500);
-        }
-        
-        // Initialize Google Analytics or other tracking based on consent
-        function initializeTracking() {
-            const consent = getConsent();
-            
-            if (consent === 'accepted') {
-                // Load Google Analytics or other tracking scripts
-                loadAnalytics();
-            } else if (consent === 'rejected') {
-                // Ensure no tracking is loaded
-                console.log('Analytics disabled by user preference');
-            }
-        }
-        
-        function loadAnalytics() {
-            // Example: Load Google Analytics (replace with your actual GA ID)
-            if (!window.gtag && !document.querySelector('script[src*="googletagmanager.com"]')) {
-                const script = document.createElement('script');
-                script.async = true;
-                script.src = 'https://www.googletagmanager.com/gtag/js?id=G-FQ0KP0XDCQ';
-                document.head.appendChild(script);
-                
-                window.dataLayer = window.dataLayer || [];
-                window.gtag = function() { dataLayer.push(arguments); };
-                gtag('js', new Date());
-                gtag('config', 'G-FQ0KP0XDCQ');
-                
-                console.log('Analytics loaded with user consent');
-            }
-        }
-        
-        // Event handlers
-        if (acceptBtn) {
-            acceptBtn.addEventListener('click', () => {
-                setConsent('accepted');
-                initializeTracking();
-            });
-        }
-        
-        if (rejectBtn) {
-            rejectBtn.addEventListener('click', () => {
-                setConsent('rejected');
-            });
-        }
-        
-        // Show banner only if no consent stored
-        if (!hasConsent()) {
-            setTimeout(() => {
-                cookieConsent.style.display = 'block';
-                setTimeout(() => {
-                    cookieConsent.classList.remove('cookie-hidden');
-                }, 100);
-            }, 1000);
-        } else {
-            cookieConsent.style.display = 'none';
-            initializeTracking();
-        }
-        
-        // Optional: Add cookie consent to window object for other scripts to use
-        window.cookieConsent = {
-            hasConsent: () => getConsent() === 'accepted',
-            getConsent: () => getConsent()
-        };
-    })();
-</script>
-
 
     <script>
-        // ================= MOBILE MENU =================
+        // Mobile Menu
         const mobileBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
-
         let menuOpen = false;
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                menuOpen = !menuOpen;
+                mobileMenu.classList.toggle('open');
+                mobileBtn.innerHTML = menuOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+        }
 
-        mobileBtn.addEventListener('click', () => {
-        menuOpen = !menuOpen;
-        mobileMenu.classList.toggle('open');
-        mobileBtn.innerHTML = menuOpen
-            ? '<i class="fas fa-times"></i>'
-            : '<i class="fas fa-bars"></i>';
-        })
+        // Cookie Consent
+        (function() {
+            const COOKIE_CONSENT_KEY = 'exifexplorer_cookie_consent';
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptBtn = document.getElementById('cookieAccept');
+            const rejectBtn = document.getElementById('cookieReject');
+            
+            if (localStorage.getItem(COOKIE_CONSENT_KEY)) {
+                if (cookieConsent) cookieConsent.style.display = 'none';
+            } else {
+                if (cookieConsent) {
+                    setTimeout(() => {
+                        cookieConsent.style.display = 'block';
+                        setTimeout(() => cookieConsent.classList.remove('cookie-hidden'), 100);
+                    }, 1000);
+                }
+            }
+            
+            if (acceptBtn) {
+                acceptBtn.addEventListener('click', () => {
+                    localStorage.setItem(COOKIE_CONSENT_KEY, 'accepted');
+                    if (cookieConsent) {
+                        cookieConsent.classList.add('cookie-hidden');
+                        setTimeout(() => cookieConsent.style.display = 'none', 500);
+                    }
+                });
+            }
+            if (rejectBtn) {
+                rejectBtn.addEventListener('click', () => {
+                    localStorage.setItem(COOKIE_CONSENT_KEY, 'rejected');
+                    if (cookieConsent) {
+                        cookieConsent.classList.add('cookie-hidden');
+                        setTimeout(() => cookieConsent.style.display = 'none', 500);
+                    }
+                });
+            }
+        })();
+
+        // Main Upscaler Logic
         document.addEventListener('DOMContentLoaded', function() {
             let originalImageData = null;
             let upscaledBlob = null;
@@ -390,39 +319,62 @@
             const enhancement = document.getElementById('enhancement');
             const outputFormat = document.getElementById('outputFormat');
             
-            function triggerFileInput(e) { if(e) { e.preventDefault(); e.stopPropagation(); } fileInput.click(); }
-            uploadBtn?.addEventListener('click', triggerFileInput);
-            uploadIcon?.addEventListener('click', triggerFileInput);
-            uploadArea?.addEventListener('click', (e) => { if(e.target !== uploadBtn && !uploadBtn?.contains(e.target)) fileInput.click(); });
+            function triggerFileInput(e) { 
+                if(e) { e.preventDefault(); e.stopPropagation(); } 
+                if (fileInput) fileInput.click(); 
+            }
             
-            uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
-            uploadArea.addEventListener('dragleave', () => { uploadArea.classList.remove('drag-over'); });
-            uploadArea.addEventListener('drop', (e) => {
-                e.preventDefault(); uploadArea.classList.remove('drag-over');
-                const file = e.dataTransfer.files[0];
-                if(file && file.type.startsWith('image/')) processImage(file);
-            });
-            fileInput.addEventListener('change', (e) => { if(e.target.files[0]) processImage(e.target.files[0]); });
+            if (uploadBtn) uploadBtn.addEventListener('click', triggerFileInput);
+            if (uploadIcon) uploadIcon.addEventListener('click', triggerFileInput);
+            if (uploadArea) {
+                uploadArea.addEventListener('click', (e) => { 
+                    if(e.target !== uploadBtn && !uploadBtn?.contains(e.target) && e.target !== uploadIcon) {
+                        fileInput.click();
+                    }
+                });
+            }
             
-            upscaleFactor.addEventListener('change', () => { if(originalImageData) upscaleImage(); });
-            enhancement.addEventListener('change', () => { if(originalImageData) upscaleImage(); });
-            outputFormat.addEventListener('change', () => { if(upscaledBlob) updateDownload(); });
+            if (uploadArea) {
+                uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
+                uploadArea.addEventListener('dragleave', () => { uploadArea.classList.remove('drag-over'); });
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault(); 
+                    uploadArea.classList.remove('drag-over');
+                    const file = e.dataTransfer.files[0];
+                    if(file && file.type.startsWith('image/')) processImage(file);
+                });
+            }
+            
+            if (fileInput) {
+                fileInput.addEventListener('change', (e) => { 
+                    if(e.target.files && e.target.files[0]) processImage(e.target.files[0]); 
+                });
+            }
+            
+            if (upscaleFactor) upscaleFactor.addEventListener('change', () => { if(originalImageData) upscaleImage(); });
+            if (enhancement) enhancement.addEventListener('change', () => { if(originalImageData) upscaleImage(); });
+            if (outputFormat) outputFormat.addEventListener('change', () => { if(upscaledBlob) updateDownload(); });
             
             function processImage(file) {
-                loadingOverlay.classList.remove('hidden');
-                loadingText.textContent = 'Loading image...';
+                if (loadingOverlay) loadingOverlay.classList.remove('hidden');
+                if (loadingText) loadingText.textContent = 'Loading image...';
+                
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     const img = new Image();
                     img.onload = () => {
                         originalWidth = img.width;
                         originalHeight = img.height;
-                        originalCanvas.width = img.width;
-                        originalCanvas.height = img.height;
-                        const ctx = originalCanvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0);
-                        originalImageData = ctx.getImageData(0, 0, img.width, img.height);
-                        optionsPanel.classList.remove('hidden');
+                        
+                        if (originalCanvas) {
+                            originalCanvas.width = img.width;
+                            originalCanvas.height = img.height;
+                            const ctx = originalCanvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0);
+                            originalImageData = ctx.getImageData(0, 0, img.width, img.height);
+                        }
+                        
+                        if (optionsPanel) optionsPanel.classList.remove('hidden');
                         upscaleImage();
                     };
                     img.src = e.target.result;
@@ -431,33 +383,31 @@
             }
             
             function upscaleImage() {
-                if (!originalImageData) return;
-                loadingOverlay.classList.remove('hidden');
-                loadingText.textContent = 'Upscaling image...';
+                if (!originalImageData || !upscaledCanvas) return;
+                if (loadingOverlay) loadingOverlay.classList.remove('hidden');
+                if (loadingText) loadingText.textContent = 'Upscaling image...';
                 
-                const factor = parseInt(upscaleFactor.value);
+                const factor = upscaleFactor ? parseInt(upscaleFactor.value) : 2;
                 const newWidth = originalWidth * factor;
                 const newHeight = originalHeight * factor;
-                const enhancementType = enhancement.value;
+                const enhancementType = enhancement ? enhancement.value : 'standard';
                 
                 upscaledCanvas.width = newWidth;
                 upscaledCanvas.height = newHeight;
                 const ctx = upscaledCanvas.getContext('2d');
                 
-                // Create temporary canvas for scaling
                 const tempCanvas = document.createElement('canvas');
                 tempCanvas.width = originalWidth;
                 tempCanvas.height = originalHeight;
                 const tempCtx = tempCanvas.getContext('2d');
                 tempCtx.putImageData(originalImageData, 0, 0);
                 
-                // Apply enhancement based on selected type
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.drawImage(tempCanvas, 0, 0, newWidth, newHeight);
+                
+                // Apply enhancement filters
                 if (enhancementType === 'detailed') {
-                    ctx.imageSmoothingEnabled = true;
-                    ctx.imageSmoothingQuality = 'high';
-                    ctx.drawImage(tempCanvas, 0, 0, newWidth, newHeight);
-                    
-                    // Apply sharpening filter
                     const imageData = ctx.getImageData(0, 0, newWidth, newHeight);
                     const data = imageData.data;
                     const sharpened = new Uint8ClampedArray(data.length);
@@ -480,11 +430,6 @@
                     }
                     ctx.putImageData(new ImageData(sharpened, newWidth, newHeight), 0, 0);
                 } else if (enhancementType === 'smooth') {
-                    ctx.imageSmoothingEnabled = true;
-                    ctx.imageSmoothingQuality = 'high';
-                    ctx.drawImage(tempCanvas, 0, 0, newWidth, newHeight);
-                    
-                    // Apply simple blur/smoothing
                     const imageData = ctx.getImageData(0, 0, newWidth, newHeight);
                     const data = imageData.data;
                     const smoothed = new Uint8ClampedArray(data.length);
@@ -510,45 +455,58 @@
                         }
                     }
                     ctx.putImageData(new ImageData(smoothed, newWidth, newHeight), 0, 0);
-                } else {
-                    ctx.imageSmoothingEnabled = true;
-                    ctx.imageSmoothingQuality = 'high';
-                    ctx.drawImage(tempCanvas, 0, 0, newWidth, newHeight);
                 }
                 
-                // Update size info
                 const originalSize = (originalWidth * originalHeight / 1000000).toFixed(2);
                 const newSize = (newWidth * newHeight / 1000000).toFixed(2);
-                sizeInfo.innerHTML = `<i class="fas fa-chart-line mr-2"></i>Original: ${originalWidth}×${originalHeight} (${originalSize} MP) → Upscaled: ${newWidth}×${newHeight} (${newSize} MP)`;
+                if (sizeInfo) {
+                    sizeInfo.innerHTML = `<i class="fas fa-chart-line mr-2"></i>Original: ${originalWidth}×${originalHeight} (${originalSize} MP) → Upscaled: ${newWidth}×${newHeight} (${newSize} MP)`;
+                }
                 
+                const format = outputFormat ? outputFormat.value : 'image/png';
                 upscaledCanvas.toBlob((blob) => {
                     upscaledBlob = blob;
                     updateDownload();
-                    loadingOverlay.classList.add('hidden');
-                }, outputFormat.value, 0.95);
+                    if (loadingOverlay) loadingOverlay.classList.add('hidden');
+                    if (resultsContainer) resultsContainer.classList.remove('hidden');
+                }, format, 0.95);
             }
             
             function updateDownload() {
-                if (!upscaledBlob) return;
+                if (!upscaledBlob || !downloadBtn) return;
                 const url = URL.createObjectURL(upscaledBlob);
+                const factor = upscaleFactor ? parseInt(upscaleFactor.value) : 2;
+                const format = outputFormat ? outputFormat.value : 'image/png';
+                const extension = format === 'image/png' ? 'png' : 'jpg';
+                
                 downloadBtn.onclick = () => {
                     const a = document.createElement('a');
                     a.href = url;
-                    const factor = parseInt(upscaleFactor.value);
-                    a.download = `upscaled_${factor}x_${Date.now()}.${outputFormat.value === 'image/png' ? 'png' : 'jpg'}`;
+                    a.download = `upscaled_${factor}x_${Date.now()}.${extension}`;
                     a.click();
                 };
             }
             
-            resetBtn.addEventListener('click', () => {
-                originalImageData = null;
-                upscaledBlob = null;
-                resultsContainer.classList.add('hidden');
-                optionsPanel.classList.add('hidden');
-                fileInput.value = '';
-            });
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                    originalImageData = null;
+                    upscaledBlob = null;
+                    if (resultsContainer) resultsContainer.classList.add('hidden');
+                    if (optionsPanel) optionsPanel.classList.add('hidden');
+                    if (fileInput) fileInput.value = '';
+                    if (originalCanvas) {
+                        const ctx = originalCanvas.getContext('2d');
+                        ctx.clearRect(0, 0, originalCanvas.width, originalCanvas.height);
+                    }
+                    if (upscaledCanvas) {
+                        const ctx = upscaledCanvas.getContext('2d');
+                        ctx.clearRect(0, 0, upscaledCanvas.width, upscaledCanvas.height);
+                    }
+                });
+            }
             
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            const yearSpan = document.getElementById('currentYear');
+            if (yearSpan) yearSpan.textContent = new Date().getFullYear();
         });
     </script>
 </body>
