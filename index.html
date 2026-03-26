@@ -1133,6 +1133,25 @@ mobileBtn.addEventListener('click', () => {
     ? '<i class="fas fa-times"></i>'
     : '<i class="fas fa-bars"></i>';
 })
+
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+                backToTop.style.opacity = '1';
+                backToTop.style.visibility = 'visible';
+            } else {
+                backToTop.classList.remove('show');
+                backToTop.style.opacity = '0';
+                backToTop.style.visibility = 'hidden';
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+       
 document.addEventListener("DOMContentLoaded", () => {
 
     const uploadBtn = document.getElementById('uploadBtn');
