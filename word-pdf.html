@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="title" content="Word to PDF Converter | Exif Explorer - Convert DOC/DOCX to PDF">
+    <meta name="description" content="Convert Microsoft Word documents to PDF with perfect pagination. Support for .doc and .docx files. Preserves formatting, fonts, and layout exactly as in Word.">
+    <meta name="google-adsense-account" content="ca-pub-8918616047230546">
+
+    <link rel="canonical" href="https://exifexplorer.com/word-to-pdf">
+
+    <link rel="manifest" href="site.webmanifest">
+<!-- <meta name="theme-color" content="#13131A"> -->
+
+<!-- Standard favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="images/icons/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="images/icons/favicon-32x32.png">
+
+<!-- Optional -->
+<link rel="icon" type="image/png" sizes="48x48" href="images/icons/favicon-48x48.png">
+
+<!-- Apple Touch Icon (iOS) -->
+<link rel="apple-touch-icon" sizes="180x180" href="images/icons/apple-touch-icon.png">
+
+<!-- Android / Chrome -->
+<link rel="icon" type="image/png" sizes="192x192" href="images/icons/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="images/icons/android-chrome-512x512.png">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8918616047230546"
+     crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#8B5CF6', secondary: '#EC4899' },
+                    fontFamily: { 'poppins': ['Poppins', 'sans-serif'], 'inter': ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PDF Generation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- html2canvas for rendering HTML to image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- For DOCX parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.4.2/mammoth.browser.min.js"></script>
+    
+    <style>
+        body { background: linear-gradient(135deg, #050508 0%, #0A0A0F 50%, #050508 100%); min-height: 100vh; }
+        .glass-premium { background: rgba(17, 17, 21, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(139, 92, 246, 0.2); transition: all 0.3s; }
+        .glass-premium:hover { border-color: rgba(139, 92, 246, 0.5); }
+        .upload-zone { transition: all 0.3s; cursor: pointer; }
+        .upload-zone.drag-over { border-color: #8B5CF6 !important; background: rgba(139, 92, 246, 0.08); }
+        .mobile-menu { max-height: 0; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .mobile-menu.open { max-height: 400px; opacity: 1; visibility: visible; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #111115; }
+        ::-webkit-scrollbar-thumb { background: #8B5CF6; border-radius: 10px; }
+        .preview-content {
+            max-height: 500px;
+            overflow-y: auto;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .preview-content p, .preview-content h1, .preview-content h2, .preview-content h3, .preview-content h4 {
+            margin-bottom: 0.75rem;
+        }
+        .preview-content h1 { font-size: 1.8rem; font-weight: bold; color: white; margin-top: 1rem; }
+        .preview-content h2 { font-size: 1.5rem; font-weight: bold; color: #e2e8f0; margin-top: 0.75rem; }
+        .preview-content h3 { font-size: 1.3rem; font-weight: bold; color: #cbd5e1; margin-top: 0.5rem; }
+        .preview-content h4 { font-size: 1.1rem; font-weight: bold; color: #9ca3af; margin-top: 0.5rem; }
+        .preview-content p { color: #9ca3af; margin-bottom: 0.5rem; }
+        .preview-content ul, .preview-content ol { margin-left: 1.5rem; margin-bottom: 0.75rem; }
+        .preview-content li { color: #9ca3af; margin-bottom: 0.25rem; }
+        .preview-content strong { color: white; }
+        .preview-content a { color: #8B5CF6; text-decoration: underline; }
+        .preview-content table { border-collapse: collapse; width: 100%; margin-bottom: 1rem; }
+        .preview-content th, .preview-content td { border: 1px solid #2d2d3a; padding: 8px; text-align: left; color: #9ca3af; }
+        .preview-content th { background: #1a1a2a; color: white; }
+        .page-preview { border: 1px solid rgba(139, 92, 246, 0.3); margin-bottom: 1rem; border-radius: 8px; overflow: hidden; }
+    </style>
+</head>
+<body class="font-inter text-gray-200">
+
+    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                        <i class="fas fa-camera-retro text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-poppins font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">ExifExplorer</span>
+                </a>
+                <div class="hidden md:flex gap-8 text-sm font-medium">
+                    <a href="index.html" class="hover:text-primary">Home</a>
+                    <a href="word-to-pdf.html" class="text-primary border-b-2 border-primary pb-1">Word to PDF</a>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden text-white text-2xl"><i class="fas fa-bars"></i></button>
+            </div>
+            <div id="mobileMenu" class="mobile-menu md:hidden overflow-hidden">
+                <div class="flex flex-col gap-3 pt-4 pb-2">
+                    <a href="index.html" class="px-4 py-2 hover:bg-white/5 rounded-lg">Home</a>
+                    <a href="word-to-pdf.html" class="px-4 py-2 text-primary bg-white/5 rounded-lg">Word to PDF</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative min-h-[30vh] flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-950/20 via-transparent to-pink-950/20"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 mb-6">
+                <i class="fab fa-microsoft text-primary text-sm"></i>
+                <span class="text-xs font-medium">Word to PDF Converter</span>
+            </div>
+            <h1 class="font-poppins font-black text-4xl md:text-5xl lg:text-6xl leading-tight mb-4">
+                <span class="bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">Convert Word</span>
+                <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">to PDF</span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                Convert Microsoft Word documents to PDF with perfect pagination. Preserves formatting, fonts, and layout exactly as in Word.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="max-w-5xl mx-auto">
+                <!-- Upload Area -->
+                <div id="uploadArea" class="glass-premium rounded-2xl p-8 text-center border-2 border-dashed border-white/20 upload-zone">
+                    <i class="fas fa-file-word text-6xl text-primary mb-4 cursor-pointer" id="uploadIcon"></i>
+                    <h3 class="text-2xl font-semibold text-white mb-2">Upload Word Document</h3>
+                    <p class="text-gray-400 mb-4">Drag & drop or click to browse</p>
+                    <input type="file" id="fileUpload" class="hidden" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                    <button id="uploadBtn" class="bg-gradient-to-r from-primary to-secondary hover:shadow-lg px-8 py-3 rounded-full font-medium inline-flex items-center gap-2">
+                        <i class="fas fa-folder-open"></i> Choose File
+                    </button>
+                    <p class="text-xs text-gray-500 mt-4">Supports .DOC and .DOCX files — All processing happens locally</p>
+                </div>
+
+                <!-- Conversion Options -->
+                <div id="optionsPanel" class="glass-premium rounded-2xl p-6 mt-8 hidden">
+                    <h3 class="text-lg font-bold text-white mb-4">Conversion Options</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Page Size</label>
+                            <select id="pageSize" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5">
+                                <option value="a4">A4 (210 × 297 mm)</option>
+                                <option value="letter">Letter (8.5 × 11 in)</option>
+                                <option value="legal">Legal (8.5 × 14 in)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Orientation</label>
+                            <select id="orientation" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5">
+                                <option value="portrait">Portrait</option>
+                                <option value="landscape">Landscape</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Quality</label>
+                            <input type="range" id="quality" min="1" max="100" value="95" class="w-full">
+                            <span id="qualityValue" class="text-primary text-sm">95%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File List & Preview -->
+                <div id="fileListContainer" class="hidden mt-8">
+                    <div class="glass-premium rounded-2xl p-6">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fas fa-file-alt text-primary"></i> Document
+                        </h3>
+                        <div id="fileInfo" class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-file-word text-3xl text-primary"></i>
+                                <div>
+                                    <p id="fileName" class="font-medium text-white">-</p>
+                                    <p id="fileSize" class="text-xs text-gray-400">-</p>
+                                </div>
+                            </div>
+                            <button id="removeFileBtn" class="text-red-400 hover:text-red-300">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Document Preview -->
+                        <div class="mt-6">
+                            <h4 class="text-sm font-semibold text-gray-300 mb-3">Document Preview</h4>
+                            <div id="previewContent" class="preview-content glass-premium p-4 rounded-xl overflow-y-auto max-h-96">
+                                <div class="text-center text-gray-400 py-8">
+                                    <i class="fas fa-file-word text-4xl mb-3"></i>
+                                    <p>Select a document to preview</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-4 mt-6">
+                            <button id="convertBtn" class="flex-1 bg-gradient-to-r from-primary to-secondary hover:shadow-lg py-3 rounded-xl font-semibold">
+                                <i class="fas fa-file-pdf mr-2"></i>Convert to PDF
+                            </button>
+                            <button id="clearBtn" class="px-6 py-3 rounded-xl border border-white/20 hover:bg-white/10">Clear</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading Overlay -->
+                <div id="loadingOverlay" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-primary border-r-2"></div>
+                        <p id="loadingText" class="mt-4 text-white">Converting document...</p>
+                        <p id="pageProgress" class="text-sm text-gray-400 mt-2"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <!-- Footer -->
+  <footer class="border-t border-white/10 py-12 bg-black/30">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-8"><div><img src="images/icons/apple-touch-icon.png" alt="Exif Explorer" class="w-[100px] cursor-pointer"><p class="text-gray-500 text-sm">Professional metadata extraction tool</p></div>
+        <div><h5 class="font-semibold">Quick Links</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                <li><a href="index.html" class="hover:text-primary">Home</a></li>
+                <li><a href="#features" class="hover:text-primary">Features</a></li>
+                <li><a href="#how-it-works" class="hover:text-primary">How It Works</a></li>
+                <li><a href="#blog" class="hover:text-primary">Blog</a></li>
+                <li><a href="contact.html" class="hover:text-primary">Contact</a></li>
+                <li><a href="about-us.html" class="hover:text-primary">About</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Tools</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                 <li><a href="screenshot.html"  class="hover:text-primary">Screenshot Tool</a></li>
+                 <li><a href="image-converter.html"  class="hover:text-primary">Image Converter</a></li>
+                 <li><a href="image-forensics.html"  class="hover:text-primary">Image Forensics</a></li>
+                 <li><a href="social-optimizer.html"  class="hover:text-primary">Social Media Image Optimizer</a></li>
+                 <li><a href="image-to-pdf.html"  class="hover:text-primary">Image to PDF Converter</a></li>
+                 <li><a href="image-upscaler.html"  class="hover:text-primary">Image UpScaler</a></li>
+                 <li><a href="background-remover.html"  class="hover:text-primary">Image Background Remover</a></li>
+                 <li><a href="word-pdf.html"  class="hover:text-primary">Convert Microsoft Word documents to PDF</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Legal</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                <li><a href="privacy-policy.html" class="hover:text-primary">Privacy Policy</a></li>
+                <li><a href="terms-of-use.html" class="hover:text-primary">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Connect</h5>
+            <div class="flex gap-4 mt-2"><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-github fa-lg"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-instagram fa-lg"></i></a>
+            </div>
+        </div>
+      </div>
+      <hr class="border-white/10 my-8"><div class="text-center text-gray-500 text-sm">© <span id="currentYear"></span> Exif Explorer — All rights reserved.</div>
+    </div>
+  </footer>
+
+
+  <!-- Cookie Consent Banner -->
+<div id="cookieConsent" class="fixed bottom-0 left-0 right-0 z-[9999] transform translate-y-0 transition-transform duration-500 ease-in-out">
+    <div class="glass-premium rounded-t-2xl mx-4 md:mx-auto md:max-w-3xl lg:max-w-4xl border-b-0">
+        <div class="p-5 md:p-6">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-cookie-bite text-primary text-xl"></i>
+                        <h3 class="font-poppins font-semibold text-white text-lg">We Value Your Privacy</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
+                        By clicking "Accept All", you consent to our use of cookies. 
+                        <a href="#" class="text-primary hover:text-secondary transition-colors inline-flex items-center gap-1">
+                            Learn more <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                    <button id="cookieReject" class="px-5 py-2 rounded-full border border-white/20 hover:bg-white/10 text-white text-sm font-medium transition-all duration-300">
+                        Reject All
+                    </button>
+                    <button id="cookieAccept" class="px-5 py-2 rounded-full bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/30 text-white text-sm font-medium transition-all duration-300">
+                        Accept All
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .glass-premium {
+        background: rgba(17, 17, 21, 0.95);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-bottom: none;
+    }
+    .cookie-hidden {
+        transform: translateY(100%);
+    }
+</style>
+
+<script>
+    // Cookie Consent Management
+    (function() {
+        const COOKIE_CONSENT_KEY = 'exifexplorer_cookie_consent';
+        const COOKIE_EXPIRY_DAYS = 365;
+        
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptBtn = document.getElementById('cookieAccept');
+        const rejectBtn = document.getElementById('cookieReject');
+        
+        // Check if user has already made a choice
+        function hasConsent() {
+            const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
+            return consent !== null;
+        }
+        
+        function getConsent() {
+            return localStorage.getItem(COOKIE_CONSENT_KEY);
+        }
+        
+        function setConsent(choice) {
+            localStorage.setItem(COOKIE_CONSENT_KEY, choice);
+            hideBanner();
+            
+            // Dispatch event for other scripts to know consent status
+            window.dispatchEvent(new CustomEvent('cookieConsentUpdated', { detail: { consent: choice } }));
+        }
+        
+        function hideBanner() {
+            cookieConsent.classList.add('cookie-hidden');
+            setTimeout(() => {
+                cookieConsent.style.display = 'none';
+            }, 500);
+        }
+        
+        // Initialize Google Analytics or other tracking based on consent
+        function initializeTracking() {
+            const consent = getConsent();
+            
+            if (consent === 'accepted') {
+                // Load Google Analytics or other tracking scripts
+                loadAnalytics();
+            } else if (consent === 'rejected') {
+                // Ensure no tracking is loaded
+                console.log('Analytics disabled by user preference');
+            }
+        }
+        
+        function loadAnalytics() {
+            // Example: Load Google Analytics (replace with your actual GA ID)
+            if (!window.gtag && !document.querySelector('script[src*="googletagmanager.com"]')) {
+                const script = document.createElement('script');
+                script.async = true;
+                script.src = 'https://www.googletagmanager.com/gtag/js?id=G-FQ0KP0XDCQ';
+                document.head.appendChild(script);
+                
+                window.dataLayer = window.dataLayer || [];
+                window.gtag = function() { dataLayer.push(arguments); };
+                gtag('js', new Date());
+                gtag('config', 'G-FQ0KP0XDCQ');
+                
+                console.log('Analytics loaded with user consent');
+            }
+        }
+        
+        // Event handlers
+        if (acceptBtn) {
+            acceptBtn.addEventListener('click', () => {
+                setConsent('accepted');
+                initializeTracking();
+            });
+        }
+        
+        if (rejectBtn) {
+            rejectBtn.addEventListener('click', () => {
+                setConsent('rejected');
+            });
+        }
+        
+        // Show banner only if no consent stored
+        if (!hasConsent()) {
+            setTimeout(() => {
+                cookieConsent.style.display = 'block';
+                setTimeout(() => {
+                    cookieConsent.classList.remove('cookie-hidden');
+                }, 100);
+            }, 1000);
+        } else {
+            cookieConsent.style.display = 'none';
+            initializeTracking();
+        }
+        
+        // Optional: Add cookie consent to window object for other scripts to use
+        window.cookieConsent = {
+            hasConsent: () => getConsent() === 'accepted',
+            getConsent: () => getConsent()
+        };
+    })();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let currentFile = null;
+
+    const fileInput = document.getElementById('fileUpload');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const uploadArea = document.getElementById('uploadArea');
+    const optionsPanel = document.getElementById('optionsPanel');
+    const fileListContainer = document.getElementById('fileListContainer');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    const previewContent = document.getElementById('previewContent');
+    const convertBtn = document.getElementById('convertBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const removeFileBtn = document.getElementById('removeFileBtn');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const loadingText = document.getElementById('loadingText');
+
+    uploadBtn?.addEventListener('click', () => fileInput.click());
+    uploadArea?.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files[0]) processFile(e.target.files[0]);
+    });
+
+    function processFile(file) {
+        currentFile = file;
+        fileName.textContent = file.name;
+        fileSize.textContent = (file.size / 1024).toFixed(2) + ' KB';
+
+        optionsPanel.classList.remove('hidden');
+        fileListContainer.classList.remove('hidden');
+
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const arrayBuffer = e.target.result;
+
+            if (file.name.endsWith('.docx')) {
+                mammoth.convertToHtml({ arrayBuffer })
+                    .then(result => {
+                        previewContent.innerHTML = result.value;
+                    });
+            } else {
+                previewContent.innerHTML = `<p>Preview not available for .doc</p>`;
+            }
+        };
+
+        reader.readAsArrayBuffer(file);
+    }
+
+    convertBtn.addEventListener('click', async () => {
+        if (!currentFile) return;
+
+        loadingOverlay.classList.remove('hidden');
+        loadingText.textContent = 'Converting...';
+
+        try {
+            const { jsPDF } = window.jspdf;
+
+            const reader = new FileReader();
+            const arrayBuffer = await new Promise(resolve => {
+                reader.onload = e => resolve(e.target.result);
+                reader.readAsArrayBuffer(currentFile);
+            });
+
+            const result = await mammoth.convertToHtml({ arrayBuffer });
+            const htmlContent = result.value;
+
+            // ✅ Create clean container
+            const container = document.createElement('div');
+            container.style.width = '800px';
+            container.style.padding = '40px';
+            container.style.background = '#fff';
+            container.style.fontFamily = 'Arial, sans-serif';
+            container.style.fontSize = '14px';
+            container.style.lineHeight = '1.6';
+            container.style.color = '#000';
+
+            container.innerHTML = htmlContent;
+
+            // ✅ CLEAN STYLES (NO OVER-BOLD / NO OVERLAP)
+            const style = document.createElement('style');
+            style.innerHTML = `
+                body {
+                    margin: 0;
+                    padding: 0;
+                    color: #000;
+                }
+
+                h1, h2, h3 {
+                    margin: 12px 0 6px;
+                    line-height: 1.3;
+                }
+
+                h1 { font-size: 22px; font-weight: 600; }
+                h2 { font-size: 18px; font-weight: 600; }
+                h3 { font-size: 15px; font-weight: 600; }
+
+                p {
+                    margin-bottom: 10px;
+                    font-size: 14px;
+                    line-height: 1.6;
+                    font-weight: 400;
+                }
+
+                ul, ol {
+                    margin: 0 0 10px 20px;
+                }
+
+                li {
+                    margin-bottom: 4px;
+                    font-weight: 400;
+                }
+
+                table {
+                    border-collapse: collapse;
+                    width: 100%;
+                    margin: 10px 0;
+                }
+
+                th, td {
+                    border: 1px solid #999;
+                    padding: 6px;
+                    font-size: 13px;
+                    font-weight: 400;
+                }
+
+                th {
+                    font-weight: 600;
+                    background: #f2f2f2;
+                }
+            `;
+            container.appendChild(style);
+
+            document.body.appendChild(container);
+
+            // ✅ CREATE PDF (BEST METHOD)
+            const pdf = new jsPDF({
+                unit: 'pt',
+                format: 'a4'
+            });
+
+            await pdf.html(container, {
+                margin: [40, 40, 40, 40],
+                autoPaging: 'text',
+                html2canvas: {
+                    scale: 2.2, // balanced sharpness
+                    useCORS: true
+                },
+                callback: function(doc) {
+                    doc.save(currentFile.name.replace(/\.(docx|doc)$/i, '') + '.pdf');
+                }
+            });
+
+            document.body.removeChild(container);
+            loadingOverlay.classList.add('hidden');
+
+        } catch (err) {
+            console.error(err);
+            loadingOverlay.classList.add('hidden');
+            alert('Conversion failed');
+        }
+    });
+
+    function clearAll() {
+        currentFile = null;
+        fileInput.value = '';
+        optionsPanel.classList.add('hidden');
+        fileListContainer.classList.add('hidden');
+        previewContent.innerHTML = 'Select a document';
+    }
+
+    clearBtn.addEventListener('click', clearAll);
+    removeFileBtn.addEventListener('click', clearAll);
+});
+</script>
+</body>
+</html>

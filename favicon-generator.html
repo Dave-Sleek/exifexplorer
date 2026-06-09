@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="title" content="Favicon Generator | Exif Explorer - Create Website Icons">
+    <meta name="description" content="Generate professional favicons for your website. Create all sizes: 16x16, 32x32, 64x64, 128x128, 256x256, and Apple Touch Icons.">
+    
+    <link rel="canonical" href="https://exifexplorer.com/favicon-generator">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#8B5CF6', secondary: '#EC4899' },
+                    fontFamily: { 'poppins': ['Poppins', 'sans-serif'], 'inter': ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background: linear-gradient(135deg, #050508 0%, #0A0A0F 50%, #050508 100%); min-height: 100vh; }
+        .glass-premium { background: rgba(17, 17, 21, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(139, 92, 246, 0.2); transition: all 0.3s; }
+        .upload-zone { transition: all 0.3s; cursor: pointer; }
+        .size-preview { transition: all 0.2s; }
+        .size-preview:hover { transform: scale(1.1); background: rgba(139, 92, 246, 0.2); }
+        .mobile-menu { max-height: 0; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .mobile-menu.open { max-height: 400px; opacity: 1; visibility: visible; }
+    </style>
+</head>
+<body class="font-inter text-gray-200">
+
+    <!-- Navigation with Mobile Dropdown -->
+  <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-3 group">
+        <img src="images/logos/logo.png" alt="Exif Explorer"
+            class="w-[150px] sm:w-[200px] md:w-[250px] lg:w-[193px] h-auto cursor-pointer">
+        </a>
+
+        
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex gap-8 text-sm font-medium">
+          <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+          <a href="#features" class="hover:text-primary transition-colors">Features</a>
+          <a href="#how-it-works" class="hover:text-primary transition-colors">How it Works</a>
+          <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+          <a href="about-us.html" class="text-primary border-b-2 border-primary pb-1">About</a>
+        </div>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuBtn" class="md:hidden text-white text-2xl focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobileMenu" class="mobile-menu md:hidden overflow-hidden transition-all duration-300">
+        <div class="flex flex-col gap-3 pt-4 pb-2">
+          <a href="index.html" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Home</a>
+          <a href="#features" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Features</a>
+          <a href="#how-it-works" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">How it Works</a>
+          <a href="contact.html" class="px-4 py-2 hover:bg-white/5 rounded-lg transition-colors">Contact</a>
+          <a href="about-us.html" class="px-4 py-2 text-primary bg-white/5 rounded-lg transition-colors">About Us</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+    <section class="relative min-h-[30vh] flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-950/20 via-transparent to-pink-950/20"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 mb-6">
+                <i class="fas fa-globe text-primary text-sm"></i>
+                <span class="text-xs font-medium">Favicon Generator</span>
+            </div>
+            <h1 class="font-poppins font-black text-4xl md:text-5xl leading-tight mb-4">
+                <span class="bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">Generate Website</span>
+                <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Favicons</span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">Create all favicon sizes: 16x16, 32x32, 64x64, 128x128, 256x256, and Apple Touch Icons.</p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="max-w-5xl mx-auto">
+                <!-- Upload Area -->
+                <div id="uploadArea" class="glass-premium rounded-2xl p-8 text-center border-2 border-dashed border-white/20 upload-zone">
+                    <i class="fas fa-cloud-upload-alt text-5xl text-primary mb-3 cursor-pointer" id="uploadIcon"></i>
+                    <h3 class="text-xl font-semibold text-white">Upload Your Logo</h3>
+                    <p class="text-gray-400 text-sm mb-3">PNG or SVG recommended (square images work best)</p>
+                    <input type="file" id="imageUpload" class="hidden" accept="image/png,image/jpeg,image/jpg,image/svg+xml,image/webp">
+                    <button id="uploadBtn" class="bg-gradient-to-r from-primary to-secondary px-6 py-2 rounded-full text-sm">Choose Image</button>
+                </div>
+
+                <!-- Preview & Sizes -->
+                <div id="previewContainer" class="hidden mt-8">
+                    <div class="glass-premium rounded-2xl p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Favicon Previews</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center" id="sizePreviews"></div>
+                        
+                        <div class="mt-6 p-4 bg-white/5 rounded-xl">
+                            <h4 class="text-sm font-semibold text-white mb-3">HTML Code to Add to Your Site</h4>
+                            <pre id="htmlCode" class="text-xs text-gray-300 bg-black/50 p-3 rounded-lg overflow-x-auto"></pre>
+                            <button id="copyCodeBtn" class="mt-3 px-4 py-1.5 bg-primary/20 hover:bg-primary/40 rounded-lg text-xs transition">Copy Code</button>
+                        </div>
+                        
+                        <div class="flex gap-4 mt-4">
+                            <button id="downloadAllBtn" class="flex-1 bg-gradient-to-r from-primary to-secondary py-2 rounded-xl font-semibold text-sm">
+                                <i class="fas fa-download mr-2"></i>Download All Favicons (ZIP)
+                            </button>
+                            <button id="resetFaviconBtn" class="px-4 py-2 rounded-xl border border-white/20 hover:bg-white/10 text-sm">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/10 py-12 bg-black/30">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-8"><div><img src="images/icons/apple-touch-icon.png" alt="Exif Explorer" class="w-[100px] cursor-pointer"><p class="text-gray-500 text-sm">Professional metadata extraction tool</p></div>
+        <div><h5 class="font-semibold">Quick Links</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                <li><a href="index.html" class="hover:text-primary">Home</a></li>
+                <li><a href="#features" class="hover:text-primary">Features</a></li>
+                <li><a href="#how-it-works" class="hover:text-primary">How It Works</a></li>
+                <li><a href="#blog" class="hover:text-primary">Blog</a></li>
+                <li><a href="contact.html" class="hover:text-primary">Contact</a></li>
+                <li><a href="about-us.html" class="hover:text-primary">About</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Tools</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                 <li><a href="screenshot.html"  class="hover:text-primary">Screenshot Tool</a></li>
+                 <li><a href="image-converter.html"  class="hover:text-primary">Image Converter</a></li>
+                 <li><a href="image-forensics.html"  class="hover:text-primary">Image Forensics</a></li>
+                 <li><a href="social-optimizer.html"  class="hover:text-primary">Social Media Image Optimizer</a></li>
+                 <li><a href="image-to-pdf.html"  class="hover:text-primary">Image to PDF Converter</a></li>
+                 <li><a href="image-upscaler.html"  class="hover:text-primary">Image UpScaler</a></li>
+                 <li><a href="background-remover.html"  class="hover:text-primary">Image Background Remover</a></li>
+                 <li><a href="word-pdf.html"  class="hover:text-primary">Convert Microsoft Word documents to PDF</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Legal</h5>
+            <ul class="space-y-1 mt-2 text-sm text-gray-400">
+                <li><a href="privacy-policy.html" class="hover:text-primary">Privacy Policy</a></li>
+                <li><a href="terms-of-use.html" class="hover:text-primary">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div><h5 class="font-semibold">Connect</h5>
+            <div class="flex gap-4 mt-2"><a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-github fa-lg"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-instagram fa-lg"></i></a>
+            </div>
+        </div>
+      </div>
+      <hr class="border-white/10 my-8"><div class="text-center text-gray-500 text-sm">© <span id="currentYear"></span> Exif Explorer — All rights reserved.</div>
+    </div>
+  </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let uploadedImage = null;
+            const sizes = [
+                { size: 16, name: 'favicon-16x16.png' },
+                { size: 32, name: 'favicon-32x32.png' },
+                { size: 64, name: 'favicon-64x64.png' },
+                { size: 128, name: 'favicon-128x128.png' },
+                { size: 256, name: 'favicon-256x256.png' },
+                { size: 180, name: 'apple-touch-icon.png' }
+            ];
+            
+            function triggerFileInput(e) { if(e) e.preventDefault(); fileInput.click(); }
+            const fileInput = document.getElementById('imageUpload');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const uploadIcon = document.getElementById('uploadIcon');
+            const uploadArea = document.getElementById('uploadArea');
+            
+            if(uploadBtn) uploadBtn.addEventListener('click', triggerFileInput);
+            if(uploadIcon) uploadIcon.addEventListener('click', triggerFileInput);
+            if(uploadArea) uploadArea.addEventListener('click', (e) => { if(e.target !== uploadBtn) fileInput.click(); });
+            
+            uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
+            uploadArea.addEventListener('dragleave', () => { uploadArea.classList.remove('drag-over'); });
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault(); uploadArea.classList.remove('drag-over');
+                const file = e.dataTransfer.files[0];
+                if(file && file.type.startsWith('image/')) processImage(file);
+            });
+            fileInput.addEventListener('change', (e) => { if(e.target.files[0]) processImage(e.target.files[0]); });
+            
+            function processImage(file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        uploadedImage = img;
+                        generateFavicons();
+                        document.getElementById('previewContainer').classList.remove('hidden');
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+            
+            function generateFavicons() {
+                const container = document.getElementById('sizePreviews');
+                container.innerHTML = '';
+                const blobs = {};
+                
+                sizes.forEach(({size, name}) => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = size;
+                    canvas.height = size;
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Draw background
+                    ctx.fillStyle = '#0a0a0f';
+                    ctx.fillRect(0, 0, size, size);
+                    
+                    // Draw image
+                    const scale = Math.min(size / uploadedImage.width, size / uploadedImage.height);
+                    const w = uploadedImage.width * scale;
+                    const h = uploadedImage.height * scale;
+                    const x = (size - w) / 2;
+                    const y = (size - h) / 2;
+                    ctx.drawImage(uploadedImage, x, y, w, h);
+                    
+                    // Create preview element
+                    const previewDiv = document.createElement('div');
+                    previewDiv.className = 'size-preview p-2 rounded-xl bg-white/5 cursor-pointer';
+                    previewDiv.innerHTML = `
+                        <canvas width="${size}" height="${size}" style="width: 64px; height: 64px; margin: 0 auto;"></canvas>
+                        <p class="text-xs text-gray-400 mt-1">${size}x${size}</p>
+                        <button class="download-single text-primary text-xs mt-1">Download</button>
+                    `;
+                    const previewCanvas = previewDiv.querySelector('canvas');
+                    previewCanvas.getContext('2d').drawImage(canvas, 0, 0, size, size, 0, 0, 64, 64);
+                    container.appendChild(previewDiv);
+                    
+                    // Store blob for download
+                    canvas.toBlob((blob) => {
+                        blobs[name] = blob;
+                        const downloadBtn = previewDiv.querySelector('.download-single');
+                        downloadBtn.onclick = () => {
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = name;
+                            a.click();
+                            URL.revokeObjectURL(url);
+                        };
+                    }, 'image/png');
+                });
+                
+                // Generate HTML code
+                const htmlCode = `<!-- Favicon -->
+                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+                <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png">
+                <link rel="icon" type="image/png" sizes="128x128" href="/favicon-128x128.png">
+                <link rel="icon" type="image/png" sizes="256x256" href="/favicon-256x256.png">
+                <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">`;
+                document.getElementById('htmlCode').textContent = htmlCode;
+                
+                // Download all as ZIP
+                document.getElementById('downloadAllBtn').onclick = () => {
+                    const zip = new JSZip();
+                    Object.entries(blobs).forEach(([name, blob]) => {
+                        zip.file(name, blob);
+                    });
+                    zip.generateAsync({ type: 'blob' }).then((content) => {
+                        const url = URL.createObjectURL(content);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `favicons_${Date.now()}.zip`;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    });
+                };
+            }
+            
+            document.getElementById('copyCodeBtn')?.addEventListener('click', () => {
+                const code = document.getElementById('htmlCode').textContent;
+                navigator.clipboard.writeText(code);
+                alert('HTML code copied to clipboard!');
+            });
+            
+            document.getElementById('resetFaviconBtn')?.addEventListener('click', () => {
+                uploadedImage = null;
+                document.getElementById('previewContainer').classList.add('hidden');
+                fileInput.value = '';
+            });
+            
+            // Mobile menu
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            let menuOpen = false;
+            if(mobileBtn && mobileMenu) {
+                mobileBtn.addEventListener('click', () => {
+                    menuOpen = !menuOpen;
+                    mobileMenu.classList.toggle('open');
+                    mobileBtn.innerHTML = menuOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+                });
+            }
+            
+            // Load JSZip for ZIP functionality
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+            document.head.appendChild(script);
+            
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>
